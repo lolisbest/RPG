@@ -1,0 +1,180 @@
+{
+  "Data": [
+    {
+      "Name": "Silver Coins",
+      "TypeString": "Currency",
+      "IconPath": "Images/Item/Currency/Silver Coins",
+      "Id": 1
+    },
+    {
+      "Name": "Silver Bar",
+      "TypeString": "Currency",
+      "IconPath": "Images/Item/Currency/Silver Bar",
+      "Id": 2
+    },
+    {
+      "Name": "Gold Coins",
+      "TypeString": "Currency",
+      "IconPath": "Images/Item/Currency/Gold Coins",
+      "Id": 3
+    },
+    {
+      "Name": "Gold Bar",
+      "TypeString": "Currency",
+      "IconPath": "Images/Item/Currency/Gold Bar",
+      "Id": 4
+    },
+    {
+      "Name": "Small Healing Potion",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Potion/Small Healing Potion",
+      "Description" : "HP를 1 만큼 회복합니다.",
+      "RecoveryHpAmount" : 1,
+      "BuyPrice" : 10,
+      "Id": 10
+    },
+    {
+      "Name": "Healing Potion",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Potion/Healing Potion",
+      "Description" : "HP를 2 만큼 회복합니다.",
+      "RecoveryHpAmount" : 2,
+      "BuyPrice" : 20,
+      "Id": 11
+    },
+    {
+      "Name": "Large Healing Potion",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Potion/Large Healing Potion",
+      "Description" : "HP를 4 만큼 회복합니다.",
+      "RecoveryHpAmount" : 4,
+      "BuyPrice" : 40,
+      "Id": 12
+    },
+    {
+      "Name": "Small Mana Potion",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Potion/Small Mana Potion",
+      "Description" : "MP를 1 만큼 회복합니다.",
+      "RecoveryMpAmount" : 1,
+      "BuyPrice" : 10,
+      "Id": 13
+    },
+    {
+      "Name": "Mana Potion",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Potion/Mana Potion",
+      "Description" : "MP를 2 만큼 회복합니다.",
+      "RecoveryMpAmount" : 2,
+      "BuyPrice" : 20,
+      "Id": 14
+    },
+    {
+      "Name": "Large Mana Potion",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Potion/Large Mana Potion",
+      "Description" : "MP를 4 만큼 회복합니다.",
+      "RecoveryMpAmount" : 4,
+      "BuyPrice" : 40,
+      "Id": 15
+    },
+    {
+      "Name": "Inferior Armor",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Armor",
+      "Description" : "하급 갑옷이다.",
+      "Defence" : 2,
+      "MaxHp" : 1,
+      "EquipPartTypeString" : "Chest",
+      "Grade" : 1,
+      "BuyPrice" : 250,
+      "Id": 100
+    },
+    {
+      "Name": "Inferior Boots",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Boots",
+      "Description" : "하급 신발이다.",
+      "Defence" : 1,
+      "EquipPartTypeString" : "Foot",
+      "Grade" : 1,
+      "BuyPrice" : 200,
+      "Id": 101
+    },
+    {
+      "Name": "Inferior Helmets",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Helmets",
+      "Description" : "하급 투구이다.",
+      "Defence" : 1,
+      "EquipPartTypeString" : "Head",
+      "Grade" : 1,
+      "BuyPrice" : 200,
+      "Id": 102
+    },
+    {
+      "Name": "Inferior Two Handed Sword",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Two Handed Sword",
+      "Description" : "하급 양손검이다.",
+      "Attack" : 2,
+      "EquipPartTypeString" : "Hand0",
+      "Grade" : 1,
+      "BuyPrice" : 300,
+      "Id": 103
+    },
+    {
+      "Name": "Intermediate Armor",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Armor",
+      "Description" : "중급 갑옷이다.",
+      "Defence" : 3,
+      "MaxHp" : 2,
+      "EquipPartTypeString" : "Chest",
+      "Grade" : 2,
+      "BuyPrice" : 450,
+      "Id": 104
+    },
+    {
+      "Name": "Intermediate Boots",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Boots",
+      "Description" : "중급 신발이다.",
+      "Defence" : 2,
+      "EquipPartTypeString" : "Foot",
+      "Grade" : 2,
+      "BuyPrice" : 300,
+      "Id": 105
+    },
+    {
+      "Name": "Intermediate Helmets",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Helmets",
+      "Description" : "중급 투구이다.",
+      "Defence" : 2,
+      "EquipPartTypeString" : "Head",
+      "Grade" : 2,
+      "BuyPrice" : 300,
+      "Id": 106
+    },
+    {
+      "Name": "Intermediate Two Handed Sword",
+      "TypeString": "Equipment",
+      "IconPath": "Images/Item/Equipment/Inferior Two Handed Sword",
+      "Description" : "중급 양손검이다.",
+      "Attack" : 3,
+      "EquipPartTypeString" : "Hand0",
+      "Grade" : 2,
+      "BuyPrice" : 500,
+      "Id": 107
+    },
+    {
+      "Name": "Normal Meat",
+      "TypeString": "Etc",
+      "IconPath": "Images/Item/Miscellaneous/Normal Meat",
+      "Description" : "정체 불명의 고기이다.",
+      "BuyPrice" : 5,
+      "Id": 1000
+    }
+  ]
+}

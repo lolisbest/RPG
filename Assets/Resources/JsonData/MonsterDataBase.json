@@ -1,0 +1,37 @@
+{
+  "Data": [
+    {
+      "Id" : 1,
+      "Status" : {
+        "Name": "TestMonster",
+        "Str" : 1,
+        "End" : 0,
+        "Sta" : 2,
+        "Mag" : 0,
+        "Level" : 0,
+        "Experience" : 1
+      },
+      "DropItems" : [
+        { "Id" : 3, "Count" : 100 }, {"Id" : 11, "Count" : 2  }, { "Id" : 12, "Count" : 2  }, { "Id" : 13, "Count" : 2  }, { "Id" : 14, "Count" : 2  }
+      ]
+    },
+    {
+      "Id" : 2,
+      "Status" : {
+        "Name": "Bear",
+        "Str" : 10,
+        "End" : 10,
+        "Sta" : 10,
+        "Mag" : 0,
+        "Level" : 2,
+        "Experience" : 1
+      },
+      "DropItems" : [
+        { "Id" : 3, "Count" : 250 }, {"Id" : 11, "Count" : 3  }, { "Id" : 12, "Count" : 3  }, { "Id" : 13, "Count" : 3  }, 
+        { "Id" : 14, "Count" : 3  }, { "Id" : 104, "Count" : 1  }, { "Id" : 105, "Count" : 1  }, { "Id" : 106, "Count" : 1  }, { "Id" : 107, "Count" : 1  },
+        { "Id" : 1000, "Count" : 2  }
+      ]
+    }
+
+  ]
+}

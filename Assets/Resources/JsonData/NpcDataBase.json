@@ -1,0 +1,29 @@
+{
+  "Data": [
+    {
+      "Id": 1,
+      "Name" : "TestNpc0",
+      "ServiceStrings" : ["Talk", "Quest", "Shop"],
+      "QuestIds" : [1, 2],
+      "StartDialogIds" : [1],
+      "SellingItems" : [
+        10, 11, 12, 13, 14, 15, 
+        100, 101, 102, 103, 104, 105, 106, 107
+      ]
+    },
+    {
+      "Id": 2,
+      "Name" : "마을 주민1",
+      "ServiceStrings" : ["Talk"],
+      "QuestIds" : [],
+      "StartDialogIds" : [4]
+    },
+    {
+      "Id": 3,
+      "Name" : "마을 주민2",
+      "ServiceStrings" : ["Talk"],
+      "QuestIds" : [],
+      "StartDialogIds" : [5]
+    }
+  ]
+}

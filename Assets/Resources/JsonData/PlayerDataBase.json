@@ -1,0 +1,88 @@
+{
+  "Data": [
+    {
+      "DataId" : 1,      
+      "Status" : {
+        "Name": "TestPlayer1",
+        "Str" : 10,
+        "End" : 2,
+        "Sta" : 10,
+        "Mag" : 10,
+        "Level" : 1,
+        "Experience" : 0,
+        "LeftStatusPoints" : 0
+      },
+      "Inventory" : {
+        "InventorySlotNumber" : 24,
+        "Items" : [
+          { "ItemId" : 100, "ItemCount" : 1, "SlotIndex" : 0 }, { "ItemId" : 104, "ItemCount" : 1, "SlotIndex" : 1 }
+        ],
+        "Money" : 0,
+        "MaxMoney" : 999999999
+      },
+      "HumanEquipSlots" : {
+        "HeadIndex" : -1,
+        "ChestIndex" : -1,
+        "HandIndex0" : -1,
+        "HandIndex1" : -1,
+        "FootIndex" : -1
+      }
+    },
+    {
+      "DataId" : 2,
+      "Status" : {
+        "Name": "TestPlayer2",
+        "Str" : 10,
+        "End" : 2,
+        "Sta" : 10,
+        "Mag" : 10,
+        "Level" : 3,
+        "Experience" : 0,
+        "LeftStatusPoints" : 0
+      },
+      "Inventory" : {
+        "InventorySlotNumber" : 24,
+        "Items" : [
+          { "ItemId" : 100, "ItemCount" : 1, "SlotIndex" : 0 }, { "ItemId" : 104, "ItemCount" : 1, "SlotIndex" : 1 }
+        ],
+        "Money" : 0,
+        "MaxMoney" : 999999999
+      },
+      "HumanEquipSlots" : {
+        "HeadIndex" : -1,
+        "ChestIndex" : -1,
+        "HandIndex0" : -1,
+        "HandIndex1" : -1,
+        "FootIndex" : -1
+      }
+    },
+    {
+      "DataId" : 3,
+      "Status" : {
+        "Name": "TestPlayer3",
+        "Str" : 10,
+        "End" : 2,
+        "Sta" : 10,
+        "Mag" : 10,
+        "Level" : 3,
+        "Experience" : 0,
+        "LeftStatusPoints" : 0
+      },
+      "Inventory" : {
+        "InventorySlotNumber" : 24,
+        "Items" : [
+          { "ItemId" : 100, "ItemCount" : 1, "SlotIndex" : 0 }, { "ItemId" : 104, "ItemCount" : 1, "SlotIndex" : 1 }
+        ],
+        "Money" : 0,
+        "MaxMoney" : 999999999
+      },
+      "HumanEquipSlots" : {
+        "HeadIndex" : -1,
+        "ChestIndex" : -1,
+        "HandIndex0" : -1,
+        "HandIndex1" : -1,
+        "FootIndex" : -1
+      }
+    }
+  ]
+}
