@@ -13,7 +13,8 @@ namespace RPG.UI
         public Image ItemIcon; // CurrentItemData
         public Image GradeBorder; // CurrentItemData
 
-        public TextMeshProUGUI ItemName; // CurrentItemData
+        public TextMeshProUGUI ItemNameText; // CurrentItemData
+        public TextMeshProUGUI ItemUnitPriceText;
         public TextMeshProUGUI ItemCountText; // ItemCount
         public TextMeshProUGUI TotalPriceText; // TotalPrice
 
@@ -42,6 +43,7 @@ namespace RPG.UI
             get => _itemCount;
             private set
             {
+                Debug.Log($"{_itemCount} -> {value}");
                 _itemCount = value;
                 ItemCountText.text = _itemCount.ToString();
                 TotalPrice = _itemCount * _itemUnitPrice;
@@ -116,6 +118,8 @@ namespace RPG.UI
             // 개수는 0부터
             ItemCount = 0;
             gameObject.SetActive(true);
+            ItemIcon.gameObject.SetActive(true);
+            ItemUnitPriceText.text = itemData.BuyPrice.ToString();
         }
 
         public void OpenPlayerMode(int toSellPlayerSlotIndex)
@@ -130,6 +134,8 @@ namespace RPG.UI
             // 개수는 1부터
             ItemCount = 1;
             gameObject.SetActive(true);
+            ItemIcon.gameObject.SetActive(true);
+            ItemUnitPriceText.text = itemData.SellPrice.ToString();
         }
 
         public void Close()
@@ -158,7 +164,9 @@ namespace RPG.UI
             {
                 if (Player.Instance.Items[_toSellplayerInventorySlotIndx].ItemCount < ItemCount + delta)
                 {
-                    ItemCount = Player.Instance.Items[_toSellplayerInventorySlotIndx].ItemCount;
+                    int correctCount = Player.Instance.Items[_toSellplayerInventorySlotIndx].ItemCount;
+                    Debug.Log($"보유 개수 부족. 판매 개수 제한 {ItemCount + delta} -> {correctCount}");
+                    ItemCount = correctCount;
                     return;
                 }
             }
@@ -166,11 +174,14 @@ namespace RPG.UI
             {
                 if (Player.Instance.Money < _itemUnitPrice * (ItemCount + delta))
                 {
-                    ItemCount = (int)(Player.Instance.Money / (float)_itemUnitPrice);
+                    int correctCount = (int)(Player.Instance.Money / (float)_itemUnitPrice);
+                    Debug.Log($"보유 골드 부족. 구매 개수 제한 {ItemCount + delta} -> {ItemCount}");
+                    ItemCount = correctCount;
                     return;
                 }
             }
 
+            Debug.Log($"Increase delta: {delta}, Mode: {Mode}");
             ItemCount += delta;
         }
 
@@ -192,7 +203,7 @@ namespace RPG.UI
 
         private void SetItemInfoUI(StructItemData itemData)
         {
-            ItemName.text = itemData.Name;
+            ItemNameText.text = itemData.Name;
             if (Mode == TransactionMode.Player)
             {
                 _itemUnitPrice = itemData.SellPrice;

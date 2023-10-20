@@ -20,6 +20,8 @@ public class QuestManager : Singleton<QuestManager>
     // CurrentInProgressQuests 에 퀘스트 추가
     public void AddQuest(int questId)
     {
+        if (questId < 1) return;
+
         if (IsInProgress(questId))
             // 이미 진행 중인 퀘스트라면
             throw new System.Exception($"Already In Progress Quest. Id:{questId}, Title:{DataBase.Quests[questId].Title}");

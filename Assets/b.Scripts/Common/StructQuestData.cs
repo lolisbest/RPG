@@ -44,7 +44,6 @@ namespace RPG.Common
         public StructQuestCondition[] Conditions;
         public StructIdCount[] RewardItems;
         public int RewardExp;
-        public int RewardMoney;
 
         public override string ToString()
         {
@@ -56,7 +55,6 @@ namespace RPG.Common
                 $"Conditions : {string.Join(" / ", Conditions)}\n" +
                 $"Rewards : {RewardString(RewardItems)}\n" + 
                 $"RewardExp : {RewardExp}\n" +
-                $"RewardMoney : {RewardMoney}\n" +
                 $"--------------------";
         }
 

@@ -8,6 +8,7 @@ public class EquipSlot : MonoBehaviour
 {
     public int ItemId;
     public Image ItemIcon;
+    public Image ItemGrade;
 
     public void Equip(int itemId)
     {
@@ -20,6 +21,7 @@ public class EquipSlot : MonoBehaviour
         ItemId = itemData.Id;
         ItemIcon.sprite = itemData.Sprite;
         ItemIcon.enabled = true;
+        ItemGrade.color = itemData.GradeColor;
     }
 
     public void Unequip()
@@ -27,5 +29,6 @@ public class EquipSlot : MonoBehaviour
         ItemId = -1;
         ItemIcon.sprite = null;
         ItemIcon.enabled = false;
+        ItemGrade.color = Color.white;
     }
 }

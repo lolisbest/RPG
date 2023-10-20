@@ -26,8 +26,6 @@ namespace RPG.UI
         public void Initialize()
         {
             Slots = new();
-            @Player = Player.Instance;
-
             ClearEquipSlots();
         }
 
@@ -37,6 +35,10 @@ namespace RPG.UI
             UpdateItemAll();
         }
 
+        public void SetPlayerInstance(Player player)
+        {
+            @Player = player;
+        }
         /// <summary>
         /// Append inactive Slot UIs
         /// </summary>
@@ -113,6 +115,8 @@ namespace RPG.UI
 
         void Update()
         {
+            if (!@Player) return;
+
             if(@Player.IsChangedInventory)
             {
                 UpdateItemAll();

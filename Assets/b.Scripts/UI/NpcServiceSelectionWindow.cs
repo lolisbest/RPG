@@ -31,9 +31,8 @@ public class NpcServiceSelectionWindow : MonoBehaviour
             if (childButton.name == "Quit")
                 continue;
 
-            // 현재 버튼은 판넬로 감싸져있음
             // 기본적으로 비활성화. Content Size Fitter 컴포넌트를 위해
-            childButton.transform.parent.gameObject.SetActive(false);
+            childButton.gameObject.SetActive(false);
 
             // 각각의 Enum 값의 문자열이 버튼의 이름에 포함되는지 => 다른지를 보기위해
             if (!System.Enum.GetNames(typeof(NpcService)).Any(childButton.name.Contains))
@@ -44,8 +43,6 @@ public class NpcServiceSelectionWindow : MonoBehaviour
             {
                 Buttons[buttonService] = childButton;
             }
-            
-            
         }
     }
 
@@ -62,8 +59,8 @@ public class NpcServiceSelectionWindow : MonoBehaviour
 
             if (services.HasFlag(service) && Buttons[service] != null)
             {
-                // 현재 버튼은 판넬로 감싸져있음
-                Buttons[service].transform.parent.gameObject.SetActive(true);
+                Debug.Log($"{service} active");
+                Buttons[service].gameObject.SetActive(true);
             }
         }
     }
@@ -72,8 +69,7 @@ public class NpcServiceSelectionWindow : MonoBehaviour
     {
         foreach(KeyValuePair<NpcService, Button> item in Buttons)
         {
-            // 현재 버튼은 판넬로 감싸져있음
-            item.Value.transform.parent.gameObject.SetActive(false);
+            item.Value.gameObject.SetActive(false);
         }
 
         gameObject.SetActive(false);

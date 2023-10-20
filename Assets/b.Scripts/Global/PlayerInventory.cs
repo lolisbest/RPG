@@ -78,10 +78,16 @@ public partial class Player
         // 빈 슬롯 찾기
         int addIndex = GetEmptySlotIndex();
 
+        StructItemData itemData = DataBase.Items[itemId];
+        // 화폐인지?
+        if (itemData.ItemType == EnumItemType.Currency)
+        {
+            AddMoney(itemCount);
+        }
         // 묶을 수 있는 아이템인지?
-        if (
-            DataBase.Items[itemId].ItemType == EnumItemType.Consumable ||
-            DataBase.Items[itemId].ItemType == EnumItemType.Etc
+        else if (
+            itemData.ItemType == EnumItemType.Consumable ||
+            itemData.ItemType == EnumItemType.Etc
             )
         {
             // 묶음 아이템이면, 인벤토리에 존재하는 동일한 아이템 찾기

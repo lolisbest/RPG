@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 public class InGameUIManager : Singleton<InGameUIManager>
 {
     public QuestManager @QuestManager;
-    public Player @Player;
+    public Player @Player { get; private set; }
 
     public TextMeshProUGUI FpsText;
     private readonly string _baseFpsString = "FPS : {0}";
@@ -27,14 +27,10 @@ public class InGameUIManager : Singleton<InGameUIManager>
     {
         get
         {
-            //Debug.Log("IsOpenDialogWindow " + IsOpenDialogWindow);
-            //Debug.Log("IsOpenShopWindow " + IsOpenShopWindow);
-            //Debug.Log("IsOpenTransactionWindow " + IsOpenTransactionWindow);
-
             return IsOpenItemBoxWindow || IsOpenInventoryWindow ||
             IsOpenNpcServiceSelectionWindow || IsOpenNpcQuestDetailWindow || IsOpenQuestSelectionWindow ||
-            IsOpenNpcQuestDetailWindow || IsOpenCurrentQuestDetailWindow || IsOpenDialogWindow;
-            //IsOpenShopWindow || IsOpenTransactionWindow;
+            IsOpenNpcQuestDetailWindow || IsOpenCurrentQuestDetailWindow || IsOpenDialogWindow ||
+            IsOpenShopWindow || IsOpenTransactionWindow;
         }
     }
 
@@ -46,10 +42,6 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public bool IsOpenItemBoxWindow { get => @ItemBoxWindow.gameObject.activeSelf; }
 
-
-    //public GameObject DroppedItemBoxPanelUI;
-    //public TextSlot[] ItemInTextUIList;
-    //public List<int> ItemGuidList;
 
     [Header("인벤토리 창")]
     public InventoryWindow @InventoryWindow;
@@ -85,7 +77,10 @@ public class InGameUIManager : Singleton<InGameUIManager>
     public bool IsOpenDialogWindow { get => @DialogWindow.gameObject.activeSelf; }
 
     public bool IsPresentDialogQuitButton { get => @DialogWindow.QuitButton.gameObject.activeSelf; }
-    public bool IsPresentDialogNextButton { get => @DialogWindow.NextButton.gameObject.activeSelf; }
+    public bool IsPresentDialogNextButton 
+    { 
+        get => @DialogWindow.NextButton.gameObject.activeSelf; 
+    }
 
     [Header("Hp Gauge")]
     public Gauge HpGauge;
@@ -126,14 +121,15 @@ public class InGameUIManager : Singleton<InGameUIManager>
         @NpcQuestDetailWindow.Initialize();
         @DamageTextDrawer.Initialize();
 
-        return;
         @InventoryWindow.Initialize();
-        //DroppedBox.Initialize();
         @CurrentQuestsWindow.Initialize();
-        @CurrentQuestDetailWindow.Initialize();
         @DialogWindow.Initialize();
-        @Player = Player.Instance;
+        @CurrentQuestDetailWindow.Initialize();
         @ShopWindow.Initialize();
+
+        return;
+        //DroppedBox.Initialize();
+        //@Player = Player.Instance;
     }
 
     void Awake()
@@ -153,6 +149,14 @@ public class InGameUIManager : Singleton<InGameUIManager>
     {
         if (displayFps)
             UpdateFps();
+    }
+
+    public void SetPlayerInstance(Player player)
+    {
+        @Player = player;
+        @InventoryWindow.SetPlayerInstance(player);
+        @ShopWindow.SetPlayerInstance(player);
+        _minimapController.Intit();
     }
 
     public void ActivateInteractionKeyMessage(InteractionType type)
@@ -223,15 +227,15 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void OpenInventoryWindow()
     {
-        @InventoryWindow.Open();
-        @StatusWindow.Open();
+        if (@InventoryWindow) @InventoryWindow.Open();
+        if (@StatusWindow) @StatusWindow.Open();
     }
 
     public void CloseInventoryWindow()
     {
-        @InventoryWindow.Close();
-        @InventoryItemInfoWindow.Close();
-        @StatusWindow.Close();
+        if (@InventoryWindow) @InventoryWindow.Close();
+        if (@InventoryItemInfoWindow) @InventoryItemInfoWindow.Close();
+        if (@StatusWindow) @StatusWindow.Close();
     }
 
     public void CLoseInventoryItemInfoWindow()
@@ -297,8 +301,8 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void AddQuestToCurrentQuestsWindow(int questId)
     {
-        @CurrentQuestsWindow.AddQuest(questId);
-        @QuestManager.AddQuest(questId);
+        if (@CurrentQuestsWindow) @CurrentQuestsWindow.AddQuest(questId);
+        if (@QuestManager) @QuestManager.AddQuest(questId);
     }
 
     public void OpenCurrentQuestDetailWindow(int questId)
@@ -389,8 +393,6 @@ public class InGameUIManager : Singleton<InGameUIManager>
             }
 
             @Player.AddExperience(DataBase.Quests[questId].RewardExp);
-            Debug.Log("DataBase.Quests[questId].RewardMoney: " + DataBase.Quests[questId].RewardMoney);
-            @Player.AddMoney(DataBase.Quests[questId].RewardMoney);
         }
         else
         {

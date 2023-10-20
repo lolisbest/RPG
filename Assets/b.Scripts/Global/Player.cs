@@ -97,6 +97,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         if (other.CompareTag(StringStatic.PlaceBoundaryTag)) 
         {
             PlaceBoundary boundary = other.GetComponent<PlaceBoundary>();
+            InGameUIManager.Instance.SetPlaceName(boundary.EnteringPlaceName);
             return;
         }
 
@@ -188,6 +189,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     {
         SetPlayerData(GameManager.Instance.CurrentPlayerData);
         Debug.Log("Player Set Data " + GameManager.Instance.CurrentPlayerData);
+        InGameUIManager.Instance.SetPlayerInstance(this);
         Debug.Log("Player Awake()");
         RecoveryAll();
         TakenDamageColliders = new();
@@ -200,6 +202,8 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     void Update()
     {
+        if (!_defence) return;
+
         if(_defence.HasBlocked)
         {
             StartKnockback();

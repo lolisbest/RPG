@@ -16,6 +16,8 @@ public class MinimapController : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _placeNameText;
 
+    [SerializeField] private GameObject _minimapCameraPrefab;
+
     public void SetPlaceName(string placeName)
     {
         if (!_placeNameText) return;
@@ -23,8 +25,14 @@ public class MinimapController : MonoBehaviour
         _placeNameText.text = placeName;
     }
 
-    private void Start()
+    public void Intit()
     {
+        GameObject minimapCameraObject = Instantiate(_minimapCameraPrefab);
+        Camera minimapCamera = minimapCameraObject.GetComponent<Camera>();
+        FollowPosition followPosition = minimapCameraObject.GetComponent<FollowPosition>();
+        followPosition.SetTarget(Player.Instance.transform);
+        _minimapCamera = minimapCamera;
+
         // 초기에 미니맵 줌을 최대 확대로
         if (_minimapCamera) _minimapCamera.orthographicSize = (int)(((_zoomMin + _zoomMax) / 2f) / _zoomStep) * _zoomStep;
     }

@@ -34,6 +34,9 @@ public class AspectRatioKeeper : MonoBehaviour
     [Tooltip("비율에 따라 결정되는 Height의 최댓값")] 
     public float MaxHeight = 200f;
 
+    public bool CopyWidthToHeight;
+    public bool CopyHeightToWidth;
+
     private void Reset()
     {
         LimitedWidth = true;
@@ -90,6 +93,10 @@ public class AspectRatioKeeper : MonoBehaviour
         {
             newHeight = Mathf.Clamp(newHeight, MinHeight, MaxHeight);
         }
+
+        if (CopyHeightToWidth) { newWidth = newHeight; }
+        
+        if (CopyWidthToHeight) { newHeight = newWidth; }
 
         _target.sizeDelta = new Vector2(newWidth, newHeight);
     }

@@ -33,13 +33,17 @@ public class ShopWindow : MonoBehaviour
     public TextMeshProUGUI NpcName;
     public TextMeshProUGUI PlayerName;
     public TextMeshProUGUI HoldingGold;
-    private readonly string _baseHoldingGoldString = "보유 골드 : {0}";
+    private readonly string _baseHoldingGoldString = "{0}";
 
     public void Initialize()
     {
         CreateShopSlots(_defaultSlotCount);
         CreatePlayerSlots(_defaultSlotCount);
-        @Player = Player.Instance;
+    }
+
+    public void SetPlayerInstance(Player player)
+    {
+        @Player = player;
     }
 
     private ItemSlotInShop CreateSlot()

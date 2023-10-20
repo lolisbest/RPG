@@ -112,6 +112,7 @@ namespace RPG.UI
         {
             // _rectTransform 를 드래그에서만 사용한다면, 드래그를 한다는 건 그 이전에 Awake() 됐다는 뜻.
             _slotRectTransform = GetComponent<RectTransform>();
+            CanDrag = true;
         }
     }
 }

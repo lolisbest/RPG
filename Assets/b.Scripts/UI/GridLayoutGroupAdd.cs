@@ -56,7 +56,11 @@ public class GridLayoutGroupAdd : MonoBehaviour
 
         float inner = _rect.rect.width - padding.left - padding.right - spacingRow;
 
+        //Debug.Log("_rect.rect.width " + _rect.rect.width);
+        //Debug.Log("inner " + inner);
+
         float cellSize = inner / Column;
+        //Debug.Log("cellSize " + cellSize);
 
         _gridLayoutGroup.cellSize = new Vector2(cellSize, cellSize);
     }

@@ -12,6 +12,7 @@ namespace RPG.UI
     {
         public TextMeshProUGUI ItemNameText;
         public Image ItemIcon;
+        public Image ItemGrade;
 
         public GameObject StatusOptionsRoot;
 
@@ -47,6 +48,7 @@ namespace RPG.UI
             StructItemData itemData = DataBase.Items[itemId];
             SetItemName(itemData.Name);
             SetItemIcon(itemData.Sprite);
+            SetItemGrade(itemData.GradeColor);
             SetItemDescription(itemData.Description);
             SetStatusOption(itemData.Attack, itemData.Defence, itemData.MaxHp, itemData.MaxMp);
 
@@ -115,6 +117,11 @@ namespace RPG.UI
         private void SetItemName(string itemName)
         {
             ItemNameText.text = itemName;
+        }
+
+        private void SetItemGrade(Color color)
+        {
+            ItemGrade.color = color;
         }
 
         private void SetItemDescription(string description)

@@ -276,7 +276,7 @@ namespace RPG.Input
             CloseItemBoxWindow();
 
             // inventory
-            //ToggleInventoryWindow();
+            ToggleInventoryWindow();
 
             // quickslot
             //PressQuickSlot();

@@ -58,6 +58,8 @@ namespace RPG.UI
 
         public void AddQuest(int questId)
         {
+            if (questId < 1) throw new System.Exception($"CurrentQuestsWindow questId: {questId}");
+
             foreach(var slot in Slots)
             {
                 if(slot.QuestId == questId)
