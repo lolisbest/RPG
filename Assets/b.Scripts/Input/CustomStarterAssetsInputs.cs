@@ -18,8 +18,6 @@ namespace RPG.Input
 
 		// attack
 		public bool attack;
-		// adv attack
-		public bool advAttack;
 
 		public bool block;
 
@@ -35,6 +33,7 @@ namespace RPG.Input
 
 		public bool lootAll;
 		public bool inventory;
+		public bool skill;
 
 		public bool quit;
 
@@ -46,7 +45,10 @@ namespace RPG.Input
 		public bool slot6;
 		public bool slot7;
 		public bool slot8;
+		public bool slot9;
+		public bool slot0;
 
+		public bool esc;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -68,7 +70,6 @@ namespace RPG.Input
 				LookInput(value.Get<Vector2>());
 			}
 		}
-
 
 		public void OnNoMouseRotation(InputValue value)
 		{
@@ -98,11 +99,6 @@ namespace RPG.Input
         {
 			attack = value.isPressed;
         }
-
-		public void OnAdvancedAttack(InputValue value)
-		{
-			advAttack = value.isPressed;
-		}
 
 		public void OnInteraction(InputValue value)
         {
@@ -164,6 +160,12 @@ namespace RPG.Input
 			inventory = value.isPressed;
 		}
 
+		public void OnSkill(InputValue value)
+		{
+			//Debug.Log("OnInventory");
+			skill = value.isPressed;
+		}
+
 		public void OnQuit(InputValue value)
 		{
 			quit = value.isPressed;
@@ -208,6 +210,21 @@ namespace RPG.Input
 		{
 			slot8 = value.isPressed;
 		}
+
+		public void OnSlot9(InputValue value)
+		{
+			slot9 = value.isPressed;
+		}
+
+		public void OnSlot0(InputValue value)
+		{
+			slot0 = value.isPressed;
+		}
+
+		public void OnEsc(InputValue value)
+		{
+			esc = value.isPressed;
+		}
 #endif
 
 		public void MoveInput(Vector2 newMoveDirection)
@@ -246,7 +263,6 @@ namespace RPG.Input
 			//move = Vector2.zero;
             look = Vector2.zero;
 			attack = false;
-			advAttack = false;
 
 			interaction = false;
 			//lootAll = false;
@@ -262,6 +278,10 @@ namespace RPG.Input
 			slot6 = false;
 			slot7 = false;
 			slot8 = false;
+			slot9 = false;
+			slot0 = false;
+
+			esc = false;
 		}
 
 		/// <summary>
@@ -271,7 +291,6 @@ namespace RPG.Input
         {
 			jump = false;
 			attack = false;
-			advAttack = false;
 
 			interaction = false;
 
@@ -284,6 +303,7 @@ namespace RPG.Input
 
 			lootAll = false;
 			inventory = false;
+			skill = false;
 
 			quit = false;
 
@@ -295,6 +315,10 @@ namespace RPG.Input
 			slot6 = false;
 			slot7 = false;
 			slot8 = false;
+			slot9 = false;
+			slot0 = false;
+
+			esc = false;
 		}
 	}
 

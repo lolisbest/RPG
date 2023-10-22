@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Monster;
 using System;
+using Cinemachine;
 
 public class MapManager : Singleton<MapManager>
 {
@@ -11,13 +12,22 @@ public class MapManager : Singleton<MapManager>
 
     public int CurrentMapId = 1;
 
-    void Awake()
+    public Transform PlayerSpwanPosition;
+
+    public GameObject PlayerPrefab;
+    public GameObject FollowCamPrefab;
+
+
+    protected override void Awake()
     {
+        base.Awake();
         Initialize();
         MonstersInMap = new();
+        SpwanPlayer();
     }
 
     // Start is called before the first frame update
+
     void Start()
     {
 
@@ -47,5 +57,20 @@ public class MapManager : Singleton<MapManager>
     public override void Initialize()
     {
         ;
+    }
+
+    public void RespwanPlayer()
+    {
+        //Debug.Log("Respwan Position " + PlayerSpwanPosition.position);
+        Player.Instance.Spwan(PlayerSpwanPosition.position);
+    }
+
+    private void SpwanPlayer()
+    {
+        //Debug.Log("First Spwan Position " + PlayerSpwanPosition.position);
+        GameObject playerObject = Instantiate(PlayerPrefab, PlayerSpwanPosition.position, Quaternion.identity);
+        GameObject followObject = Instantiate(FollowCamPrefab, transform.position, Quaternion.identity);
+        CinemachineVirtualCamera virtualCamera = followObject.GetComponent<CinemachineVirtualCamera>();
+        virtualCamera.Follow = Player.Instance.CameraRoot;
     }
 }

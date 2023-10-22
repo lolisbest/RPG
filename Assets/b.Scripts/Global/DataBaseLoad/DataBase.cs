@@ -29,6 +29,7 @@ public static partial class DataBase
     private static QuestDataBase _questDataBase;
     public static Dictionary<int, StructQuestData> Quests { get => QuestDataBase.Quests; }
 
+    // Server..
     //private static PlayerDataBase _playerDataBase;
     //public static Dictionary<int, StructPlayerData> Players { get => PlayerDataBase.Players; }
 
@@ -39,16 +40,22 @@ public static partial class DataBase
 
     private static DialogDataBase _dialogDataBase;
 
-    public static readonly int StatusPointsPerLevelUp = 3;
     public static Dictionary<int, StructDialogData> Dialogs { get => DialogDataBase.Dialogs; }
+
+    public static readonly int StatusPointsPerLevelUp = 3;
+
+    private static SkillDataBase _skillDataBase;
+
+    public static Dictionary<int, StructSkillData> Skills { get => SkillDataBase.Skills; }
+
     public static void Load()
     {
         _itemDataBase.Load();
         _npcDataBase.Load();
         _questDataBase.Load();
-        //_playerDataBase.Load();
         _monsterDataBase.Load();
         _dialogDataBase.Load();
+        _skillDataBase.Load();
 
         //ShowReservedPath();
     }
@@ -58,9 +65,10 @@ public static partial class DataBase
         _itemDataBase = (ItemDataBase)(new ItemDataBase().Initialize());
         _npcDataBase = (NpcDataBase)(new NpcDataBase().Initialize());
         _questDataBase = (QuestDataBase)(new QuestDataBase().Initialize());
-        //_playerDataBase = (PlayerDataBase)(new PlayerDataBase().Initialize());
         _monsterDataBase = (MonsterDataBase)(new MonsterDataBase().Initialize());
         _dialogDataBase = (DialogDataBase)(new DialogDataBase().Initialize());
+        _skillDataBase = (SkillDataBase)(new SkillDataBase().Initialize());
+
     }
 
     public static (int, int) ExpTable(int level, int exp)

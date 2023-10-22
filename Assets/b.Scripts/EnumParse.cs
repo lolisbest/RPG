@@ -19,7 +19,7 @@ namespace RPG.Utils
         public static T[] Read<T>(string filePath)
         {
             TextAsset textAsset = Resources.Load<TextAsset>(filePath);
-            //Debug.Log($"{filePath} : {File.Exists(Application.dataPath + "/Resources/" + filePath + ".json")}");
+            Debug.Log($"{filePath} : {File.Exists(Application.dataPath + "/Resources/" + filePath + ".json")}");
             if (textAsset == null)
                 throw new Exception($"TextAsset Load Fail. {filePath}");
 

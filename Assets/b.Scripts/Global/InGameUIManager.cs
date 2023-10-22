@@ -30,7 +30,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
             return IsOpenItemBoxWindow || IsOpenInventoryWindow ||
             IsOpenNpcServiceSelectionWindow || IsOpenNpcQuestDetailWindow || IsOpenQuestSelectionWindow ||
             IsOpenNpcQuestDetailWindow || IsOpenCurrentQuestDetailWindow || IsOpenDialogWindow ||
-            IsOpenShopWindow || IsOpenTransactionWindow;
+            IsOpenShopWindow || IsOpenTransactionWindow || IsOpenEscWindow || IsOpenSkillsWindow;
         }
     }
 
@@ -109,6 +109,19 @@ public class InGameUIManager : Singleton<InGameUIManager>
     [Header("미니맵")]
     [SerializeField] private MinimapController _minimapController;
 
+    [Header("Esc 메뉴 창")]
+    [SerializeField] private GameObject _escWindow;
+    public bool IsOpenEscWindow { get => _escWindow.activeSelf; }
+
+    [Header("스킬 창")]
+    [SerializeField] private SkillsWindow _skillsWindow;
+    public bool IsOpenSkillsWindow { get => _skillsWindow.gameObject.activeSelf; }
+
+    [Header("사망 창")]
+    [SerializeField] private GameObject _onDeathWindow;
+    public bool IsOpenOnDeathWindow { get => _onDeathWindow.gameObject.activeSelf; }
+
+
     public override void Initialize()
     {
         LastInteractionType = InteractionType.Open;
@@ -132,9 +145,9 @@ public class InGameUIManager : Singleton<InGameUIManager>
         //@Player = Player.Instance;
     }
 
-    void Awake()
+    protected override void Awake()
     {
-        //DontDestroyOnLoad(gameObject);
+        base.Awake();
         Initialize();
     }
 
@@ -402,6 +415,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void UpdateHpGauge(float rate)
     {
+        //Debug.Log("UpdateHpGauge " + rate);
         HpGauge.SetCurretRate(rate);
     }
 
@@ -465,10 +479,12 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void UseQuickSlot(int quickSlotNumber)
     {
+        //Debug.Log("Try UseQuickSlost quickSlotNumber " + quickSlotNumber);
         foreach (var slot in @QuickSlotManager.QuickSlots)
         {
             if (slot.Key == quickSlotNumber)
             {
+                //Debug.Log("Try UseQuickSlost Key" + slot.Key);
                 slot.Use();
             }
         }
@@ -517,5 +533,44 @@ public class InGameUIManager : Singleton<InGameUIManager>
     public void SetPlaceName(string placeName)
     {
         _minimapController.SetPlaceName(placeName);
+    }
+
+    public void ToggleEscWindow()
+    {
+        //Debug.Log("InGameUiManager.ToggleEscWindow");
+        if (!IsOpenSkillsWindow) _skillsWindow.Open();
+        else _skillsWindow.Close();
+    }
+
+    public void CloseEscWindow()
+    {
+        _escWindow.SetActive(false);
+    }
+
+    public void OpenSkillsWindow()
+    {
+        StructSkillData[] skills = { DataBase.Skills[1] };
+        _skillsWindow.LoadDataIntoSlots(skills);
+        _skillsWindow.Open();
+    }
+
+    public void CloseSkillsWindow()
+    {
+        _skillsWindow.Close();
+    }
+
+    public void OpenOnDeathWindow()
+    {
+        _onDeathWindow.SetActive(true);
+    }
+
+    public void CloseOnDeathWindow()
+    {
+        _onDeathWindow.SetActive(false);
+    }
+    public void RespawnPlayer()
+    {
+        CloseOnDeathWindow();
+        MapManager.Instance.RespwanPlayer();
     }
 }

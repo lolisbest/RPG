@@ -13,11 +13,39 @@ public class Defence : MonoBehaviour
         AttackCollider attackCollider = other.GetComponent<AttackCollider>();
         if (attackCollider != null)
         {
+            //Debug.Log($"OnTriggerEnter {other.name}");
+
             if (attackCollider.AttackerType == EnumAttackerType.Player)
                 return;
 
             Vector3 defenceToAttack = attackCollider.transform.position - transform.position;
             if(Vector3.Dot(defenceToAttack, transform.forward) > 0)
+            {
+                Debug.Log("Denfence Ok");
+                HasBlocked = true;
+                attackCollider.OnBlocked();
+            }
+            else
+            {
+                Debug.Log("Denfence Fail");
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        AttackCollider attackCollider = other.GetComponent<AttackCollider>();
+        if (attackCollider != null)
+        {
+            Debug.Log($"OnTriggerStay {other.name}");
+
+            if (attackCollider.AttackerType == EnumAttackerType.Player)
+                return;
+
+            //Vector3 defenceToAttack = (attackCollider.transform.up - transform.position).normalized;
+            float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
+
+            if (Mathf.Abs(dot) > 0.05f)
             {
                 Debug.Log("제대로 막음");
                 HasBlocked = true;

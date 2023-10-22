@@ -11,6 +11,11 @@ namespace RPG.UI
         [SerializeField] private GameObject _slotPrefab;
         [SerializeField] private Transform _slotsRoot;
 
+        [SerializeField] private RectTransform _slotRateRef;
+
+
+        public RectTransform SlotRateReference { get => _slotRateRef ? _slotRateRef : null; }
+
         public virtual void Open()
         {
             gameObject.SetActive(true);
@@ -64,6 +69,11 @@ namespace RPG.UI
             GameObject slotObject = Instantiate(_slotPrefab);
             slotObject.name = $"Slot[{_slots.Count+1}]";
             Slot<T> slot = slotObject.GetComponent<Slot<T>>();
+            AspectRatioKeeper ratioKeeper = slotObject.GetComponent<AspectRatioKeeper>();
+            if (ratioKeeper && SlotRateReference)
+            {
+                ratioKeeper.SetOther(SlotRateReference);
+            }
             slotObject.transform.SetParent(_slotsRoot);
             return slot;
         }

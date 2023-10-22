@@ -40,6 +40,7 @@ namespace RPG.Monster
         #endregion
 
         #region IDamageable Property Implements
+        public bool IsDie { get; protected set; }
         public void OnDeath()
         {
             //Debug.Log($"{name} die");
@@ -107,7 +108,6 @@ namespace RPG.Monster
         }
         #endregion
 
-        public bool IsDie { get; protected set; }
         public Vector3 RespawnPosition { get; private set; }
 
         public Transform DropStartPosition;
@@ -264,18 +264,18 @@ namespace RPG.Monster
             //Debug.Log($"{name} collision with {other.transform.parent?.name}");
             if (other.CompareTag(StringStatic.PlayerAttackEffectTag))
             {
-                AttackCollider playeryAttackCollider = other.gameObject.GetComponent<AttackCollider>();
-                if(playeryAttackCollider != null)
+                AttackCollider attackCollider = other.gameObject.GetComponent<AttackCollider>();
+                if(attackCollider != null)
                 {
                     //Debug.Log("playeryAttackCollider.Damage: " + playeryAttackCollider.Damage);
-                    int realDamage = Calculate.RealDamage(playeryAttackCollider.Damage, RealStatus.Def);
+                    int realDamage = Calculate.RealDamage(attackCollider.Damage, RealStatus.Def);
                     if (realDamage != 0)
                     {
                         OnDamage(realDamage);
 
                         if (!ToAttackTarget)
                         {
-                            ToAttackTarget = other.transform;
+                            ToAttackTarget = attackCollider.Body;
                         }
                     }
                     else
@@ -288,6 +288,18 @@ namespace RPG.Monster
 
         private void Update()
         {
+            if (ToAttackTarget)
+            {
+                // 대상이 죽었다면 표적 풀기
+                IDamageable target = ToAttackTarget.GetComponent<IDamageable>();
+                //Debug.Log($"{ToAttackTarget} IDamageable {target != null}");
+                if (target != null)
+                {
+                    if (target.IsDie) ToAttackTarget = null;
+                    //Debug.Log("Target IsDie " + target.IsDie);
+                }
+            }
+
             switch (State)
             {
                 case MonsterState.Idle:

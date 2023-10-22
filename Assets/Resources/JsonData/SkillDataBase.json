@@ -1,0 +1,13 @@
+{
+  "Data": [
+    {
+      "Id": 1,
+      "Name": "세 번 베기",
+      "IconPath" : "Images/Skill/ThreeSlash",
+      "Description": "검을 세 번 빠르게 휘두른다.",
+      "MpCost" : 2,
+      "WeaponTypeStrings" : ["TwoHandedSword", "OneHandedSword"],
+      "CoolTime" : 4
+    }
+  ]
+}

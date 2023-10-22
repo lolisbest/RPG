@@ -706,7 +706,6 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   attack: 0
-  advAttack: 0
   block: 0
   interaction: 0
   npcTalk: 0
@@ -717,6 +716,7 @@ MonoBehaviour:
   npcShop: 0
   lootAll: 0
   inventory: 0
+  skill: 0
   quit: 0
   slot1: 0
   slot2: 0
@@ -726,6 +726,9 @@ MonoBehaviour:
   slot6: 0
   slot7: 0
   slot8: 0
+  slot9: 0
+  slot0: 0
+  esc: 0
   analogMovement: 0
   cursorLocked: 0
   cursorInputForLook: 1
@@ -750,6 +753,7 @@ MonoBehaviour:
     Level: 0
     Experience: 0
     LeftStatusPoints: 0
+    AvailableSkillIds: 
   CameraRoot: {fileID: 1532538733131122808}
   _hp: 0
   _mp: 0
@@ -888,7 +892,7 @@ Transform:
   m_GameObject: {fileID: 2073913409222748650}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.175, z: 0.56}
-  m_LocalScale: {x: 1.4, y: 0.6, z: 0.2}
+  m_LocalScale: {x: 1.5, y: 0.7, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1355041046147465960}
@@ -3327,6 +3331,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackerType: 1
+  _collider: {fileID: 5339468952108546924}
+  _body: {fileID: 1355041046147465960}
+--- !u!64 &5339468952108546924 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 6871702908708946626, guid: dd57d812d22a5a847a17a88430996db8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1532538733926398382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5339468952108546925 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6871702908708946627, guid: dd57d812d22a5a847a17a88430996db8,

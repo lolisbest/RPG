@@ -8,7 +8,7 @@ namespace RPG.Common
     {
         private static T _instance;
         private static readonly object Lock = new object();
-
+        protected static int s_number = 0;
         ///// <summary>
         ///// 씬이 없어질 때 파괴할지
         ///// </summary>
@@ -64,13 +64,38 @@ namespace RPG.Common
             }
         }
 
-        //private void Awake()
-        //{
-        //    Debug.Log("Singleton<>.Awake()");
-        //    if (_persistent)
-        //        DontDestroyOnLoad(gameObject);
-        //    OnAwake();
-        //}
+        protected virtual void Awake()
+        {
+            name = $"{name}[{s_number}]";
+            s_number++;
+            Debug.Log($"Singleton<{GetType()}>.Awake() s_number:{s_number}");
+
+            if (s_number > 1)
+            {
+                Debug.Log($"Already Exists {GetType()}");
+                Destroy(this.gameObject);
+                return;
+            }
+        }
+
+
+        // 앱이 종료될때 호출
+        protected override void OnApplicationQuit()
+        {
+            Debug.Log($"{GetType()}.OnApplicationQuit s_number : {s_number}");
+            base.OnApplicationQuit();
+            s_number = 0;
+        }
+
+        // 객체가 파괴될때 호출
+        protected new virtual void OnDestroy()
+        {
+            Debug.Log($"{GetType()}.OnDestroy before s_number : {s_number}");
+            s_number--; 
+            Debug.Log($"{GetType()}.OnDestroy after s_number : {s_number}");
+
+            base.OnDestroy();
+        }
 
         public abstract void Initialize();
         protected virtual void OnAwake() { }
@@ -80,7 +105,7 @@ namespace RPG.Common
     public class Singleton : MonoBehaviour
     {
         public static bool Quitting { get; protected set; }
-
+   
         // 앱이 종료될때 호출
         protected virtual void OnApplicationQuit()
         {

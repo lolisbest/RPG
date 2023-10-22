@@ -110,4 +110,5 @@ namespace RPG.UI
 
             Player.Instance.SwapItemSlot(SlotIndex, otherSlot.SlotIndex);
         }
-    } }
+    } 
+}

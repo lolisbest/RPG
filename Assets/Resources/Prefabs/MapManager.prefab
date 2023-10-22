@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd09a4086082af48b5d7677b9a327fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _persistent: 1
   MonstersInMap: []
   CurrentMapId: 1
+  PlayerSpwanPosition: {fileID: 7482965686926109211}
+  PlayerPrefab: {fileID: 1839089372817905746, guid: 14f923e1bbd887241859ecc9f237f907,
+    type: 3}
+  FollowCamPrefab: {fileID: 5119621943493543225, guid: 72991747b8aee224fb614fb371470a7e,
+    type: 3}

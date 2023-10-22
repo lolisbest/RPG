@@ -11,4 +11,5 @@ public static class StringStatic
     public readonly static string PlayerAttackEffectTag = "PlayerAttackEffect";
     public readonly static string MonsterAttackEffectTag = "MonsterAttackEffect";
     public readonly static string PlaceBoundaryTag = "PlaceBoundary";
+
 }

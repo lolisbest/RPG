@@ -12,11 +12,13 @@ namespace RPG.UI
         void Awake()
         {
             QuickSlots = GetComponentsInChildren<QuickSlot>().ToList();
-            int key = 1;
+            int count = 1;
             foreach(var quickSlot in QuickSlots)
             {
+                int key = count % 10;
                 quickSlot.SetKey(key % 10);
-                key++;
+                quickSlot.SetQuitckSlotManager(this);
+                count++;
             }
         }
 
@@ -25,6 +27,22 @@ namespace RPG.UI
             foreach (var quickSlot in QuickSlots)
             {
                 quickSlot.UpdateItmeCount();
+            }
+        }
+
+        public void TryClearSlotWidthSameSkill(int skillId)
+        {
+            foreach(var quickSlot in QuickSlots)
+            {
+                if (quickSlot.LinkedSkillId == skillId) quickSlot.ClearQuickSlot();
+            }
+        }
+
+        public void TryClearSlotWidthSameItem(int inventorySlotIndex)
+        {
+            foreach (var quickSlot in QuickSlots)
+            {
+                if (quickSlot.LinkedInventorySlotIndex == inventorySlotIndex) quickSlot.ClearQuickSlot();
             }
         }
     }

@@ -38,7 +38,7 @@ public class DamageTextDrawer : Singleton<DamageTextDrawer>
     public void ShowDamageText(int damage, Vector3 worldPosition)
     {
         Vector2 canvasPosition = Camera.main.WorldToScreenPoint(worldPosition);
-        Debug.Log($"{worldPosition} -> {canvasPosition}");
+        //Debug.Log($"{worldPosition} -> {canvasPosition}");
         DamageText damageText;
         if (IdleDamageTexts.Count == 0)
         {

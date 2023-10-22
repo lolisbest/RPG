@@ -6,6 +6,7 @@ using RPG.UI;
 using RPG.Utils;
 using RPG.Input;
 using UnityEngine.SceneManagement;
+using System;
 
 public partial class Player : Singleton<Player>, IDamageable, IStatus
 {
@@ -34,6 +35,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     #endregion
 
     #region IDamageable Implements
+    public bool IsDie { get; private set; }
     public void OnDamage(int damageAmount)
     {
         //Debug.Log("Player is Hit!!!");
@@ -48,7 +50,8 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     public void OnDeath()
     {
-        throw new System.NotImplementedException();
+        _controller.SetDeath();
+        IsDie = true;
     }
     #endregion
 
@@ -59,7 +62,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         get => _hp;
         private set
         {
-            Debug.Log($"_hp {_hp} -> {value}");
+            //Debug.Log($"_hp {_hp} -> {value}");
             _hp = value < 0 ? 0 : value;
             float rate = (float)_hp / RealStatus.MaxHp;
             InGameUIManager.Instance.UpdateHpGauge(rate);
@@ -106,34 +109,32 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
             AttackCollider monsterAttackCollider = other.GetComponent<AttackCollider>();
             if(monsterAttackCollider != null && !TakenDamageColliders.ContainsKey(monsterAttackCollider))
             {
+                //Debug.Log("Player.OnTriggerEnter");
                 TakenDamageColliders.Add(monsterAttackCollider, false);
-
-                //int realDamage = Calculate.RealDamage(monsterAttackCollider.Damage, RealStatus.Def);
-
-                //if (realDamage > 0)
-                //{
-                //    //Debug.Log("Player take Damage : " + monsterAttackCollider.Damage);
-                //    //Debug.Log("Playe Def : " + Def);
-                //    //Debug.Log("Player take realDamage : " + realDamage);
-
-
-                //    if (_controller.IsBlocking)
-                //    {
-                //        //Debug.Log("Block!!!");
-                //        OnDamage(0);
-                //    }
-                //    else
-                //    {
-                //        OnDamage(realDamage);
-                //    }
-                //}
-                //else
-                //{
-                //    OnDamage(0);
-                //}
             }
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //if (other.CompareTag(StringStatic.PlaceBoundaryTag))
+        //{
+        //    PlaceBoundary boundary = other.GetComponent<PlaceBoundary>();
+        //    InGameUIManager.Instance.SetPlaceName(boundary.EnteringPlaceName);
+        //    return;
+        //}
+
+        if (other.CompareTag(StringStatic.MonsterAttackEffectTag))
+        {
+            AttackCollider monsterAttackCollider = other.GetComponent<AttackCollider>();
+            if (monsterAttackCollider != null && !TakenDamageColliders.ContainsKey(monsterAttackCollider))
+            {
+                Debug.Log("Player.OnTriggerStay");
+                TakenDamageColliders.Add(monsterAttackCollider, false);
+            }
+        }
+    }
+
 
     private void SetPlayerData(StructPlayerData playerData)
     {
@@ -162,7 +163,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         HumanEquipSlots = playerData.HumanEquipSlots;
         Status = playerData.Status;
 
-        Debug.Log("LoadPlayerData");
+        //Debug.Log("LoadPlayerData");
         Debug.Log("LoadPlayerData " + Status.ToString());
     }
 
@@ -181,8 +182,9 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         throw new System.NotImplementedException();
     }
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
     }
 
     void Start()
@@ -193,6 +195,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         Debug.Log("Player Awake()");
         RecoveryAll();
         TakenDamageColliders = new();
+        IsDie = false;
     }
 
     void FixedUpdate()
@@ -213,6 +216,22 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     void LateUpdate()
     {
         CheckDamage();
+    }
+
+    public ResultType ActSkill(int skillId)
+    {
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            StructSkillData skillData = DataBase.Skills[skillId];
+            if (skillData.MpCost > Mp) return ResultType.SkillNotEnoughMP;
+
+            Mp -= skillData.MpCost;
+            _controller.Skill(skillId);
+
+            return ResultType.SkillSuccess;
+        }
+
+        return ResultType.MouseEventOnObject;
     }
 
     private void CheckDamage()
@@ -240,13 +259,14 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                     {
                         // 막은 판정의 공격 콜라이더라면
                         // 데미지 1/5 수준으로
-                        Debug.Log("막은 공격");
+                        //Debug.Log("Blocked Attack");
                         OnDamage(realDamage / 5);
                     }
                     else
                     {
-                        Debug.Log("막지 못 한 공격");
+                        //Debug.Log("Hit Attack");
                         OnDamage(realDamage);
+                        Hit();
                     }
 
                     // 판정 끝남을 체크
@@ -254,6 +274,11 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                 }
             }
         }
+    }
+
+    private void Hit()
+    {
+        _controller.SetHitAnimation();
     }
 
     private void RecoveryAll()
@@ -266,5 +291,28 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     {
         Status = status;
         IsChangedStatus = true;
+    }
+
+    public void AddSkill(int skillId)
+    {
+        StructStatus newStatus = Status;
+        int newSize = Status.AvailableSkillIds.Length + 1;
+        Array.Resize(ref newStatus.AvailableSkillIds, newSize);
+        newStatus.AvailableSkillIds[newSize] = skillId;
+
+        Debug.Log($"New Player Available Skills {string.Join(",", newStatus.AvailableSkillIds)}");
+    }
+
+    public void Spwan(Vector3 spwanPosition)
+    {
+        transform.position = spwanPosition;
+        RecoveryAll();
+        _controller.SetRespawn();
+        IsDie = false;
+    }
+
+    public void OpenOnDeatthWindow()
+    {
+        InGameUIManager.Instance.OpenOnDeathWindow();
     }
 }

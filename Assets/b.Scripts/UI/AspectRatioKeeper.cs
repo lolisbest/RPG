@@ -58,6 +58,11 @@ public class AspectRatioKeeper : MonoBehaviour
         Adjust();
     }
 
+    public void SetOther(RectTransform other)
+    {
+        _other = other;
+    }
+
     private void Adjust()
     {
         Vector2 targetSize = _target.rect.size;

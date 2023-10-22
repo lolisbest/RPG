@@ -24,6 +24,8 @@ namespace RPG.Common
 
         public int LeftStatusPoints;
 
+        public int[] AvailableSkillIds;
+
         public override string ToString()
         {
             return $"Name : {Name}, Level : {Level}, Str : {Str}, Experience : {Experience}, LeftStatusPoints : {LeftStatusPoints}";
@@ -137,9 +139,11 @@ namespace RPG.Common
         }
     }
 
+    [Flags]
     public enum EnumWeaponType
     {
         None = 0,
         TwoHandedSword,
+        OneHandedSword,
     }
 }

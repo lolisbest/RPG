@@ -46,7 +46,6 @@ public partial class GameManager : Singleton<GameManager>
     {
         string url = "http://localhost:9999/delete/playerData?playerDataId={0}";
         GameManager.Instance.TryHttpGet(string.Format(url, playerDataId));
-        //UIManager.Instance.RequestPlayerData();
     }
 
     public void OpenServerCommunicationErrorWindow(string message)

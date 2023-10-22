@@ -13,7 +13,7 @@ namespace RPG.UI
     {
         public Image Icon; // 퀵슬롯 버튼에 표시할 아이템 아이콘 이미지
 
-        public int Key;
+        public int Key { get; private set; }
         public TextMeshProUGUI KeyText;
 
         public int LinkedInventorySlotIndex;
@@ -23,19 +23,49 @@ namespace RPG.UI
 
         private RectTransform _iconRectTransform;
 
+        [SerializeField] private Image _coolTimeIndicator;
 
-        private void AddItemToQuickSlot(Sprite itemSprite, int slotIndex)
+        [SerializeField] private float _leftCoolTime;
+        public float LeftCoolTime
         {
+            get => _leftCoolTime;
+            private set
+            {
+                _coolTimeIndicator.gameObject.SetActive(false);
+                _leftCoolTime = value;
+
+                if (LinkedSkillId <= 0) return;
+
+                if (_leftCoolTime <= 0) return;
+
+                StructSkillData skillData = DataBase.Skills[LinkedSkillId];
+                _coolTimeIndicator.fillAmount = Mathf.Clamp01(_leftCoolTime / skillData.CoolTime);
+                _coolTimeIndicator.gameObject.SetActive(true);
+            }
+        }
+
+        [SerializeField] private QuickSlotManager _quickSlotManager;
+
+        public void SetQuitckSlotManager(QuickSlotManager quickSlotManager)
+        {
+            _quickSlotManager = quickSlotManager;
+        }
+
+        private void AddItemToQuickSlot(Sprite itemSprite, int linkedInventoryslotIndex)
+        {
+            _quickSlotManager.TryClearSlotWidthSameItem(linkedInventoryslotIndex);
+
             if (!IsEmpty())
             {
                 ClearQuickSlot();
             }
 
-            Debug.Log("Quick slotIndex : " + slotIndex);
-            Debug.Log("Quick itemSprite : " + itemSprite);
 
-            LinkedInventorySlotIndex = slotIndex;
+            LinkedInventorySlotIndex = linkedInventoryslotIndex;
             Icon.sprite = itemSprite;
+
+            Debug.Log("Quick LinkedInventorySlotIndex : " + linkedInventoryslotIndex);
+            Debug.Log("Quick itemSprite : " + itemSprite);
 
             UpdateItmeCount();
 
@@ -45,12 +75,14 @@ namespace RPG.UI
 
         private void AddSkillToQuickSlot(Sprite skillSprite, int skillId)
         {
+            _quickSlotManager.TryClearSlotWidthSameSkill(skillId);
+
             if (!IsEmpty())
             {
                 ClearQuickSlot();
             }
 
-            throw new System.NotImplementedException("Add Skill To QuickSlot");
+            //throw new System.NotImplementedException("Add Skill To QuickSlot");
 
             LinkedSkillId = skillId;
             Icon.sprite = skillSprite;
@@ -90,7 +122,7 @@ namespace RPG.UI
             }
             else
             {
-                IconSkillSlot skillSlot = eventData.pointerDrag.GetComponent<IconSkillSlot>();
+                SkillSlot skillSlot = eventData.pointerDrag.GetComponent<SkillSlot>();
                 if (skillSlot != null)
                 {
                     skillSlot.SetFloatingIconSize(_iconRectTransform.rect.size);
@@ -116,11 +148,11 @@ namespace RPG.UI
             }
             else
             {
-                IconSkillSlot skillSlot = elmentObject.GetComponent<IconSkillSlot>();
+                SkillSlot skillSlot = elmentObject.GetComponent<SkillSlot>();
                 if (skillSlot != null)
                 {
                     Debug.Log("Register Skill");
-                    AddItemToQuickSlot(skillSlot.SkillIcon.sprite, skillSlot.SkillId);
+                    AddSkillToQuickSlot(skillSlot.SkillIcon.sprite, skillSlot.SkillId);
                     LinkedInventorySlotIndex = -1;
                     return;
                 }
@@ -139,11 +171,18 @@ namespace RPG.UI
             _iconRectTransform = Icon.rectTransform;
         }
 
+        void Update()
+        {
+            if (LinkedSkillId > 0 && LeftCoolTime > 0)
+            {
+                LeftCoolTime -= Time.deltaTime;
+            }
+        }
+
         public void Use()
         {
             if(LinkedInventorySlotIndex != -1)
             {
-                Debug.Log("Use");
                 int leftItemCount = Player.Instance.ConsumeItem(LinkedInventorySlotIndex);
 
                 if (leftItemCount == 0)
@@ -158,7 +197,15 @@ namespace RPG.UI
             }
             else if(LinkedSkillId != -1)
             {
+                Debug.Log($"Act Skill #{LinkedSkillId}, _coolTimeIndicator: {_coolTimeIndicator.gameObject.activeSelf}");
+                if (_coolTimeIndicator.gameObject.activeSelf) return;
 
+                if (Player.Instance.ActSkill(LinkedSkillId) == ResultType.SkillSuccess)
+                {
+                    Debug.Log("Act Skill Success");
+                    StructSkillData skillData = DataBase.Skills[LinkedSkillId];
+                    LeftCoolTime = skillData.CoolTime;
+                }
             }
         }
 
@@ -199,7 +246,7 @@ namespace RPG.UI
             }
             else
             {
-                IconSkillSlot skillSlot = eventData.pointerDrag.GetComponent<IconSkillSlot>();
+                SkillSlot skillSlot = eventData.pointerDrag.GetComponent<SkillSlot>();
                 if (skillSlot != null)
                 {
                     skillSlot.ResetFloatingIconSize();

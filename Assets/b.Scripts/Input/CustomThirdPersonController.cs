@@ -108,8 +108,11 @@ namespace RPG.Input
         private int _animIDMotionSpeed;
 
         private int _animIDSlash;
-        private int _animIDSlashThree;
+        private int _animIDSkill;
         private int _animIDBlock;
+        private int _animIDHit;
+        private int _animIDDeath;
+        private int _animIDRespawn;
 
         [Header("Physics.Cast Radius")]
         public float Radius = 1f;
@@ -171,7 +174,6 @@ namespace RPG.Input
             }
         }
 
-
         private void Awake()
         {
             // get a reference to our main camera
@@ -179,6 +181,25 @@ namespace RPG.Input
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+        }
+
+        public void SetHitAnimation()
+        {
+            _animator.SetTrigger(_animIDHit);
+        }
+
+        public void SetDeath()
+        {
+            //Debug.Log("SetDeath");
+            _animator.SetTrigger(_animIDDeath);
+            _controller.enabled = false;
+        }
+
+        public void SetRespawn()
+        {
+            //Debug.Log("SetRespawn");
+            _animator.SetTrigger(_animIDRespawn);
+            _controller.enabled = true;
         }
 
         private void Start()
@@ -211,16 +232,18 @@ namespace RPG.Input
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
-
-            // 점프 후, 그라운드 체크
-            JumpAndGravity();
-            GroundedCheck();
-
-            if (@UIManager.IsInteractingWithPlayer)
+            if (@UIManager.IsInteractingWithPlayer || @Player.IsDie)
             {
                 //Debug.Log("InteractingWithPlayer ");
                 _input.ClearInputsOnIntraction();
+            }
+
+            if (@Player.IsDie)
+            {
+                // 죽었다면 return;
+                //Debug.Log("Player Is Die");
+                _input.ClearBoolInputs(); 
+                return;
             }
 
             if (_input.noMouseRotation)
@@ -230,12 +253,16 @@ namespace RPG.Input
                 _input.attack = false;
             }
 
+            // 점프 후, 그라운드 체크
+            JumpAndGravity();
+            GroundedCheck();
+
+
             // Animation
 
-            if(!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             {
                 Slash();
-                SlashThree();
             }
 
             // 현재 막기 중이면 Move 호출하지 않음.
@@ -264,12 +291,13 @@ namespace RPG.Input
             CloseNpcQuestDetailWindow();
 
             // npc shop
-            //OpenNpcShopWindow();
+            OpenNpcShopWindow();
+            CloseNpcShopWindow();
 
             // npc rest
             //RequestNpcRest();
 
-            //CloseNpcServiceSelectionWindow();
+            CloseNpcServiceSelectionWindow();
 
             // itembox
             LootAll();
@@ -278,8 +306,13 @@ namespace RPG.Input
             // inventory
             ToggleInventoryWindow();
 
+            // skill
+            ToggleSkillsWindow();
+
             // quickslot
-            //PressQuickSlot();
+            PressQuickSlot();
+
+            ToggleEscMenu();
 
             _input.ClearBoolInputs();
         }
@@ -287,6 +320,7 @@ namespace RPG.Input
         private void LateUpdate()
         {
             CameraRotation();
+            ClearSkillInput();
         }
 
         /// <summary>
@@ -301,8 +335,11 @@ namespace RPG.Input
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 
             _animIDSlash = Animator.StringToHash("Slash");
-            _animIDSlashThree = Animator.StringToHash("Slash Three");
+            _animIDSkill = Animator.StringToHash("Skill");
             _animIDBlock = Animator.StringToHash("Block");
+            _animIDHit = Animator.StringToHash("Hit");
+            _animIDDeath = Animator.StringToHash("Death");
+            _animIDRespawn = Animator.StringToHash("Respawn");
         }
 
         private void GroundedCheck()
@@ -349,11 +386,22 @@ namespace RPG.Input
             }
         }
 
-        private void SlashThree()
+        public void Skill(int skillId)
         {
-            if (IsIdleBlend && _input.advAttack)
+            if (IsIdleBlend && skillId > 0)
             {
-                _animator.SetTrigger(_animIDSlashThree);
+                _animator.SetInteger(_animIDSkill, skillId);
+            }
+        }
+
+        public void ClearSkillInput()
+        {
+            if (!IsIdleBlend)
+            {
+                // Idle이 아니라면 Skill Parameter를 0으로 매 프레임마다 초기화
+                // 1) Idle 이 아니고 스킬 사용 중이라면 다음번 상태를 위한 셋팅.
+                // 2) Idle 이 아니고 다른 행동 중이라면 스킬 입력을 버림
+                _animator.SetInteger(_animIDSkill, 0);
             }
         }
 
@@ -735,6 +783,23 @@ namespace RPG.Input
             }
         }
 
+        private void ToggleSkillsWindow()
+        {
+            if (_input.skill)
+            {
+                //Debug.Log("@UIManager.IsOpenInventoryWindow: " + @UIManager.IsOpenInventoryWindow);
+                //Debug.Log("@UIManager.IsInteractingWithPlayer: " + @UIManager.IsInteractingWithPlayer);
+                if (!@UIManager.IsOpenSkillsWindow && !@UIManager.IsInteractingWithPlayer)
+                {
+                    @UIManager.OpenSkillsWindow();
+                }
+                else if (@UIManager.IsOpenSkillsWindow)
+                {
+                    @UIManager.CloseSkillsWindow();
+                }
+            }
+        }
+
         private void TalkWithNpc()
         {
             if(@UIManager.IsOpenNpcServiceSelectionWindow)
@@ -818,7 +883,18 @@ namespace RPG.Input
             {
                 if (_input.npcShop)
                 {
-                    throw new System.NotImplementedException("not implemented npc shop");
+                    InGameUIManager.Instance.OpenShop();
+                }
+            }
+        }
+
+        private void CloseNpcShopWindow()
+        {
+            if (@UIManager.IsOpenShopWindow)
+            {
+                if (_input.quit)
+                {
+                    InGameUIManager.Instance.CloseShop();
                 }
             }
         }
@@ -863,6 +939,7 @@ namespace RPG.Input
 
             if (_input.slot6)
             {
+                //Debug.Log("Quick 6");
                 @UIManager.UseQuickSlot(6);
             }
 
@@ -874,6 +951,25 @@ namespace RPG.Input
             if (_input.slot8)
             {
                 @UIManager.UseQuickSlot(8);
+            }
+
+            if (_input.slot9)
+            {
+                @UIManager.UseQuickSlot(9);
+            }
+
+            if (_input.slot0)
+            {
+                @UIManager.UseQuickSlot(0);
+            }
+        }
+
+        private void ToggleEscMenu()
+        {
+            if (_input.esc)
+            {
+                //Debug.Log("Player.ToggleEscMenu()");
+                InGameUIManager.Instance.ToggleEscWindow();
             }
         }
     }

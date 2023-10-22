@@ -177,6 +177,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Slot9",
+                    "type": "Button",
+                    "id": "9082cac5-7887-4568-9633-a500dda5d7e1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot0",
+                    "type": "Button",
+                    "id": "ada972bb-9cb1-4b45-94e7-3c605eb6dd9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "NpcTalk",
                     "type": "Button",
                     "id": "42d20191-8608-4b46-8945-b3d89f023e8a",
@@ -238,6 +256,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Esc",
+                    "type": "Button",
+                    "id": "80b6df7c-698c-48b3-8ca7-e96f4dcdc305",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "6802fb9e-28f6-4e43-aac4-4acaa00b69fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -475,10 +511,10 @@
                 {
                     "name": "",
                     "id": "a4b7ab36-7c76-4c4a-996a-8e04b9b47432",
-                    "path": "",
+                    "path": "<Keyboard>/5",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Slot5",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -486,10 +522,10 @@
                 {
                     "name": "",
                     "id": "0e63ffff-3ec0-48e2-b96f-92a4c9f276a9",
-                    "path": "",
+                    "path": "<Keyboard>/6",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Slot6",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -497,10 +533,10 @@
                 {
                     "name": "",
                     "id": "fbb7f27d-8ce5-45f7-beb4-cf7cec194897",
-                    "path": "",
+                    "path": "<Keyboard>/7",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Slot7",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -508,10 +544,10 @@
                 {
                     "name": "",
                     "id": "505ad7a6-2942-452d-9223-cf3d641b319c",
-                    "path": "",
+                    "path": "<Keyboard>/8",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Slot8",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -645,6 +681,50 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "NpcTalkNext",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6016bba8-afdf-44a1-9f68-f846035aef73",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d5ab0e7-98bb-4633-8079-4a9a5c33bd10",
+                    "path": "<Keyboard>/9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Slot9",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9419357e-5849-4841-99aa-947c3b755000",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Slot0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f08eb314-d3f5-42f9-8a11-3b331ffae364",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

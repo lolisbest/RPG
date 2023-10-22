@@ -20,6 +20,11 @@ namespace RPG.Common
         RequestProtocolError,
         RequestDataProcessingError,
         RequestUnknownCase,
+        SkillNotEnoughMP,
+        SkillOnCoolTime,
+        SkillSuccess,
+
+        MouseEventOnObject,
 
     }
 }

@@ -13,9 +13,9 @@ public partial class GameManager : Singleton<GameManager>
         throw new System.NotImplementedException();
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        Debug.Log("GameManager.Awake");
+        base.Awake();
 
         InitQuitting();
         DontDestroyOnLoad(gameObject);
@@ -42,6 +42,7 @@ public partial class GameManager : Singleton<GameManager>
     {
         Debug.Log("GameManager.OnDisable");
     }
+
     void FixedUpdate()
     {
 

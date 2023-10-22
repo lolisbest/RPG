@@ -50,5 +50,7 @@ public class LoadingSceneController : MonoBehaviour
                 }
             }
         }
+
+        Debug.Log("==================");
     }
 }
