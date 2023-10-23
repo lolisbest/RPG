@@ -10,6 +10,7 @@ namespace RPG.Utils
         public static T[] FromJson<T>(string json)
         {
             Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+            Debug.Log("json " + json);
             return wrapper.Data;
         }
 

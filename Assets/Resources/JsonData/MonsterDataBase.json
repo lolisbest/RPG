@@ -19,7 +19,7 @@
       "Id" : 2,
       "Status" : {
         "Name": "Bear",
-        "Str" : 10,
+        "Str" : 1,
         "End" : 10,
         "Sta" : 10,
         "Mag" : 0,

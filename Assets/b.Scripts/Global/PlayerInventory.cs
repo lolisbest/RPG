@@ -15,8 +15,6 @@ public partial class Player
     [SerializeField]
     private StructHumanEquipSlots _humanEquipSlots;
 
-    public EnumWeaponType WeaponType;
-
     /// <summary>
     /// set 할 시에 IsChangedStatus = true; IsChangedInventory = true;
     /// </summary>
@@ -240,6 +238,8 @@ public partial class Player
         Hp += itemData.RecoveryHpAmount;
         Mp += itemData.RecoveryMpAmount;
 
+        AddSkill(itemData.SkillId);
+
         _structInventory.Items[slotIndex].ItemCount -= 1;
 
         IsChangedInventory = true;
@@ -251,6 +251,16 @@ public partial class Player
         }
 
         return _structInventory.Items[slotIndex].ItemCount;
+    }
+
+    private void AddSkill(int skillId)
+    {
+        StructStatus newStatus = Status;
+        int newSize = Status.AvailableSkillIds.Length + 1;
+        Array.Resize(ref newStatus.AvailableSkillIds, newSize);
+        newStatus.AvailableSkillIds[newSize-1] = skillId;
+        Status = newStatus;
+        Debug.Log($"New Player Available Skills {string.Join(",", newStatus.AvailableSkillIds)}");
     }
 
     private void RemoveItem(int slotIndex)

@@ -22,6 +22,7 @@ public class StatusWindow : MonoBehaviour
     public TextMeshProUGUI MaxMpText;
 
     public TextMeshProUGUI LefPointsText;
+    public TextMeshProUGUI RequiredExpText;
 
     private readonly string LevelBaseString = "Level : {0}";
 
@@ -59,6 +60,7 @@ public class StatusWindow : MonoBehaviour
         {
             @Player = Player.Instance;
         }
+
         UpdateStatus();
         UpdateWindow();
         gameObject.SetActive(true);
@@ -113,6 +115,10 @@ public class StatusWindow : MonoBehaviour
 
         LefPointsText.text = string.Format(LeftPointsBaseString, _tempStatus.LeftStatusPoints);
         //LefPointsText.text = string.Format(LeftPointsBaseString, );
+        (var newLevel, var leftExp, var requiredExp) = DataBase.ExpTable(_tempStatus.Level, _tempStatus.Experience);
+        RequiredExpText.text = requiredExp.ToString();
+    
+    
     }
 
     public void IncreaseStr()

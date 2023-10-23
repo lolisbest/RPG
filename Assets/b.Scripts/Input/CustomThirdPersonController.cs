@@ -186,6 +186,7 @@ namespace RPG.Input
         public void SetHitAnimation()
         {
             _animator.SetTrigger(_animIDHit);
+            _input.block = false;
         }
 
         public void SetDeath()
@@ -232,6 +233,9 @@ namespace RPG.Input
 
         private void Update()
         {
+            // esc window
+            ToggleEscMenu();
+
             if (@UIManager.IsInteractingWithPlayer || @Player.IsDie)
             {
                 //Debug.Log("InteractingWithPlayer ");
@@ -311,8 +315,6 @@ namespace RPG.Input
 
             // quickslot
             PressQuickSlot();
-
-            ToggleEscMenu();
 
             _input.ClearBoolInputs();
         }
@@ -463,8 +465,6 @@ namespace RPG.Input
                 _speed = targetSpeed;
             }
 
-            //Debug.Log("_speed " + _speed);
-            // 점점 빨라지거나 점점 느려지는 효과
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
             if (_animationBlend < 0.01f) _animationBlend = 0f;
 
@@ -473,10 +473,16 @@ namespace RPG.Input
 
             // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is a move input rotate player when the player is moving
+
+            float deltaY = 0f;
+
             if (move != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                                   _mainCamera.transform.eulerAngles.y;
+
+                deltaY = Mathf.Abs(NormalizeAngle(transform.eulerAngles.y - _targetRotation));
+
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
 
@@ -484,22 +490,45 @@ namespace RPG.Input
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
-
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            // 캐릭터의 방향과 입력 키의 방향의 각도 차이에 대해서 각도 차이가 심하면 느리게 움직임. 각도 차이가 작으면 원래의 움직이는 속도.
+            float power = 0f;
 
-            //Debug.Log("Move " + targetDirection.normalized * (_speed * Time.deltaTime) +
-            //                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            if (deltaY <= 90f)
+            {
+                // 90~60 Lerp: 0~1
+                // 60 = 1
+                power = Mathf.Clamp01((90 - deltaY) / 30f);
+
+                // 0.1 ~ 1
+                power = 0.95f * power + 0.05f;
+            }
+
+            _controller.Move(targetDirection.normalized * (_speed * power * Time.deltaTime) +
+                 new Vector3(0.0f, _verticalVelocity, 0.0f) * power * Time.deltaTime);
 
             // update animator if using character
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude * power);
             }
+        }
+
+        public float NormalizeAngle(float angle)
+        {
+            angle %= 360; // 각도를 360으로 나눈 나머지를 사용
+            if (angle > 180)
+            {
+                angle -= 360;
+            }
+            else if (angle < -180)
+            {
+                angle += 360;
+            }
+
+            return angle;
         }
 
         public void Move(Vector3 delta)
@@ -968,7 +997,7 @@ namespace RPG.Input
         {
             if (_input.esc)
             {
-                //Debug.Log("Player.ToggleEscMenu()");
+                Debug.Log("Player.ToggleEscMenu()");
                 InGameUIManager.Instance.ToggleEscWindow();
             }
         }

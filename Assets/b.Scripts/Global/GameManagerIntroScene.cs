@@ -20,7 +20,7 @@ public partial class GameManager : Singleton<GameManager>
         _introSceneUIManager = uiManager;
     }
 
-    public void SetPlayerDataToStart(StructPlayerData playerData)
+    public void SetCurrentPlayerData(StructPlayerData playerData)
     {
         CurrentPlayerData = playerData;
     }
@@ -42,6 +42,12 @@ public partial class GameManager : Singleton<GameManager>
         _httpComunicate.TryGet(url);
     }
 
+    public void TryHttpPost(string url, string data)
+    {
+        Debug.Log("_httpComunicate " + _httpComunicate.name);
+        _httpComunicate.TryPost(url, data);
+    }
+
     public void DeletePlayerData(int playerDataId)
     {
         string url = "http://localhost:9999/delete/playerData?playerDataId={0}";
@@ -61,5 +67,16 @@ public partial class GameManager : Singleton<GameManager>
     public void Test()
     {
         Debug.Log("GameManager.Test");
+    }
+
+    public void SavePlayerData()
+    {
+        string url = "http://localhost:9999/upload/playerData";
+
+        StructPlayerData[] playerDataArray = new StructPlayerData[] { CurrentPlayerData };
+        Debug.Log("CurrentPlayerData " + CurrentPlayerData);
+        string data = RPG.Utils.JsonHelper.ToJson(playerDataArray);
+        Debug.Log(data);
+        GameManager.Instance.TryHttpPost(url, data);
     }
 }

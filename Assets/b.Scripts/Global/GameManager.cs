@@ -15,9 +15,10 @@ public partial class GameManager : Singleton<GameManager>
 
     protected override void Awake()
     {
+        InitQuitting();
+
         base.Awake();
 
-        InitQuitting();
         DontDestroyOnLoad(gameObject);
         DataBase.Initialize();
         DataBase.Load();

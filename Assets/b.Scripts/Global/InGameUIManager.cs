@@ -155,7 +155,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     {
         //return;
 
-        ToggleFpsText(displayFps);
+        //ToggleFpsText(displayFps);
     }
 
     void Update()
@@ -219,7 +219,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
         if (@ItemBoxWindow == null)
             return false;
 
-        Debug.Log($"TryOpenItemBoxWindow Items:{itemBox.Items.Count}");
+        //Debug.Log($"TryOpenItemBoxWindow Items:{itemBox.Items.Count}");
         CurrentBeingOpenItemBox = itemBox;
         @ItemBoxWindow.Link(CurrentBeingOpenItemBox);
         @ItemBoxWindow.Open();
@@ -537,9 +537,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void ToggleEscWindow()
     {
-        //Debug.Log("InGameUiManager.ToggleEscWindow");
-        if (!IsOpenSkillsWindow) _skillsWindow.Open();
-        else _skillsWindow.Close();
+        _escWindow.SetActive(!_escWindow.activeSelf);
     }
 
     public void CloseEscWindow()
@@ -549,7 +547,8 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void OpenSkillsWindow()
     {
-        StructSkillData[] skills = { DataBase.Skills[1] };
+        StructSkillData[] skills = @Player.Status.AvailableSkillIds.Select(x => DataBase.Skills[x]).ToArray();
+
         _skillsWindow.LoadDataIntoSlots(skills);
         _skillsWindow.Open();
     }
@@ -572,5 +571,17 @@ public class InGameUIManager : Singleton<InGameUIManager>
     {
         CloseOnDeathWindow();
         MapManager.Instance.RespwanPlayer();
+    }
+
+    private void UploadPlayerData()
+    {
+        GameManager.Instance.SetCurrentPlayerData(@Player.GetPlayerData());
+        GameManager.Instance.SavePlayerData();
+    }
+
+    public void LoadIntroScene()
+    {
+        UploadPlayerData();
+        LoadingSceneController.Load("IntroScene");
     }
 }

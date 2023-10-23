@@ -71,22 +71,33 @@ public static partial class DataBase
 
     }
 
-    public static (int, int) ExpTable(int level, int exp)
+
+    /// <summary>
+    /// return (새로운 레벨, 캐릭터가 보유한 경험치량, 부족한 경험치량)
+    /// </summary>
+    /// <param name="currentLevel"></param>
+    /// <param name="currentExp"></param>
+    /// <returns></returns>
+    public static (int, int, int) ExpTable(int currentLevel, int currentExp)
     {
-        if(level * 100 > exp)
+        int requiredExp = currentLevel * 100;
+
+        if (requiredExp > currentExp)
         {
-            return (level, exp);
+            return (currentLevel, currentExp, requiredExp - currentExp);
         }
 
-        int newLevel = level;
-        int newExp = exp;
-        while(newExp >= newLevel * 100)
+        int newLevel = currentLevel;
+        int newExp = currentExp;
+
+        while(newExp >= requiredExp)
         {
-            newExp -= newLevel * 100;
+            newExp -= requiredExp;
             newLevel++;
+            requiredExp = newLevel * 100;
         }
 
-        return (newLevel, newExp);
+        return (newLevel, newExp, requiredExp - newExp);
     }
 
     public static void ShowReservedPath()

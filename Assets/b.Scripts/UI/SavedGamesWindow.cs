@@ -14,7 +14,7 @@ namespace RPG.UI
 
         public void StartGame()
         {
-            GameManager.Instance.SetPlayerDataToStart(_selectedSlot.SlotData);
+            GameManager.Instance.SetCurrentPlayerData(_selectedSlot.SlotData);
             GameManager.Instance.LoadInGameScene();
             return;
         }

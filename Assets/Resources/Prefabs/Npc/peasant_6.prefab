@@ -1784,6 +1784,18 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8357478816823491651, guid: bbff8b80e1264dd47998d08c470b2970,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ab35697c9ce9ad447a19ce490b5448b4,
+        type: 2}
+    - target: {fileID: 8357478816823491651, guid: bbff8b80e1264dd47998d08c470b2970,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8100161070339040114, guid: ab35697c9ce9ad447a19ce490b5448b4,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbff8b80e1264dd47998d08c470b2970, type: 3}
 --- !u!114 &375705038195551270 stripped

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using RPG.UI;
-
+using RPG.Common;
 
 public class IntroSceneUIManager : MonoBehaviour
 {
@@ -17,9 +17,11 @@ public class IntroSceneUIManager : MonoBehaviour
     [Header("서버와의 통신 에러 창")]
     [SerializeField] private ServerErrorWindow _serverErrorWindow;
 
+    [SerializeField] private PlayerCreationWindow _playerCreationWindow;
     void Start()
     {
         GameManager.Instance.SetIntroUIManager(this);
+        _mainSelectionWindow.gameObject.SetActive(true);
     }
 
     public void OpenSavedGamedsWindow()
@@ -28,6 +30,7 @@ public class IntroSceneUIManager : MonoBehaviour
         GameManager.Instance.TryHttpGet(url, _savedGamesWindow.LoadDataIntoSlots);
         _mainSelectionWindow.gameObject.SetActive(false);
         _savedGamesWindow.Open();
+        _playerCreationWindow.Close();
     }
 
     public void ToggleProgressIndicator(bool active)
@@ -47,10 +50,18 @@ public class IntroSceneUIManager : MonoBehaviour
         _serverErrorWindow.Close();
     }
 
+    public void OpenPlayerCreationWindow()
+    {
+        _mainSelectionWindow.gameObject.SetActive(false);
+        _savedGamesWindow.Close();
+        _playerCreationWindow.Open();
+    }
+
     public void ReturnToMain()
     {
-        _savedGamesWindow.Close();
         _mainSelectionWindow.gameObject.SetActive(true);
+        _savedGamesWindow.Close();
+        _playerCreationWindow.Close();
     }
 
     public void Test()

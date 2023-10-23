@@ -42,11 +42,9 @@ public class HttpCommunicate : MonoBehaviour
             yield return request.SendWebRequest();
 
             ResultType result = ProcessResult(request, out string Response);
-            //Debug.Log("result " + result);
             switch (result)
             {
                 case ResultType.RequestSuccess:
-                    //Debug.Log("Success");
                     callback?.Invoke(Response);
                     break;
                 case ResultType.RequestInProgress:
@@ -60,13 +58,47 @@ public class HttpCommunicate : MonoBehaviour
                     //Debug.Log("default");
                     break;
             }
-
-            //Debug.Log("request result " + Response);
         }
 
         ToggleProgressIndicator(false);
         IsUsing = false;
     }
+
+    public bool TryPost(string url, string data)
+    {
+        if (IsUsing) return false;
+
+        Debug.Log("TryPost " + data);
+        StartCoroutine(HttpPost(url, data));
+        return true;
+    }
+
+    private IEnumerator HttpPost(string url, string data)
+    {
+        IsUsing = true;
+        //ToggleProgressIndicator(true);
+
+        using (UnityWebRequest request = UnityWebRequest.Post(url, data))
+        {
+            yield return request.SendWebRequest();
+
+            ResultType result = ProcessResult(request, out string Response);
+            switch (result)
+            {
+                case ResultType.RequestSuccess:
+                    break;
+                case ResultType.RequestInProgress:
+                    break;
+                default:
+                    Debug.Log("Post Fail");
+                    break;
+            }
+        }
+
+        //ToggleProgressIndicator(false);
+        IsUsing = false;
+    }
+
 
     private void ToggleProgressIndicator(bool active)
     {

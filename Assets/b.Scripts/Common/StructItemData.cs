@@ -30,6 +30,8 @@ namespace RPG.Common
         public int RecoveryHpAmount;
         public int RecoveryMpAmount;
 
+        public int SkillId;
+
         public string EquipPartTypeString;
         public EnumEquipType EquipType;
         public EnumWeaponType WeaponType;

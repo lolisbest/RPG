@@ -39,7 +39,7 @@ namespace RPG.Common
         public StructStatus SetExperience(int exp)
         {
             Debug.Log("SetExperience1 newExp " + exp);
-            (int newLevel, int newExp) = DataBase.ExpTable(Level, exp);
+            (int newLevel, int newExp, int requiredExp) = DataBase.ExpTable(Level, exp);
             if(newLevel != Level)
             {
                 int statusPoints = (newLevel - Level) * DataBase.StatusPointsPerLevelUp;

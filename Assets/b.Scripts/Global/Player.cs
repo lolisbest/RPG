@@ -18,6 +18,9 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     public Transform CameraRoot;
 
+    /// <summary>
+    /// IsChangedStatus = true;
+    /// </summary>
     public StructStatus Status
     {
         get => _status;
@@ -91,13 +94,23 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     public bool IsChangedStatus { get; set; }
 
-    public Dictionary<AttackCollider, bool> TakenDamageColliders;
+    public Dictionary<int, StructAttackHit> TakenHits;
 
     [SerializeField] private AnimationCurve _knockbackMultifly;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(StringStatic.PlaceBoundaryTag)) 
+        CheckAttack(other);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        CheckAttack(other);
+    }
+
+    private void CheckAttack(Collider other)
+    {
+        if (other.CompareTag(StringStatic.PlaceBoundaryTag))
         {
             PlaceBoundary boundary = other.GetComponent<PlaceBoundary>();
             InGameUIManager.Instance.SetPlaceName(boundary.EnteringPlaceName);
@@ -106,35 +119,23 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
         if (other.CompareTag(StringStatic.MonsterAttackEffectTag))
         {
-            AttackCollider monsterAttackCollider = other.GetComponent<AttackCollider>();
-            if(monsterAttackCollider != null && !TakenDamageColliders.ContainsKey(monsterAttackCollider))
+            AttackCollider attackCollider = other.GetComponent<AttackCollider>();
+            if (attackCollider != null)
             {
                 //Debug.Log("Player.OnTriggerEnter");
-                TakenDamageColliders.Add(monsterAttackCollider, false);
+                StructAttackHit attackhit = new StructAttackHit
+                {
+                    AttackCollider = attackCollider,
+                    AttackScriptId = attackCollider.GetHashCode(),
+                    IsBlocked = false,
+                    IsApplied = false,
+                    RawDamage = attackCollider.Damage
+                };
+
+                AddAttackHit(attackhit);
             }
         }
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        //if (other.CompareTag(StringStatic.PlaceBoundaryTag))
-        //{
-        //    PlaceBoundary boundary = other.GetComponent<PlaceBoundary>();
-        //    InGameUIManager.Instance.SetPlaceName(boundary.EnteringPlaceName);
-        //    return;
-        //}
-
-        if (other.CompareTag(StringStatic.MonsterAttackEffectTag))
-        {
-            AttackCollider monsterAttackCollider = other.GetComponent<AttackCollider>();
-            if (monsterAttackCollider != null && !TakenDamageColliders.ContainsKey(monsterAttackCollider))
-            {
-                Debug.Log("Player.OnTriggerStay");
-                TakenDamageColliders.Add(monsterAttackCollider, false);
-            }
-        }
-    }
-
 
     private void SetPlayerData(StructPlayerData playerData)
     {
@@ -163,6 +164,12 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         HumanEquipSlots = playerData.HumanEquipSlots;
         Status = playerData.Status;
 
+        if (Status.AvailableSkillIds == null)
+        {
+            StructStatus status = Status;
+            status.AvailableSkillIds = new int[0];
+            Status = status;
+        }
         //Debug.Log("LoadPlayerData");
         Debug.Log("LoadPlayerData " + Status.ToString());
     }
@@ -185,6 +192,31 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     protected override void Awake()
     {
         base.Awake();
+        _defence.OnCollision += AddAttackHit;
+    }
+
+    // 공격 피해를 담아 줌. 아직 적용된 피해가 아니고 중복되는 경우 막은 여부 취합.
+    private void AddAttackHit(StructAttackHit attackHit)
+    {
+        //Debug.Log($"Add AttackHit {attackHit.AttackCollider.name} {attackHit.AttackCollider.gameObject.activeSelf}");
+        if (TakenHits.ContainsKey(attackHit.AttackScriptId))
+        {
+            // 이미 존재하는 AttackCollider Id 라면
+            StructAttackHit oldAttackHit = TakenHits[attackHit.AttackScriptId];
+
+            // 이미 적용된 피해라면 변경 없이 메서드 종료
+            if (oldAttackHit.IsApplied) return;
+
+            // 막은 여부를 OR 연산 -> Player Collider와 Defence Collider가 동시에 닿았을 경우 방어 성공 판정
+            oldAttackHit.IsBlocked |= attackHit.IsBlocked;
+
+            TakenHits[oldAttackHit.AttackScriptId] = oldAttackHit;
+        }
+        else
+        {
+            // 새로운 공격 피해라면 추가
+            TakenHits.Add(attackHit.AttackScriptId, attackHit);
+        }
     }
 
     void Start()
@@ -194,7 +226,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         InGameUIManager.Instance.SetPlayerInstance(this);
         Debug.Log("Player Awake()");
         RecoveryAll();
-        TakenDamageColliders = new();
+        TakenHits = new();
         IsDie = false;
     }
 
@@ -205,17 +237,12 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     void Update()
     {
-        if (!_defence) return;
 
-        if(_defence.HasBlocked)
-        {
-            StartKnockback();
-        }
     }
 
     void LateUpdate()
     {
-        CheckDamage();
+        ApplyDamage();
     }
 
     public ResultType ActSkill(int skillId)
@@ -234,33 +261,42 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         return ResultType.MouseEventOnObject;
     }
 
-    private void CheckDamage()
+    private void ApplyDamage()
     {
-        AttackCollider[] copyTakenDamageColliders = new AttackCollider[TakenDamageColliders.Count];
+        int[] attackHitIds = new int[TakenHits.Count];
         int copyStartIndex = 0;
-        TakenDamageColliders.Keys.CopyTo(copyTakenDamageColliders, copyStartIndex);
+        TakenHits.Keys.CopyTo(attackHitIds, copyStartIndex);
 
-        for (int i = 0; i < copyTakenDamageColliders.Length; i++)
+        for (int i = 0; i < attackHitIds.Length; i++)
         {
-            // 공격 콜라이더가 꺼지면 제거
-            if (!copyTakenDamageColliders[i].gameObject.activeSelf)
+            int attackScriptId = attackHitIds[i];
+            StructAttackHit attackHit = TakenHits[attackScriptId];
+
+            //Debug.Log($"Attack " + attackHit.AttackCollider.name);
+
+            if (!attackHit.AttackCollider.gameObject.activeSelf)
             {
-                TakenDamageColliders.Remove(copyTakenDamageColliders[i]);
+                // 공격 콜라이더 오브젝트가 비활성화 되었다면 제거
+                //Debug.Log("WasApplied Damage " + TakenHits.Count);
+                TakenHits.Remove(attackScriptId);
+                //Debug.Log("Removed Damage " + TakenHits.Count);
             }
             else
             {
-                if (TakenDamageColliders[copyTakenDamageColliders[i]] == false)
+                if (!attackHit.IsApplied)
                 {
                     // 아직 대미지 판정을 안 했다면
+                    //Debug.Log("Now Apply Damage");
 
-                    int realDamage = Calculate.RealDamage(copyTakenDamageColliders[i].Damage, RealStatus.Def);
+                    int realDamage = Calculate.RealDamage(attackHit.RawDamage, RealStatus.Def);
 
-                    if (copyTakenDamageColliders[i].IsBlocked)
+                    if (attackHit.IsBlocked)
                     {
                         // 막은 판정의 공격 콜라이더라면
                         // 데미지 1/5 수준으로
-                        //Debug.Log("Blocked Attack");
+                        _defence.OnBlockSuccess();
                         OnDamage(realDamage / 5);
+                        StartKnockback();
                     }
                     else
                     {
@@ -270,7 +306,8 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                     }
 
                     // 판정 끝남을 체크
-                    TakenDamageColliders[copyTakenDamageColliders[i]] = true;
+                    attackHit.IsApplied = true;
+                    TakenHits[attackScriptId] = attackHit;
                 }
             }
         }
@@ -293,16 +330,6 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         IsChangedStatus = true;
     }
 
-    public void AddSkill(int skillId)
-    {
-        StructStatus newStatus = Status;
-        int newSize = Status.AvailableSkillIds.Length + 1;
-        Array.Resize(ref newStatus.AvailableSkillIds, newSize);
-        newStatus.AvailableSkillIds[newSize] = skillId;
-
-        Debug.Log($"New Player Available Skills {string.Join(",", newStatus.AvailableSkillIds)}");
-    }
-
     public void Spwan(Vector3 spwanPosition)
     {
         transform.position = spwanPosition;
@@ -314,5 +341,20 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     public void OpenOnDeatthWindow()
     {
         InGameUIManager.Instance.OpenOnDeathWindow();
+    }
+
+    public StructPlayerData GetPlayerData()
+    {
+        StructPlayerData playerData = new();
+
+        playerData.Status = _status;
+        playerData.Inventory = _structInventory;
+        playerData.HumanEquipSlots = _humanEquipSlots;
+        
+        /// todo:
+        //playerData.DataId = -1
+        //playerData.SpawnPlaceId = -1
+
+        return playerData;
     }
 }
