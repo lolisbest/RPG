@@ -156,7 +156,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                 throw new System.Exception("loadedItem.SlotIndex >= _structInventory.Items.Length");
             }
 
-            AddItem(loadedItem.SlotIndex, loadedItem.ItemId, loadedItem.ItemCount);
+            AddItem(loadedItem.SlotIndex, loadedItem.ItemId, loadedItem.ItemCount, loadedItem.IsOnEquip);
         }
 
         //Debug.Log("_structInventory:" + _structInventory);

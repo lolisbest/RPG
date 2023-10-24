@@ -57,13 +57,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48bb4b0c0df8eff429b5838429ed1162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiManager: {fileID: 0}
+  _inGameUIManager: {fileID: 0}
   _questManager: {fileID: 0}
-  _itemDropper: {fileID: 0}
-  _player: {fileID: 0}
-  _damageTextDrawer: {fileID: 0}
   _minimapCameraPrefab: {fileID: 0}
   _minimapFollowPosition: {fileID: 0}
+  _playerPrefab: {fileID: 1839089372817905746, guid: 14f923e1bbd887241859ecc9f237f907,
+    type: 3}
   _httpComunicate: {fileID: 7444736029548788295}
   _introSceneUIManager: {fileID: 0}
   _savedGamesWindow: {fileID: 0}

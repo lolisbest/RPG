@@ -24,6 +24,7 @@ namespace RPG.UI
 
         public override void SetSlotData(StructPlayerData playerData)
         {
+            Debug.Log("SavedGameSlot " + playerData);
             base.SetSlotData(playerData);
             PlayerDataId = playerData.DataId;
             _playerNameText.text = string.Format(BaseNameString, playerData.Status.Name);

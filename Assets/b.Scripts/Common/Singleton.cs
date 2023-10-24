@@ -6,7 +6,7 @@ namespace RPG.Common
 {
     public abstract class Singleton<T> : Singleton where T : MonoBehaviour
     {
-        private static T _instance;
+        protected static T _instance;
         private static readonly object Lock = new object();
 
         public static T Instance
@@ -26,7 +26,10 @@ namespace RPG.Common
                 {
                     // 인스턴스를 가지고 있다면
                     if (_instance != null)
+                    {
+                        //Debug.Log("Instance => _instance");
                         return _instance;
+                    }
 
                     // 인스턴스를 가지고 있지 않다면
                     var instances = FindObjectsOfType<T>();
@@ -37,6 +40,7 @@ namespace RPG.Common
                         // 인스턴스가 1개인 경우
                         if (count == 1)
                         {
+                            //Debug.Log("Instance => instances[0]");
                             return _instance = instances[0];
                         }
                         // 인스턴스가 여러 개인 경우
@@ -52,15 +56,16 @@ namespace RPG.Common
                     Debug.Log($"[Singleton<{typeof(T)}>] An instance is needed in the scene and no existing instances were found, so a new instance will be created.");
                     // 새로운 게임 오브젝트를 생성하여 스크립트를 추가하고 저장 및 반환
 
-                    return _instance = new GameObject($"(Singleton){typeof(T)}")
-                               .AddComponent<T>();
+                    //return _instance = new GameObject($"(Singleton){typeof(T)}")
+                    //           .AddComponent<T>();
+                    return null;
                 }
             }
         }
 
         protected virtual void Awake()
         {
-            if (!Instance) Destroy(this.gameObject);
+            if (Instance && Instance != this) Destroy(this.gameObject);
         }
 
 
@@ -71,9 +76,8 @@ namespace RPG.Common
         }
 
         // 객체가 파괴될때 호출
-        protected new virtual void OnDestroy()
+        protected override void OnDestroy()
         {
-
             base.OnDestroy();
         }
 

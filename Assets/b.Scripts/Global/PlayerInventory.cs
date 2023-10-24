@@ -134,7 +134,7 @@ public partial class Player
     /// <param name="itemId"></param>
     /// <param name="itemCount"></param>
     /// <returns></returns>
-    public ResultType AddItem(int itemSlotIndex, int itemId, int itemCount)
+    public ResultType AddItem(int itemSlotIndex, int itemId, int itemCount, bool isEquiped)
     {
         if (_structInventory.Items[itemSlotIndex].ItemId != -1)
         {
@@ -146,6 +146,7 @@ public partial class Player
         // 사용 중인 슬롯이 아니므로 아이템 추가
         _structInventory.Items[itemSlotIndex].ItemId = itemId;
         _structInventory.Items[itemSlotIndex].ItemCount = itemCount;
+        _structInventory.Items[itemSlotIndex].IsOnEquip = isEquiped;
         IsChangedInventory = true;
         return ResultType.Success;
     }

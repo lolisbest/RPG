@@ -33,7 +33,7 @@ public static partial class DataBase
                 Monsters.Add(monsterData.Id, monsterData);
                 GameObject prefab = Resources.Load<GameObject>(MonsterPrefabDirPath + "/" + monsterData.Status.Name);
                 MonsterPrefabs.Add(monsterData.Id, prefab);
-                Debug.Log(monsterData);
+                //Debug.Log(monsterData);
             }
 
             Debug.Log($"Loaded {Monsters.Count}/{monsterDataArray.Length} of Monsters from {DataFileName}");

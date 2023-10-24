@@ -576,6 +576,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     private void UploadPlayerData()
     {
         GameManager.Instance.SetCurrentPlayerData(@Player.GetPlayerData());
+        Debug.Log(@Player.GetPlayerData());
         GameManager.Instance.SavePlayerData();
     }
 

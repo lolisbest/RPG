@@ -15,6 +15,7 @@ public partial class GameManager : Singleton<GameManager>
 
     protected override void Awake()
     {
+        Debug.Log("GameManater.Awake()");
         InitQuitting();
 
         base.Awake();
@@ -24,7 +25,7 @@ public partial class GameManager : Singleton<GameManager>
         DataBase.Load();
 
         CurrentPlayerData = StructPlayerData.GetTempData();
-        Debug.Log("Test " + CurrentPlayerData);
+        //Debug.Log("Test " + CurrentPlayerData);
 
         InteractableObject.SetLayerMaskValue();
     }
