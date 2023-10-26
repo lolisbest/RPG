@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 226549369650767430}
   - component: {fileID: 226549369650767431}
   - component: {fileID: 226549369650767428}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GuardEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 226549369650767429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 413, y: 2.8, z: 103.79}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7247735555088764325}
@@ -120,7 +120,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1054,8 +1054,8 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.30547538
-          value: 1
+          time: 0.30086723
+          value: 0.5846157
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1063,8 +1063,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.29399696
         - serializedVersion: 3
-          time: 0.7007871
-          value: 1
+          time: 0.6800352
+          value: 0.56923103
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -4924,7 +4924,7 @@ GameObject:
   - component: {fileID: 226549370467060346}
   - component: {fileID: 226549370467060340}
   - component: {fileID: 226549370467060341}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Shockwave Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4940,7 +4940,7 @@ Transform:
   m_GameObject: {fileID: 226549370467060347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 226549369650767430}
@@ -5029,7 +5029,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5963,9 +5963,18 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
+          time: 0.40639126
+          value: 0.9948764
+          inSlope: 0.749141
+          outSlope: 0.0086313
+          tangentMode: 65
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
+          inSlope: 0.0086313
           outSlope: 0
           tangentMode: 5
           weightedMode: 0
@@ -9806,7 +9815,7 @@ GameObject:
   - component: {fileID: 7247735555088764325}
   - component: {fileID: 7247735555088764324}
   - component: {fileID: 7247735555088764327}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Light Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9822,7 +9831,7 @@ Transform:
   m_GameObject: {fileID: 7247735555088764326}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 226549369650767430}
@@ -9911,7 +9920,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10845,8 +10854,8 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.29856315
-          value: 0.49487507
+          time: 0.3031713
+          value: 0.7256452
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -10854,8 +10863,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.29399696
         - serializedVersion: 3
-          time: 0.7077146
-          value: 0.49695402
+          time: 0.6984983
+          value: 0.71233946
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -14715,7 +14724,7 @@ GameObject:
   - component: {fileID: 6198094161808588960}
   - component: {fileID: 4620753685558068229}
   - component: {fileID: 8184328985295892331}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19597,7 +19606,7 @@ GameObject:
   - component: {fileID: 7942663344531802001}
   - component: {fileID: 7942663344531801967}
   - component: {fileID: 7942663344531801966}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Shockwave Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19613,7 +19622,7 @@ Transform:
   m_GameObject: {fileID: 7942663344531802000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 226549369650767430}
@@ -19702,7 +19711,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -20636,9 +20645,18 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
+          time: 0.38995606
+          value: 1
+          inSlope: 0.88503987
+          outSlope: 0
+          tangentMode: 65
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
+          inSlope: -0
           outSlope: 0
           tangentMode: 5
           weightedMode: 0

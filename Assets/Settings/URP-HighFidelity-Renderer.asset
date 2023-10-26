@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   OutlineSettings:
-    Color: {r: 1, g: 0, b: 0, a: 1}
+    Color: {r: 0, g: 1, b: 0, a: 0.3764706}
     Width: 8
     LayerMask:
       serializedVersion: 2

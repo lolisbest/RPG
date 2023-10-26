@@ -494,15 +494,18 @@ namespace RPG.Input
 
             // 캐릭터의 방향과 입력 키의 방향의 각도 차이에 대해서 각도 차이가 심하면 느리게 움직임. 각도 차이가 작으면 원래의 움직이는 속도.
             float power = 0f;
+            float statMoveAngle = 90f;
+            float maxSpeedMax = 10f;
 
-            if (deltaY <= 90f)
+            if (deltaY <= statMoveAngle)
             {
                 // 90~60 Lerp: 0~1
                 // 60 = 1
-                power = Mathf.Clamp01((90 - deltaY) / 30f);
+                power = Mathf.Clamp01((80 - deltaY) / maxSpeedMax);
 
                 // 0.1 ~ 1
-                power = 0.95f * power + 0.05f;
+                //power = 0.99f * power + 0.01f;
+                power *= power *= power *= power *= power *= power;
             }
 
             _controller.Move(targetDirection.normalized * (_speed * power * Time.deltaTime) +

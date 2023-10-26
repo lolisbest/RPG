@@ -53,7 +53,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     public void OnDeath()
     {
-        _controller.SetDeath();
+        _inputController.SetDeath();
         IsDie = true;
     }
     #endregion
@@ -88,7 +88,8 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     public AttackCollider _attackCollider;
     public Animator _anim;
 
-    public CustomThirdPersonController _controller;
+    [SerializeField] private CustomThirdPersonController _inputController;
+    [SerializeField] private CharacterController _characterController;
 
     [SerializeField] private Defence _defence;
 
@@ -98,17 +99,32 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     [SerializeField] private AnimationCurve _knockbackMultifly;
 
+    private Vector3 _formerPosition;
+    public bool IsHitFromMonster { get; private set; }
+
     private void OnTriggerEnter(Collider other)
     {
-        CheckAttack(other);
+        CheckTrigger(other);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        CheckAttack(other);
+        CheckTrigger(other);
     }
 
-    private void CheckAttack(Collider other)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("OnCollision " + collision.gameObject.name);
+    //    CheckTrigger(collision);
+    //}
+
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    Debug.Log("OnCollision " + collision.gameObject.name);
+    //    CheckTrigger(collision);
+    //}
+
+    private void CheckTrigger(Collider other)
     {
         if (other.CompareTag(StringStatic.PlaceBoundaryTag))
         {
@@ -122,6 +138,8 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
             AttackCollider attackCollider = other.GetComponent<AttackCollider>();
             if (attackCollider != null)
             {
+                Vector3 hitPosition = Vector3.zero;
+
                 //Debug.Log("Player.OnTriggerEnter");
                 StructAttackHit attackhit = new StructAttackHit
                 {
@@ -129,10 +147,60 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                     AttackScriptId = attackCollider.GetHashCode(),
                     IsBlocked = false,
                     IsApplied = false,
-                    RawDamage = attackCollider.Damage
+                    RawDamage = attackCollider.Damage,
+                    HitPosition = hitPosition
                 };
 
                 AddAttackHit(attackhit);
+            }
+        }
+    }
+
+    private void CheckTrigger(Collision collision)
+    {
+        if (collision.gameObject.CompareTag(StringStatic.PlaceBoundaryTag))
+        {
+            PlaceBoundary boundary = collision.gameObject.GetComponent<PlaceBoundary>();
+            InGameUIManager.Instance.SetPlaceName(boundary.EnteringPlaceName);
+            return;
+        }
+
+        if (collision.gameObject.CompareTag(StringStatic.MonsterAttackEffectTag))
+        {
+            AttackCollider attackCollider = collision.gameObject.GetComponent<AttackCollider>();
+            if (attackCollider != null)
+            {
+                Debug.Log("OnCollision " + attackCollider.name);
+
+                Vector3 sum = Vector3.zero;
+
+                foreach (var contact in collision.contacts)
+                {
+                    sum += contact.point;
+                }
+
+                Vector3 averagePosition = sum / collision.contacts.Length;
+
+                StructAttackHit attackhit = new StructAttackHit
+                {
+                    AttackCollider = attackCollider,
+                    AttackScriptId = attackCollider.GetHashCode(),
+                    IsBlocked = false,
+                    IsApplied = false,
+                    RawDamage = attackCollider.Damage,
+                    HitPosition = averagePosition
+                };
+
+                AddAttackHit(attackhit);
+
+                //IsHitFromMonster = true;
+
+                _characterController.enabled = false;
+                transform.position = _formerPosition;
+                _characterController.enabled = true;
+
+                Debug.Log("OnCollision character controller.velocity " + _characterController.velocity);
+                //Debug.Log("OnCollision character controller.velocity " + _characterController);
             }
         }
     }
@@ -209,7 +277,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
             // 막은 여부를 OR 연산 -> Player Collider와 Defence Collider가 동시에 닿았을 경우 방어 성공 판정
             oldAttackHit.IsBlocked |= attackHit.IsBlocked;
-
+            oldAttackHit.HitPosition = oldAttackHit.HitPosition == Vector3.zero ? attackHit.HitPosition : oldAttackHit.HitPosition;
             TakenHits[oldAttackHit.AttackScriptId] = oldAttackHit;
         }
         else
@@ -232,12 +300,19 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     void FixedUpdate()
     {
-
+        _formerPosition = transform.position;
+        IsHitFromMonster = false;
     }
 
     void Update()
     {
-
+        if (IsHitFromMonster)
+        {
+            _characterController.enabled = false;
+            transform.position = _formerPosition;
+            _characterController.enabled = true;
+            IsHitFromMonster = false;
+        }
     }
 
     void LateUpdate()
@@ -253,7 +328,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
             if (skillData.MpCost > Mp) return ResultType.SkillNotEnoughMP;
 
             Mp -= skillData.MpCost;
-            _controller.Skill(skillId);
+            _inputController.Skill(skillId);
 
             return ResultType.SkillSuccess;
         }
@@ -294,7 +369,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                     {
                         // 막은 판정의 공격 콜라이더라면
                         // 데미지 1/5 수준으로
-                        _defence.OnBlockSuccess();
+                        _defence.OnBlockSuccess(attackHit.HitPosition);
                         OnDamage(realDamage / 5);
                         StartKnockback();
                     }
@@ -315,7 +390,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     private void Hit()
     {
-        _controller.SetHitAnimation();
+        _inputController.SetHitAnimation();
     }
 
     private void RecoveryAll()
@@ -334,7 +409,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     {
         transform.position = spwanPosition;
         RecoveryAll();
-        _controller.SetRespawn();
+        _inputController.SetRespawn();
         IsDie = false;
     }
 

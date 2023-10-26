@@ -12,6 +12,11 @@ public class Defence : MonoBehaviour
 
     [SerializeField] private GameObject _defenceEffectPrefab;
 
+    [SerializeField] private Collider _collider;
+
+    /// <summary>
+    /// 1) Player.AddAttackHit
+    /// </summary>
     public event Action<StructAttackHit> OnCollision;
 
     private void OnTriggerEnter(Collider other)
@@ -26,9 +31,54 @@ public class Defence : MonoBehaviour
         TryDefence(other);
     }
 
-    private void TryDefence(Collider other)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    TryDefence(collision);
+    //}
+
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    TryDefence(collision);
+    //}
+
+    private void TryDefence(Collider otherCollider)
     {
-        AttackCollider attackCollider = other.GetComponent<AttackCollider>();
+        AttackCollider attackCollider = otherCollider.GetComponent<AttackCollider>();
+        if (attackCollider != null)
+        {
+            if (attackCollider.AttackerType == EnumAttackerType.Player)
+                return;
+
+            float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
+            //Debug.Log("dot " + dot);
+
+            if (dot < 0f)
+            {
+                //Debug.Log("Denfence Ok");
+                Vector3 closestPoint = otherCollider.ClosestPointOnBounds(transform.position);
+                //hitPosition = closestPoint;
+
+                OnCollision?.Invoke(
+                    new StructAttackHit
+                    {
+                        AttackCollider = attackCollider,
+                        AttackScriptId = attackCollider.GetHashCode(),
+                        IsBlocked = true,
+                        IsApplied = false,
+                        RawDamage = attackCollider.Damage,
+                        HitPosition = closestPoint
+                    });
+            }
+            else
+            {
+                //Debug.Log("막지 못 함");
+            }
+        }
+    }
+
+    private void TryDefence(Collision collision)
+    {
+        AttackCollider attackCollider = collision.gameObject.GetComponent<AttackCollider>();
         if (attackCollider != null)
         {
             if (attackCollider.AttackerType == EnumAttackerType.Player)
@@ -39,15 +89,25 @@ public class Defence : MonoBehaviour
 
             if (dot < 0f)
             {
-                //Debug.Log("Denfence Ok");
+                Vector3 sum = Vector3.zero;
+
+                foreach(var contact in collision.contacts)
+                {
+                    sum += contact.point;
+                }
+
+                Vector3 averagePosition = sum / collision.contacts.Length;
 
                 OnCollision?.Invoke(
-                    new StructAttackHit {
+                    new StructAttackHit
+                    {
                         AttackCollider = attackCollider,
                         AttackScriptId = attackCollider.GetHashCode(),
                         IsBlocked = true,
                         IsApplied = false,
-                        RawDamage = attackCollider.Damage});
+                        RawDamage = attackCollider.Damage,
+                        HitPosition = averagePosition
+                    });
             }
             else
             {
@@ -55,6 +115,7 @@ public class Defence : MonoBehaviour
             }
         }
     }
+
 
     public void OnBlockSuccess()
     {
@@ -64,6 +125,23 @@ public class Defence : MonoBehaviour
             //Debug.Log("Guard Effect Start");
             effectObject.SetActive(true);
             effectObject.transform.position = transform.position;
+            particleSystem.Play();
+        }
+        else
+        {
+            Destroy(effectObject);
+        }
+    }
+
+    public void OnBlockSuccess(Vector3 hitPosition)
+    {
+        GameObject effectObject = Instantiate(_defenceEffectPrefab);
+        if (effectObject.TryGetComponent<ParticleSystem>(out ParticleSystem particleSystem))
+        {
+            effectObject.name = $"GuardEffect[{Time.time}]";
+            Debug.Log("Guard Effect Start " + effectObject.name);
+            effectObject.SetActive(true);
+            effectObject.transform.position = hitPosition;
             particleSystem.Play();
         }
         else

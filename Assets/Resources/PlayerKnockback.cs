@@ -26,7 +26,7 @@ public partial class Player : IKnockback
         while (lastingTime < knockBackLastingTime)
         {
             Vector3 reducedKnockBackSpeed = -transform.forward * _knockbackMultifly.Evaluate(lastingTime) * 10f;
-            _controller.Move(reducedKnockBackSpeed * Time.deltaTime);
+            _inputController.Move(reducedKnockBackSpeed * Time.deltaTime);
             yield return new WaitForFixedUpdate();
             lastingTime += Time.deltaTime;
         }

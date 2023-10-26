@@ -11,5 +11,6 @@ namespace RPG.Common
         public bool IsApplied;
         public int RawDamage;
         public AttackCollider AttackCollider;
+        public Vector3 HitPosition;
     }
 }

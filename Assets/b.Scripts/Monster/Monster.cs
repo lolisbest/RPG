@@ -4,6 +4,7 @@ using UnityEngine;
 using RPG.Common;
 using UnityEngine.AI;
 using RPG.Utils;
+using UnityEditor.Animations;
 
 namespace RPG.Monster
 {
@@ -16,7 +17,7 @@ namespace RPG.Monster
         Attack,
         Skill,
         Run,
-        
+
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
@@ -28,7 +29,6 @@ namespace RPG.Monster
         private readonly int _animWalk = Animator.StringToHash("Walk");
         private readonly int _animRotate = Animator.StringToHash("Rotate");
         private readonly int _animAttack = Animator.StringToHash("Attack");
-        private readonly int _animSkill = Animator.StringToHash("Skill");
         private readonly int _animRun = Animator.StringToHash("Run");
 
         private readonly int _animStateIdle = Animator.StringToHash("Base Layer.Idle");
@@ -36,6 +36,13 @@ namespace RPG.Monster
         private readonly int _animStateWalk = Animator.StringToHash("Base Layer.Walk");
         private readonly int _animStateRun = Animator.StringToHash("Base Layer.Run");
         private readonly int _animStateAttack = Animator.StringToHash("Base Layer.Attack");
+
+        private readonly int _animStateAttackBodySlam = Animator.StringToHash("Base Layer.Attack.BearBodySlam");
+        private readonly int _animStateAttackRightCraw = Animator.StringToHash("Base Layer.Attack.BearRightCraw");
+        private readonly int _animStateAttackBite = Animator.StringToHash("Base Layer.Attack.BearBite");
+        private readonly int _animStateAttackLeftCraw = Animator.StringToHash("Base Layer.Attack.BearLeftCraw");
+        private readonly int _animStateAttackIdle = Animator.StringToHash("Base Layer.Attack.BearAttackIdle");
+
 
         #endregion
 
@@ -116,18 +123,23 @@ namespace RPG.Monster
         public InGameMonsterUI MonsterUI;
         [SerializeField]
         private MonsterState _state;
-        public MonsterState State 
-        { 
-            get => _state; 
+        /// <summary>
+        /// 1) Clear Animator Parameters. 2) Set State Parameter
+        /// </summary>
+        public MonsterState State
+        {
+            get => _state;
             private set
             {
+                Debug.Log($"{name} {_state} -> {value}");
+
                 _state = value;
                 if (_anim == null)
                     return;
 
                 ClearAnimatorBools();
 
-                if(_state == MonsterState.Idle)
+                if (_state == MonsterState.Idle)
                 {
                     _anim.SetBool(_animIdle, true);
                 }
@@ -184,7 +196,7 @@ namespace RPG.Monster
 
                 if (!_minimapIconRenderer) return;
 
-                if(_toAttackTarget)
+                if (_toAttackTarget)
                 {
                     _minimapIconRenderer.color = Color.red;
                 }
@@ -204,12 +216,6 @@ namespace RPG.Monster
         [SerializeField] private CharacterController _controller;
 
         [SerializeField] private SpriteRenderer _minimapIconRenderer;
-
-        #region Public Methods
-        #endregion
-
-        #region Private Methods
-        #endregion
 
         void Start()
         {
@@ -232,10 +238,10 @@ namespace RPG.Monster
                 _naviMeshAgent.isStopped = true;
                 //Debug.Log("_naviMeshAgent.isStopped : " + _naviMeshAgent.isStopped);
             }
-            
+
             _attackCollider.SetDamage(RealStatus.Atk);
 
-            if(!TryGetComponent(out _anim))
+            if (!TryGetComponent(out _anim))
             {
                 throw new System.Exception("_anim is null");
             }
@@ -265,7 +271,7 @@ namespace RPG.Monster
             if (other.CompareTag(StringStatic.PlayerAttackEffectTag))
             {
                 AttackCollider attackCollider = other.gameObject.GetComponent<AttackCollider>();
-                if(attackCollider != null)
+                if (attackCollider != null)
                 {
                     //Debug.Log("playeryAttackCollider.Damage: " + playeryAttackCollider.Damage);
                     int realDamage = Calculate.RealDamage(attackCollider.Damage, RealStatus.Def);
@@ -435,11 +441,11 @@ namespace RPG.Monster
                 {
                     State = MonsterState.Attack;
                 }
-                else if(angle > _toleranceAngleToTargetDir)
+                else if (angle > _toleranceAngleToTargetDir)
                 {
                     State = MonsterState.Rotate;
                 }
-                else if(distance > _runDistance)
+                else if (distance > _runDistance)
                 {
                     //Debug.Log($"Run : distance:{distance} > _runDistance:{_runDistance}");
                     State = MonsterState.Run;
@@ -485,17 +491,27 @@ namespace RPG.Monster
         {
             if (ToAttackTarget)
             {
-                if (CurrentStateInfo.fullPathHash != _animStateAttack && _anim.GetBool(_animAttack))
+                //DisplayAnimator();
+                Debug.Log($"CurrentStateInfo.fullPathHash {CurrentStateInfo.fullPathHash}");
+                Debug.Log($"_animStateAttackBodySlam {_animStateAttackBodySlam}");
+                Debug.Log($"_animStateAttack {_animStateAttack}");
+                Debug.Log($"_animStateAttackIdle {_animStateAttackIdle}");
+
+                if (CurrentStateInfo.fullPathHash != _animStateAttackBodySlam && _anim.GetBool(_animAttack))
                 {
                     // 아직 전이 하지 않은 상태
                     return;
                 }
 
-                if (CurrentStateInfo.fullPathHash == _animStateAttack)
+                Debug.Log("Attak CurrentStateInfo.normalizedTime " + CurrentStateInfo.normalizedTime);
+
+                // Attack 으로 완전 전이됐다면
+                if (IsInAttackStates())
                 {
                     float attackClipExitTime = 0.9f;
                     if (CurrentStateInfo.normalizedTime < attackClipExitTime)
                     {
+                        Debug.Log("CurrentStateInfo.normalizedTime < attackClipExitTime");
                         return;
                     }
                     else
@@ -504,26 +520,27 @@ namespace RPG.Monster
                     }
                 }
 
-                float? distance = GetDistanceFromTarget(ToAttackTarget);
-                float? angle = GetAngleToTarget(ToAttackTarget);
-                //Debug.Log($"Attack : distance: {distance}, angle: {angle}");
-                if (distance <= _attackRange && angle <= _toleranceAngleToTargetDir)
-                {
-                    //Debug.Log($"Attack Stay");
-                }
-                else
-                {
-                    if(angle > _toleranceAngleToTargetDir)
-                    {
-                        State = MonsterState.Rotate;
-                        Debug.Log($"Attack => {State}");
-                    }
-                    else
-                    {
-                        State = MonsterState.Walk;
-                        Debug.Log($"Attack => {State}");
-                    }
-                }
+                Debug.Log("State -> ?");
+
+                //float? distance = GetDistanceFromTarget(ToAttackTarget);
+                //float? angle = GetAngleToTarget(ToAttackTarget);
+                //Debug.Log($"Attack : distance: {distance}, _attackRange: {_attackRange}");
+                //Debug.Log($"Attack : angle: {angle}, _toleranceAngleToTargetDir: {_toleranceAngleToTargetDir}");
+                
+                State = MonsterState.Idle;
+                //else
+                //{
+                //    if (angle > _toleranceAngleToTargetDir)
+                //    {
+                //        State = MonsterState.Rotate;
+                //        //Debug.Log($"Attack => {State}");
+                //    }
+                //    else
+                //    {
+                //        State = MonsterState.Walk;
+                //        //Debug.Log($"Attack => {State}");
+                //    }
+                //}
             }
             else
             {
@@ -594,7 +611,7 @@ namespace RPG.Monster
         {
             AnimatorStateInfo stateInfo = _anim.GetCurrentAnimatorStateInfo(0);
             string stateName;
-            if(stateInfo.fullPathHash == _animStateIdle)
+            if (stateInfo.fullPathHash == _animStateIdle)
             {
                 stateName = "Idle";
             }
@@ -619,7 +636,7 @@ namespace RPG.Monster
                 stateName = "Unknown";
             }
 
-            if(message == "")
+            if (message == "")
             {
                 Debug.Log($"MonsterState: {State}, _anim State Name: {stateName}, normalizedTime: {stateInfo.normalizedTime}\n" +
                     $"_animIdle: {_anim.GetBool(_animIdle)}\n" +
@@ -638,7 +655,7 @@ namespace RPG.Monster
                     $"_animRun: {_anim.GetBool(_animRun)}\n" +
                     $"_animAttack: {_anim.GetBool(_animAttack)}\n" +
                     $"");
-            }    
+            }
         }
         private void ClearAnimatorBools()
         {
@@ -647,6 +664,39 @@ namespace RPG.Monster
             _anim.SetBool(_animWalk, false);
             _anim.SetBool(_animAttack, false);
             _anim.SetBool(_animRun, false);
+        }
+
+        private bool IsInAttackStates()
+        {
+
+            if (CurrentStateInfo.fullPathHash ==  _animStateAttackBodySlam)
+            {
+                Debug.Log("BearBodySlam");
+                return true;
+            }
+            else if (CurrentStateInfo.fullPathHash == _animStateAttackRightCraw)
+            {
+                Debug.Log("BearRightCraw");
+                return true;
+            }
+            else if (CurrentStateInfo.fullPathHash == _animStateAttackBite)
+            {
+                Debug.Log("BearBite");
+                return true;
+            }
+            else if (CurrentStateInfo.fullPathHash == _animStateAttackIdle)
+            {
+                Debug.Log("BearAttackIdle");
+                return true;
+            }
+            else if (CurrentStateInfo.fullPathHash == _animStateAttackLeftCraw)
+            {
+                Debug.Log("BearLeftCraw");
+                return true;
+            }
+
+            Debug.Log("Not Attack State");
+            return false;
         }
     }
 }
