@@ -67,14 +67,14 @@ namespace RPG.Common
 
         public StructItemData SetType()
         {
-            ItemType = RPG.Utils.EnumParse.StringToEnum<EnumItemType>(TypeString);
+            ItemType = Utils.StringToEnum<EnumItemType>(TypeString);
             if(EquipPartTypeString == null)
             {
                 EquipType = EnumEquipType.None;
             }
             else
             {
-                EquipType = RPG.Utils.EnumParse.StringToEnum<EnumEquipType>(EquipPartTypeString);
+                EquipType = Utils.StringToEnum<EnumEquipType>(EquipPartTypeString);
             }
 
             return this;

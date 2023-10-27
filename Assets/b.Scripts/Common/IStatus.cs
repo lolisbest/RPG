@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RPG.Utils;
 
 namespace RPG.Common
 {
@@ -49,7 +48,7 @@ namespace RPG.Common
             int newMaxHp;
             int newMaxMp;
 
-            (newAtk, newDef, newMaxHp, newMaxMp) = Calculate.RealStatus(
+            (newAtk, newDef, newMaxHp, newMaxMp) = Utils.Calculate.RealStatus(
                 totalStr, totalEnd, totalSta, totalMag
             );
 
@@ -78,7 +77,7 @@ namespace RPG.Common
             int newMaxHp;
             int newMaxMp;
 
-            (newAtk, newDef, newMaxHp, newMaxMp) = Calculate.RealStatus(
+            (newAtk, newDef, newMaxHp, newMaxMp) = Utils.Calculate.RealStatus(
                 totalStr, totalEnd, totalSta, totalMag
             );
 
@@ -87,6 +86,5 @@ namespace RPG.Common
                 newAtk, newDef, newMaxHp, newMaxMp
                 );
         }
-
     }
 }

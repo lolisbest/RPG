@@ -20,7 +20,7 @@ public static partial class DataBase
         {
             string filePath = DataRootDirPath + DataFileName;
 
-            StructPlayerData[] playerDataArray = RPG.Utils.ReadJson.Read<StructPlayerData>(filePath);
+            StructPlayerData[] playerDataArray = Utils.JsonHelper.Read<StructPlayerData>(filePath);
 
             for (int i = 0; i < playerDataArray.Length; i++)
             {

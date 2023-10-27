@@ -15,14 +15,14 @@ public static partial class DataBase
         {
             string filePath = DataRootDirPath + DataFileName;
 
-            StructQuestData[] questDataArray = RPG.Utils.ReadJson.Read<StructQuestData>(filePath);
+            StructQuestData[] questDataArray = Utils.JsonHelper.Read<StructQuestData>(filePath);
             for (int i = 0; i < questDataArray.Length; i++)
             {
                 StructQuestData questData = questDataArray[i];
                 for(int condIndex = 0; condIndex < questData.Conditions.Length; condIndex++)
                 {
                     StructQuestCondition condition = questData.Conditions[condIndex];
-                    condition.Type = RPG.Utils.EnumParse.StringToEnum<QuestConditionType>(condition.TypeString);
+                    condition.Type = Utils.StringToEnum<QuestConditionType>(condition.TypeString);
                     questData.Conditions[condIndex] = condition;
                 }
 

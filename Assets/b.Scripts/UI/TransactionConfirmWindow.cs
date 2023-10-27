@@ -82,6 +82,10 @@ namespace RPG.UI
             if (Player.Instance.Money < TotalPrice)
                 return;
 
+            if (ItemCount == 0) return;
+
+            if (ItemCount < 0) throw new System.Exception("Buy ItemCount < 0");
+
             ResultType result = Player.Instance.AddItem(TransactionItemData.Id, ItemCount);
             Debug.Log("Buy result: " + result);
 

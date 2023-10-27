@@ -50,29 +50,21 @@ public class Defence : MonoBehaviour
                 return;
 
             float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
-            //Debug.Log("dot " + dot);
 
-            if (dot < 0f)
-            {
-                //Debug.Log("Denfence Ok");
-                Vector3 closestPoint = otherCollider.ClosestPointOnBounds(transform.position);
-                //hitPosition = closestPoint;
+            //Debug.Log("Denfence Ok");
+            Vector3 closestPoint = otherCollider.ClosestPoint(transform.position);
+            //hitPosition = closestPoint;
 
-                OnCollision?.Invoke(
-                    new StructAttackHit
-                    {
-                        AttackCollider = attackCollider,
-                        AttackScriptId = attackCollider.GetHashCode(),
-                        IsBlocked = true,
-                        IsApplied = false,
-                        RawDamage = attackCollider.Damage,
-                        HitPosition = closestPoint
-                    });
-            }
-            else
-            {
-                //Debug.Log("막지 못 함");
-            }
+            OnCollision?.Invoke(
+                new StructAttackHit
+                {
+                    AttackCollider = attackCollider,
+                    AttackScriptId = attackCollider.GetHashCode(),
+                    IsBlocked = true,
+                    IsApplied = false,
+                    RawDamage = attackCollider.Damage,
+                    HitPosition = closestPoint
+                });
         }
     }
 
@@ -84,38 +76,30 @@ public class Defence : MonoBehaviour
             if (attackCollider.AttackerType == EnumAttackerType.Player)
                 return;
 
-            float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
-            Debug.Log("dot " + dot);
+            //float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
 
-            if (dot < 0f)
+            Vector3 sum = Vector3.zero;
+
+            foreach(var contact in collision.contacts)
             {
-                Vector3 sum = Vector3.zero;
+                sum += contact.point;
+            }
 
-                foreach(var contact in collision.contacts)
+            Vector3 averagePosition = sum / collision.contacts.Length;
+
+            OnCollision?.Invoke(
+                new StructAttackHit
                 {
-                    sum += contact.point;
-                }
+                    AttackCollider = attackCollider,
+                    AttackScriptId = attackCollider.GetHashCode(),
+                    IsBlocked = true,
+                    IsApplied = false,
+                    RawDamage = attackCollider.Damage,
+                    HitPosition = averagePosition
+                });
 
-                Vector3 averagePosition = sum / collision.contacts.Length;
-
-                OnCollision?.Invoke(
-                    new StructAttackHit
-                    {
-                        AttackCollider = attackCollider,
-                        AttackScriptId = attackCollider.GetHashCode(),
-                        IsBlocked = true,
-                        IsApplied = false,
-                        RawDamage = attackCollider.Damage,
-                        HitPosition = averagePosition
-                    });
-            }
-            else
-            {
-                //Debug.Log("막지 못 함");
-            }
         }
     }
-
 
     public void OnBlockSuccess()
     {

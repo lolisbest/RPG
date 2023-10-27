@@ -29,7 +29,7 @@ public static partial class DataBase
                 throw new System.Exception("초기화 되지 않은 Items or _itemIds");
 
             string filePath = DataRootDirPath + DataFileName;
-            StructItemData[] itemDataArray = RPG.Utils.ReadJson.Read<StructItemData>(filePath);
+            StructItemData[] itemDataArray = Utils.JsonHelper.Read<StructItemData>(filePath);
             for(int i = 0; i < itemDataArray.Length; i++)
             {
                 StructItemData itemData = itemDataArray[i];

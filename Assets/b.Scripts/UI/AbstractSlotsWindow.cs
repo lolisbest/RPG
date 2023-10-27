@@ -1,4 +1,3 @@
-using RPG.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +49,7 @@ namespace RPG.UI
         public virtual void LoadDataIntoSlots(string dataString)
         {
             //Debug.Log("dataString " + dataString);
-            T[] playerDataArray = JsonHelper.FromJson<T>(dataString);
+            T[] playerDataArray = Utils.JsonHelper.FromJson<T>(dataString);
             LoadDataIntoSlots(playerDataArray);
         }
 

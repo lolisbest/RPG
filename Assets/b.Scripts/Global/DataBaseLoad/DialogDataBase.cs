@@ -15,7 +15,7 @@ public static partial class DataBase
         {
             string filePath = DataRootDirPath + DataFileName;
 
-            StructDialogData[] dialogDataArray = RPG.Utils.ReadJson.Read<StructDialogData>(filePath);
+            StructDialogData[] dialogDataArray = Utils.JsonHelper.Read<StructDialogData>(filePath);
             for (int i = 0; i < dialogDataArray.Length; i++)
             {
                 StructDialogData dialogData = dialogDataArray[i];

@@ -15,13 +15,13 @@ public static partial class DataBase
         {
             string filePath = DataRootDirPath + DataFileName;
 
-            StructNpcData[] npcDataArray = RPG.Utils.ReadJson.Read<StructNpcData>(filePath);
+            StructNpcData[] npcDataArray = Utils.JsonHelper.Read<StructNpcData>(filePath);
             for (int i = 0; i < npcDataArray.Length; i++)
             {
                 StructNpcData npcData = npcDataArray[i];
                 foreach (var valueString in npcData.ServiceStrings)
                 {
-                    npcData.Services |= RPG.Utils.EnumParse.StringToEnum<NpcService>(valueString);
+                    npcData.Services |= Utils.StringToEnum<NpcService>(valueString);
                 }
 
                 Npcs.Add(npcData.Id, npcData);

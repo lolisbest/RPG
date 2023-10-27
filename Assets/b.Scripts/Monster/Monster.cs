@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Common;
 using UnityEngine.AI;
-using RPG.Utils;
 using UnityEditor.Animations;
 
 namespace RPG.Monster
@@ -21,7 +20,7 @@ namespace RPG.Monster
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
-    public class Monster : MonoBehaviour, IStatus, IDamageable
+    public partial class Monster : MonoBehaviour, IStatus, IDamageable
     {
         #region Animation String Hashs
         private readonly int _animState = Animator.StringToHash("State");
@@ -29,6 +28,7 @@ namespace RPG.Monster
         private readonly int _animWalk = Animator.StringToHash("Walk");
         private readonly int _animRotate = Animator.StringToHash("Rotate");
         private readonly int _animAttack = Animator.StringToHash("Attack");
+        private readonly int _animAttackType = Animator.StringToHash("AttackType");
         private readonly int _animRun = Animator.StringToHash("Run");
 
         private readonly int _animStateIdle = Animator.StringToHash("Base Layer.Idle");
@@ -37,13 +37,6 @@ namespace RPG.Monster
         private readonly int _animStateRun = Animator.StringToHash("Base Layer.Run");
         private readonly int _animStateAttack = Animator.StringToHash("Base Layer.Attack");
 
-        private readonly int _animStateAttackBodySlam = Animator.StringToHash("Base Layer.Attack.BearBodySlam");
-        private readonly int _animStateAttackRightCraw = Animator.StringToHash("Base Layer.Attack.BearRightCraw");
-        private readonly int _animStateAttackBite = Animator.StringToHash("Base Layer.Attack.BearBite");
-        private readonly int _animStateAttackLeftCraw = Animator.StringToHash("Base Layer.Attack.BearLeftCraw");
-        private readonly int _animStateAttackIdle = Animator.StringToHash("Base Layer.Attack.BearAttackIdle");
-
-
         #endregion
 
         #region IDamageable Property Implements
@@ -51,11 +44,11 @@ namespace RPG.Monster
         public void OnDeath()
         {
             //Debug.Log($"{name} die");
-            @QuestManager.CallbackQuestCondition(QuestConditionType.Kill, Id, 1);
+            _questManager.CallbackQuestCondition(QuestConditionType.Kill, Id, 1);
             IsDie = true;
             gameObject.SetActive(false);
 
-            @ItemDropper.DropItemBox(Id, DropStartPosition.position);
+            _itemDropper.DropItemBox(Id, _dropStartPosition.position);
         }
 
         public void OnDamage(int damageAmount)
@@ -63,7 +56,7 @@ namespace RPG.Monster
             //Debug.Log($"{name} : {Hp} -> {Hp - damageAmount}");
 
             //Debug.Log("DropStartPosition.position " + DropStartPosition.position);
-            InGameUIManager.Instance.ShowDamageText(damageAmount, DropStartPosition.position);
+            InGameUIManager.Instance.ShowDamageText(damageAmount, _dropStartPosition.position);
 
             Hp -= damageAmount;
             if (Hp <= 0f)
@@ -73,56 +66,11 @@ namespace RPG.Monster
         }
         #endregion
 
-        private StructStatus _status;
-        #region IStatus Implements
-        public StructRealStatus RealStatus { get; private set; }
-        public StructStatus Status
-        {
-            get => _status;
-            private set
-            {
-                _status = value;
-
-                RealStatus = IStatus.UpdateRealStatus(_status);
-            }
-        }
-
-        #endregion
-
-        #region Hp, Mp
-        public int _hp;
-        public int Hp
-        {
-            get => _hp;
-            private set
-            {
-                _hp = value < 0 ? 0 : value;
-                float rate = (float)_hp / RealStatus.MaxHp;
-                MonsterUI.UpadteHp(rate);
-                //Debug.Log("Hp Rate " + rate);
-            }
-        }
-
-        public int _mp;
-        public int Mp
-        {
-            get => _mp;
-            private set
-            {
-                _mp = value < 0 ? 0 : value;
-                float rate = (float)_mp / RealStatus.MaxMp;
-            }
-        }
-        #endregion
-
-        public Vector3 RespawnPosition { get; private set; }
-
-        public Transform DropStartPosition;
+        [SerializeField] private Transform _dropStartPosition;
 
         #region Monster Info
         public InGameMonsterUI MonsterUI;
-        [SerializeField]
-        private MonsterState _state;
+        [SerializeField] private MonsterState _state;
         /// <summary>
         /// 1) Clear Animator Parameters. 2) Set State Parameter
         /// </summary>
@@ -145,6 +93,7 @@ namespace RPG.Monster
                 }
                 else if (_state == MonsterState.Rotate)
                 {
+                    _accumulatedRotation = 0f;
                     _anim.SetBool(_animRotate, true);
                 }
                 else if (_state == MonsterState.Walk)
@@ -157,10 +106,16 @@ namespace RPG.Monster
                 }
                 else if (_state == MonsterState.Attack)
                 {
+                    // AttackIdle is exclusive
+                    int attackType = Random.Range(0, AttackStateStrings.Length - 1);
                     _anim.SetBool(_animAttack, true);
+                    _anim.SetInteger(_animAttackType, attackType);
                 }
             }
         }
+
+        private float _accumulatedRotation;
+
         public int Id;
         // 쫓아가는 최대 거리
         private float _followMaxDistance;
@@ -175,15 +130,15 @@ namespace RPG.Monster
         public float _runSpeed = 15f;
         public float _runDistance = 8.8f;
 
-        public float RespawnInterval { get; set; } = 2f;
+        public float SpawnInterval { get; set; }
         public float LeftTimeToSpawn { get; set; }
         #endregion
 
-        public QuestManager @QuestManager;
-        public ItemDropper @ItemDropper;
+        [SerializeField] private QuestManager _questManager;
+        [SerializeField] private ItemDropper _itemDropper;
 
-        private NavMeshAgent _naviMeshAgent;
-        private Animator _anim;
+        [SerializeField] private NavMeshAgent _naviMeshAgent;
+        [SerializeField] private Animator _anim;
         public AnimatorStateInfo CurrentStateInfo { get => _anim.GetCurrentAnimatorStateInfo(0); }
 
         [SerializeField] private Transform _toAttackTarget;
@@ -207,62 +162,77 @@ namespace RPG.Monster
             }
         }
 
-        public AttackCollider _attackCollider;
+        public AttackCollider[] _attackColliders;
 
-        public bool IsStopped;
+        [SerializeField] public Collider _hitCollider;
 
-        public Collider HitCollider;
-
-        [SerializeField] private CharacterController _controller;
+        [SerializeField] private CharacterController _characterController;
 
         [SerializeField] private SpriteRenderer _minimapIconRenderer;
 
+        [SerializeField] private string[] AttackStateStrings;
+        [SerializeField] private int[] AttackStateHashes;
+
+        private Vector3 _initialPosition;
+        private Quaternion _initialRotation;
+
+        /// <summary>
+        /// 스폰 할 때 사용할 위치와 회전
+        /// </summary>
+        /// <param name="initialPosition"></param>
+        /// <param name="initialRotation"></param>
+        public void SetIntialPoseRot(Vector3 initialPosition, Quaternion initialRotation)
+        {
+            _initialPosition = initialPosition;
+            _initialRotation = initialRotation;
+        }
+
+        void Awake()
+        {
+            Utils.CheckNull(_naviMeshAgent, "_naviMeshAgent is null");
+            Utils.CheckNull(_anim, "_anim is null");
+            Utils.CheckNull(_attackColliders, "_attackCollider is null");
+            Utils.CheckNull(_dropStartPosition, "_dropStartPosition is null");
+            Utils.CheckNull(_hitCollider, "_hitCollider is null");
+            _hitCollider.isTrigger = true;
+
+            SetAttackStateHashes();
+        }
+
         void Start()
         {
-            MapManager.Instance.AddMonster(this);
+            _naviMeshAgent.enabled = true;
+            _naviMeshAgent.isStopped = true;
 
-            HitCollider.isTrigger = true;
+            _questManager = QuestManager.Instance;
+            _itemDropper = ItemDropper.Instance;
 
-            @QuestManager = QuestManager.Instance;
-            @ItemDropper = ItemDropper.Instance;
+            Spawn();
+        }
 
-            Status = DataBase.Monsters[Id].Status;
-            name = $"{Status.Name}:{gameObject.GetHashCode()}";
-            MonsterUI.SetName(Status.Name);
+        private void SetAttackStateHashes()
+        {
+            AttackStateHashes = new int[AttackStateStrings.Length];
 
-            Hp = RealStatus.MaxHp;
-
-
-            if (TryGetComponent(out _naviMeshAgent))
+            for(int i = 0; i < AttackStateStrings.Length; i++)
             {
-                _naviMeshAgent.isStopped = true;
-                //Debug.Log("_naviMeshAgent.isStopped : " + _naviMeshAgent.isStopped);
+                //Animator.StringToHash("Base Layer.Attack.BearAttackIdle");
+                AttackStateHashes[i] = Animator.StringToHash(AttackStateStrings[i]);
             }
-
-            _attackCollider.SetDamage(RealStatus.Atk);
-
-            if (!TryGetComponent(out _anim))
-            {
-                throw new System.Exception("_anim is null");
-            }
-
-            IsDie = false;
-            State = MonsterState.Idle;
-            RespawnPosition = transform.position;
-            LeftTimeToSpawn = RespawnInterval;
-            ToAttackTarget = ToAttackTarget;
         }
 
         public void Spawn()
         {
             IsDie = false;
             State = MonsterState.Idle;
-            transform.position = RespawnPosition;
             Hp = RealStatus.MaxHp;
-            LeftTimeToSpawn = RespawnInterval;
+            LeftTimeToSpawn = SpawnInterval;
+            Debug.Log("SpwanInterval " + SpawnInterval);
             gameObject.SetActive(true);
             ToAttackTarget = null;
             _naviMeshAgent.isStopped = true;
+            transform.position = _initialPosition;
+            transform.rotation = _initialRotation;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -271,10 +241,11 @@ namespace RPG.Monster
             if (other.CompareTag(StringStatic.PlayerAttackEffectTag))
             {
                 AttackCollider attackCollider = other.gameObject.GetComponent<AttackCollider>();
+
                 if (attackCollider != null)
                 {
-                    //Debug.Log("playeryAttackCollider.Damage: " + playeryAttackCollider.Damage);
-                    int realDamage = Calculate.RealDamage(attackCollider.Damage, RealStatus.Def);
+                    Debug.Log($"{name} hit attackCollider.Damage: " + attackCollider.Damage);
+                    int realDamage = Utils.Calculate.RealDamage(attackCollider.Damage, RealStatus.Def);
                     if (realDamage != 0)
                     {
                         OnDamage(realDamage);
@@ -348,6 +319,7 @@ namespace RPG.Monster
                 return null;
 
             Vector3 targetDir = target.position - transform.position;
+            targetDir.y = 0f;
             return Vector3.Angle(targetDir, transform.forward);
         }
 
@@ -400,14 +372,29 @@ namespace RPG.Monster
         {
             if (ToAttackTarget)
             {
-                float? angleToTarget = GetAngleToTarget(ToAttackTarget);
-                if (angleToTarget < _toleranceAngleToTargetDir)
+                float? distance = GetDistanceFromTarget(ToAttackTarget);
+                float? angle = GetAngleToTarget(ToAttackTarget);
+
+                float? arriveTime = distance / _runSpeed;
+                float? focusTime = angle / _dynamicRotationSpeed;
+
+                if (distance <= _moveStopDistance && angle <= _toleranceAngleToTargetDir)
                 {
-                    State = MonsterState.Walk;
+                    State = MonsterState.Attack;
+                }
+                if (focusTime > arriveTime)
+                {
+                    //Debug.Log($"distance : {distance}");
+                    //Debug.Log($"angle : {angle}");
+                    //Debug.Log($"arriveTime : {arriveTime}");
+                    //Debug.Log($"focusTime : {focusTime}");
+                    //Debug.Log($"_accumulatedRotation : {_accumulatedRotation}");
+                    // 대상을 바라보는 시간이 도착하는 시간 보다 길면
+                    RotateTo(ToAttackTarget.position, _staticRotationSpeed);
                 }
                 else
                 {
-                    RotateTo(ToAttackTarget.position, _staticRotationSpeed);
+                    State = MonsterState.Walk;
                 }
             }
             else
@@ -425,7 +412,9 @@ namespace RPG.Monster
         {
             Vector3 targetDir = (targetPosition - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(targetDir, transform.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            transform.rotation = Quaternion.Slerp(Quaternion.LookRotation(targetDir), targetRotation, _accumulatedRotation);
+            _accumulatedRotation = rotationSpeed * Time.deltaTime;
         }
 
         /// <summary>
@@ -437,11 +426,15 @@ namespace RPG.Monster
             {
                 float? distance = GetDistanceFromTarget(ToAttackTarget);
                 float? angle = GetAngleToTarget(ToAttackTarget);
-                if (distance <= _attackRange && angle <= _toleranceAngleToTargetDir)
+
+                float? arriveTime = distance / _runSpeed;
+                float? focusTime = angle / _dynamicRotationSpeed;
+
+                if (distance <= _moveStopDistance && angle <= _toleranceAngleToTargetDir)
                 {
                     State = MonsterState.Attack;
                 }
-                else if (angle > _toleranceAngleToTargetDir)
+                else if (focusTime > arriveTime)
                 {
                     State = MonsterState.Rotate;
                 }
@@ -480,7 +473,7 @@ namespace RPG.Monster
 
             Vector3 nextCornerPosition = _naviMeshAgent.path.corners[1];
 
-            _controller.Move((nextCornerPosition - transform.position).normalized * speed * Time.deltaTime);
+            _characterController.Move((nextCornerPosition - transform.position).normalized * speed * Time.deltaTime);
         }
 
         /// <summary>
@@ -491,19 +484,11 @@ namespace RPG.Monster
         {
             if (ToAttackTarget)
             {
-                //DisplayAnimator();
-                Debug.Log($"CurrentStateInfo.fullPathHash {CurrentStateInfo.fullPathHash}");
-                Debug.Log($"_animStateAttackBodySlam {_animStateAttackBodySlam}");
-                Debug.Log($"_animStateAttack {_animStateAttack}");
-                Debug.Log($"_animStateAttackIdle {_animStateAttackIdle}");
-
-                if (CurrentStateInfo.fullPathHash != _animStateAttackBodySlam && _anim.GetBool(_animAttack))
+                if (!IsInAttackStates() && _anim.GetBool(_animAttack))
                 {
                     // 아직 전이 하지 않은 상태
                     return;
                 }
-
-                Debug.Log("Attak CurrentStateInfo.normalizedTime " + CurrentStateInfo.normalizedTime);
 
                 // Attack 으로 완전 전이됐다면
                 if (IsInAttackStates())
@@ -511,36 +496,13 @@ namespace RPG.Monster
                     float attackClipExitTime = 0.9f;
                     if (CurrentStateInfo.normalizedTime < attackClipExitTime)
                     {
-                        Debug.Log("CurrentStateInfo.normalizedTime < attackClipExitTime");
+                        // 충분히 애니메이션이 재생되지 않았다면
+                        //Debug.Log("CurrentStateInfo.normalizedTime < attackClipExitTime");
                         return;
-                    }
-                    else
-                    {
-                        //Debug.Log("Attack.normalizedTime >= 0.75");
                     }
                 }
 
-                Debug.Log("State -> ?");
-
-                //float? distance = GetDistanceFromTarget(ToAttackTarget);
-                //float? angle = GetAngleToTarget(ToAttackTarget);
-                //Debug.Log($"Attack : distance: {distance}, _attackRange: {_attackRange}");
-                //Debug.Log($"Attack : angle: {angle}, _toleranceAngleToTargetDir: {_toleranceAngleToTargetDir}");
-                
                 State = MonsterState.Idle;
-                //else
-                //{
-                //    if (angle > _toleranceAngleToTargetDir)
-                //    {
-                //        State = MonsterState.Rotate;
-                //        //Debug.Log($"Attack => {State}");
-                //    }
-                //    else
-                //    {
-                //        State = MonsterState.Walk;
-                //        //Debug.Log($"Attack => {State}");
-                //    }
-                //}
             }
             else
             {
@@ -576,11 +538,6 @@ namespace RPG.Monster
                     Debug.Log("_naviMeshAgent.isStopped " + _naviMeshAgent.isStopped);
                     State = MonsterState.Attack;
                 }
-                //else if (distance <= _moveStopDistance * 1.1f)
-                //{
-                //    //Debug.Log($"Run : distance:{distance} <= _moveStopDistance * 1.2f:{_moveStopDistance * 1.2f}");
-                //    State = MonsterState.Walk;
-                //}
                 else if (focusTime > arriveTime)
                 {
                     // 대상을 바라보는 시간이 도착하는 시간 보다 길면
@@ -668,34 +625,16 @@ namespace RPG.Monster
 
         private bool IsInAttackStates()
         {
-
-            if (CurrentStateInfo.fullPathHash ==  _animStateAttackBodySlam)
+            for (int i = 0; i < AttackStateHashes.Length; i++)
             {
-                Debug.Log("BearBodySlam");
-                return true;
-            }
-            else if (CurrentStateInfo.fullPathHash == _animStateAttackRightCraw)
-            {
-                Debug.Log("BearRightCraw");
-                return true;
-            }
-            else if (CurrentStateInfo.fullPathHash == _animStateAttackBite)
-            {
-                Debug.Log("BearBite");
-                return true;
-            }
-            else if (CurrentStateInfo.fullPathHash == _animStateAttackIdle)
-            {
-                Debug.Log("BearAttackIdle");
-                return true;
-            }
-            else if (CurrentStateInfo.fullPathHash == _animStateAttackLeftCraw)
-            {
-                Debug.Log("BearLeftCraw");
-                return true;
+                if (CurrentStateInfo.fullPathHash == AttackStateHashes[i])
+                {
+                    //Debug.Log(AttackStateStrings[i]);
+                    return true;
+                }
             }
 
-            Debug.Log("Not Attack State");
+            //Debug.Log("Not Attack State");
             return false;
         }
     }

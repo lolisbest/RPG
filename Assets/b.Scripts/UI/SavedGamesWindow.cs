@@ -4,7 +4,6 @@ using UnityEngine;
 using RPG.Common;
 using RPG.UI;
 using UnityEngine.UI;
-using RPG.Utils;
 
 namespace RPG.UI
 {

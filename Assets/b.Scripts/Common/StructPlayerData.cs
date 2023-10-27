@@ -115,7 +115,11 @@ namespace RPG.Common
         // 현재 착용 중인 장비 아이템 슬롯 번호 목록
         public StructHumanEquipSlots HumanEquipSlots;
 
-        public int SpawnPlaceId;
+        public float SpwanX;
+        public float SpwanY;
+        public float SpwanZ;
+
+        public string SpawnPlaceId;
 
         public override string ToString()
         {

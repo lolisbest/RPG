@@ -75,7 +75,7 @@ public partial class GameManager : Singleton<GameManager>
 
         StructPlayerData[] playerDataArray = new StructPlayerData[] { CurrentPlayerData };
         Debug.Log("CurrentPlayerData " + CurrentPlayerData);
-        string data = RPG.Utils.JsonHelper.ToJson(playerDataArray);
+        string data = Utils.JsonHelper.ToJson(playerDataArray);
         Debug.Log(data);
         GameManager.Instance.TryHttpPost(url, data);
     }

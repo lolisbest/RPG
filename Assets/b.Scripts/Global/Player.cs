@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.UI;
-using RPG.Utils;
 using RPG.Input;
 using UnityEngine.SceneManagement;
 using System;
@@ -363,7 +362,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
                     // 아직 대미지 판정을 안 했다면
                     //Debug.Log("Now Apply Damage");
 
-                    int realDamage = Calculate.RealDamage(attackHit.RawDamage, RealStatus.Def);
+                    int realDamage = Utils.Calculate.RealDamage(attackHit.RawDamage, RealStatus.Def);
 
                     if (attackHit.IsBlocked)
                     {

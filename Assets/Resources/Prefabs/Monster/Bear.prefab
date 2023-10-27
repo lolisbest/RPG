@@ -666,7 +666,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049860471085784053}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 3.5
@@ -693,28 +693,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6486d646b5096a44c9b9c6e5ad92b369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 0
-  _mp: 0
-  DropStartPosition: {fileID: 2267720428700308999}
+  _dropStartPosition: {fileID: 2267720428700308999}
   MonsterUI: {fileID: 799139079327635145}
   _state: 0
   Id: 2
   _attackRange: 4.85
   _moveStopDistance: 4.4
   _toleranceAngleToTargetDir: 10
-  _dynamicRotationSpeed: 20
-  _staticRotationSpeed: 30
+  _dynamicRotationSpeed: 15
+  _staticRotationSpeed: 15
   _walkSpeed: 2
   _runSpeed: 15
-  _runDistance: 8
-  QuestManager: {fileID: 0}
-  ItemDropper: {fileID: 0}
+  _runDistance: 6
+  _questManager: {fileID: 0}
+  _itemDropper: {fileID: 0}
+  _naviMeshAgent: {fileID: 5997148670947449641}
+  _anim: {fileID: 5997148670947449653}
   _toAttackTarget: {fileID: 0}
-  _attackCollider: {fileID: 7470671368778945788}
-  IsStopped: 0
-  HitCollider: {fileID: 5997148670947449642}
-  _controller: {fileID: 7037330866761581426}
+  _attackColliders:
+  - {fileID: 8324891530156520819}
+  - {fileID: 7366971822237657055}
+  - {fileID: 6216441103017867060}
+  - {fileID: 7470671368778945788}
+  _hitCollider: {fileID: 5997148670947449642}
+  _characterController: {fileID: 7037330866761581426}
   _minimapIconRenderer: {fileID: 6224679216768527325}
+  AttackStateStrings:
+  - Base Layer.Attack.Attack0
+  - Base Layer.Attack.Attack1
+  - Base Layer.Attack.Attack2
+  - Base Layer.Attack.Attack3
+  - Base Layer.Attack.Attack4
+  AttackStateHashes: 
+  _hp: 0
+  _mp: 0
 --- !u!65 &5997148670947449642
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -936,6 +948,7 @@ Transform:
   - {fileID: 586951890361301165}
   - {fileID: 5918027796097393970}
   - {fileID: 7995456392070548434}
+  - {fileID: 6301932637032484639}
   m_Father: {fileID: 4288143580077617612}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 2.5254545, y: -6.078901, z: -1.9804965}
@@ -1033,6 +1046,119 @@ Transform:
   m_Father: {fileID: 5079404095467745703}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2960671879048019541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7421459732190333869}
+  - component: {fileID: 6216441103017867060}
+  - component: {fileID: 6087794981755356937}
+  - component: {fileID: 8589603566328120042}
+  - component: {fileID: 2425477975983954733}
+  m_Layer: 0
+  m_Name: BearLeftCrawCollider
+  m_TagString: MonsterAttackEffect
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7421459732190333869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960671879048019541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.50000054, y: 0.6499999, z: 0.5000007}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7611611134392305105}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6216441103017867060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960671879048019541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackerType: 2
+  _body: {fileID: 421660671835013455}
+--- !u!136 &6087794981755356937
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960671879048019541}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &8589603566328120042
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960671879048019541}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2425477975983954733
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2960671879048019541}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3143512245031449081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,6 +1191,118 @@ Transform:
   m_Father: {fileID: 1179392935173390140}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.35865515, y: 0.0000000133404745, z: -29.274702}
+--- !u!1 &3160581932173442655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6301932637032484639}
+  - component: {fileID: 7707206588492144969}
+  - component: {fileID: 3830603491625030617}
+  - component: {fileID: 5252961254381281681}
+  - component: {fileID: 8324891530156520819}
+  m_Layer: 0
+  m_Name: BearBodySlamCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6301932637032484639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160581932173442655}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.39, z: -0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5249478381982037188}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7707206588492144969
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160581932173442655}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &3830603491625030617
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160581932173442655}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &5252961254381281681
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160581932173442655}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8324891530156520819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3160581932173442655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackerType: 2
+  _body: {fileID: 421660671835013455}
 --- !u!1 &3258414231651155624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,7 +2142,7 @@ GameObject:
   - component: {fileID: 1272662487905137594}
   - component: {fileID: 8181586168288309338}
   m_Layer: 0
-  m_Name: BearFrontRightHand
+  m_Name: BearRightCrawCollider
   m_TagString: MonsterAttackEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1938,7 +2176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackerType: 2
-  _collider: {fileID: 8453291840472531900}
   _body: {fileID: 421660671835013455}
 --- !u!136 &8453291840472531900
 CapsuleCollider:
@@ -2193,6 +2430,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3308930887110380367}
+  - {fileID: 7421459732190333869}
   m_Father: {fileID: 9110069003583429050}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -1.4280896, y: 0.665157, z: -0.19841044}
@@ -2464,13 +2702,14 @@ GameObject:
   - component: {fileID: 7158802693004758451}
   - component: {fileID: 7280155599207576072}
   - component: {fileID: 4201116014408207150}
+  - component: {fileID: 7366971822237657055}
   m_Layer: 0
-  m_Name: BearHead
-  m_TagString: Untagged
+  m_Name: BearBiteCollider
+  m_TagString: MonsterAttackEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4872158838799977232
 Transform:
   m_ObjectHideFlags: 0
@@ -2479,7 +2718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8083681751249079205}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.098, y: -0.055, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2546,10 +2785,24 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.35
+  m_Height: 1.3
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7366971822237657055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083681751249079205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackerType: 2
+  _body: {fileID: 421660671835013455}
 --- !u!1 &8182559878413260105
 GameObject:
   m_ObjectHideFlags: 0

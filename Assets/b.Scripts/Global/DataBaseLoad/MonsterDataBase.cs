@@ -24,7 +24,7 @@ public static partial class DataBase
         public void Load()
         {
             string filePath = DataRootDirPath + DataFileName;
-            StructMonsterData[] monsterDataArray = RPG.Utils.ReadJson.Read<StructMonsterData>(filePath);
+            StructMonsterData[] monsterDataArray = Utils.JsonHelper.Read<StructMonsterData>(filePath);
 
             for (int i = 0; i < monsterDataArray.Length; i++)
             {

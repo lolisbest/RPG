@@ -22,7 +22,7 @@ public class NpcServiceSelectionWindow : MonoBehaviour
 
         foreach (var serviceString in System.Enum.GetNames(typeof(NpcService)))
         {
-            NpcService service = RPG.Utils.EnumParse.StringToEnum<NpcService>(serviceString);
+            NpcService service = Utils.StringToEnum<NpcService>(serviceString);
             Buttons.Add(service, null);
         }
 
@@ -38,8 +38,8 @@ public class NpcServiceSelectionWindow : MonoBehaviour
             if (!System.Enum.GetNames(typeof(NpcService)).Any(childButton.name.Contains))
                 continue;
 
-            NpcService buttonService = RPG.Utils.EnumParse.StringToEnum<NpcService>(childButton.name);
-            if (Buttons.ContainsKey(RPG.Utils.EnumParse.StringToEnum<NpcService>(childButton.name)))
+            NpcService buttonService = Utils.StringToEnum<NpcService>(childButton.name);
+            if (Buttons.ContainsKey(Utils.StringToEnum<NpcService>(childButton.name)))
             {
                 Buttons[buttonService] = childButton;
             }
@@ -55,7 +55,7 @@ public class NpcServiceSelectionWindow : MonoBehaviour
     {
         foreach(var serviceString in System.Enum.GetNames(typeof(NpcService)))
         {
-            NpcService service = RPG.Utils.EnumParse.StringToEnum<NpcService>(serviceString);
+            NpcService service = Utils.StringToEnum<NpcService>(serviceString);
 
             if (services.HasFlag(service) && Buttons[service] != null)
             {

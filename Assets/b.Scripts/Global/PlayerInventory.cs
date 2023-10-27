@@ -222,6 +222,16 @@ public partial class Player
         int itemId = _structInventory.Items[slotIndex].ItemId;
         StructItemData itemData = DataBase.Items[itemId];
 
+        if (itemData.SkillId > 0)
+        {
+            // 이미 습득한 스킬이면 사용 안 함
+            if (Status.AvailableSkillIds.Contains(itemData.SkillId))
+            {
+                Debug.Log($"Already learned skill. {DataBase.Skills[itemData.SkillId].Name}");
+                return _structInventory.Items[slotIndex].ItemCount;
+            }
+        }
+
         if (itemData.RecoveryHpAmount > 0 && Hp >= RealStatus.MaxHp)
         {
             // 사용 실패
@@ -249,6 +259,10 @@ public partial class Player
         {
             RemoveItem(slotIndex);
             InGameUIManager.Instance.CLoseInventoryItemInfoWindow();
+        }
+        else if (_structInventory.Items[slotIndex].ItemCount < 0)
+        {
+            throw new Exception($"InventorySlot#{slotIndex}'s count < 0");
         }
 
         return _structInventory.Items[slotIndex].ItemCount;

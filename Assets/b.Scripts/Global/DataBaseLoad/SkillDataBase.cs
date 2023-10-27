@@ -15,7 +15,7 @@ public static partial class DataBase
         {
             string filePath = DataRootDirPath + DataFileName;
 
-            StructSkillData[] skillDataArray = RPG.Utils.ReadJson.Read<StructSkillData>(filePath);
+            StructSkillData[] skillDataArray = Utils.JsonHelper.Read<StructSkillData>(filePath);
 
             Debug.Log("skillDataArray " + skillDataArray.Length);
             Debug.Log("skillDataArray " + skillDataArray[0]);
@@ -27,7 +27,7 @@ public static partial class DataBase
                 for(int wTypeIndex = 0; wTypeIndex < skillData.WeaponTypeStrings.Length; wTypeIndex++)
                 {
                     string weaponTypeString = skillData.WeaponTypeStrings[wTypeIndex];
-                    EnumWeaponType weaponType = RPG.Utils.EnumParse.StringToEnum<EnumWeaponType>(weaponTypeString);
+                    EnumWeaponType weaponType = Utils.StringToEnum<EnumWeaponType>(weaponTypeString);
                     Debug.Log($"{skillData.Name} {weaponType}");
                     skillData.WeaponType |= weaponType;
                 }

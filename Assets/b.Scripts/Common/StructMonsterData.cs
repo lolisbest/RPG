@@ -20,6 +20,8 @@ namespace RPG.Common
 
         public GameObject Prefab;
 
+        public float SpawnInterval;
+
         public override string ToString()
         {
             return $"Status : {Status}\n" +
