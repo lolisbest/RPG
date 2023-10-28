@@ -24,13 +24,13 @@ public class MapManager : Singleton<MapManager>
         base.Awake();
         Initialize();
         MonstersInMap = new();
-        SpawnPlayer();
     }
 
     // Start is called before the first frame update
 
     void Start()
     {
+        SpawnPlayer();
         _spawnPoints = FindObjectsOfType<MonsterSpawnPoint>();
         SetMonsterIntoSpawnPoint();
     }
@@ -81,6 +81,8 @@ public class MapManager : Singleton<MapManager>
         GameObject playerObject = Instantiate(PlayerPrefab, PlayerSpwanPosition.position, Quaternion.identity);
         GameObject followObject = Instantiate(FollowCamPrefab, transform.position, Quaternion.identity);
         CinemachineVirtualCamera virtualCamera = followObject.GetComponent<CinemachineVirtualCamera>();
+        Debug.Log("virtualCamera: " + virtualCamera);
+        Debug.Log("Player.Instance.CameraRoot: " + Player.Instance.CameraRoot);
         virtualCamera.Follow = Player.Instance.CameraRoot;
     }
 

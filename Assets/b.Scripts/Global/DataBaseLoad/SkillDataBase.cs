@@ -28,10 +28,14 @@ public static partial class DataBase
                 {
                     string weaponTypeString = skillData.WeaponTypeStrings[wTypeIndex];
                     EnumWeaponType weaponType = Utils.StringToEnum<EnumWeaponType>(weaponTypeString);
-                    Debug.Log($"{skillData.Name} {weaponType}");
+                    //Debug.Log($"{skillData.Name} {weaponType}");
                     skillData.WeaponType |= weaponType;
                 }
 
+                Debug.Log($"skillData.TypeString : {skillData.TypeString} : null? {skillData.TypeString == null}, \"\"?: {skillData.TypeString == ""}, empty?: {skillData.TypeString == string.Empty}");
+                skillData.Type = Utils.StringToEnum<EnumSkillType>(skillData.TypeString);
+                skillData.Prefab = Resources.Load<GameObject>(skillData.PrefabPath);
+                Debug.Log($"{skillData.Name} prefab : {skillData.Prefab}");
                 skillData.Icon = Resources.Load<Sprite>(skillData.IconPath);
                 Skills.Add(skillData.Id, skillData);
 

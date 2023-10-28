@@ -28,8 +28,6 @@ public partial class Player
 
             RealStatus = IStatus.UpdateRealStatus(Status, CurrentEquips());
             IsChangedStatus = true;
-
-            _attackCollider.SetDamage(RealStatus.Atk);
         }
     }
 

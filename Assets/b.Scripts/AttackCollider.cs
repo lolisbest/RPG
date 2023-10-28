@@ -14,7 +14,8 @@ public enum Axis
 
 public class AttackCollider : MonoBehaviour
 {
-    public int Damage { get; private set; }
+    [SerializeField] private int _damage;
+    public int Damage { get => _damage; }
 
     public EnumAttackerType AttackerType;
 
@@ -25,8 +26,15 @@ public class AttackCollider : MonoBehaviour
 
     public Transform Body { get => _body; }
 
+    [SerializeField] private float _damageMultiply;
+
     public void SetDamage(int damage)
     {
-        Damage = damage;
+        _damage = (int)(damage * _damageMultiply);
+    }
+
+    public void SetBody(Transform body)
+    {
+        _body = body;
     }
 }

@@ -23,7 +23,7 @@ namespace RPG.Common
         SkillNotEnoughMP,
         SkillOnCoolTime,
         SkillSuccess,
-
+        SkillBeingDifferentAnimation,
         MouseEventOnObject,
 
     }

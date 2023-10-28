@@ -10,10 +10,12 @@ using System;
 public partial class Player : Singleton<Player>, IDamageable, IStatus
 {
     #region IStatus Implements
-    [SerializeField]
-    private StructStatus _status;
+    [SerializeField] private StructStatus _status;
 
     public StructRealStatus RealStatus { get; private set; }
+
+    [SerializeField] private Transform _actionSkillPosition;
+    [SerializeField] private Transform _projectileSkillPosition;
 
     public Transform CameraRoot;
 
@@ -31,7 +33,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
             IsChangedStatus = true;
             RealStatus = IStatus.UpdateRealStatus(_status, equipIds);
-            _attackCollider.SetDamage(RealStatus.Atk);
+            _baseSlashAttackCollider.SetDamage(RealStatus.Atk);
         }
     }
     #endregion
@@ -84,7 +86,6 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     }
     #endregion
 
-    public AttackCollider _attackCollider;
     public Animator _anim;
 
     [SerializeField] private CustomThirdPersonController _inputController;
@@ -98,8 +99,14 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     [SerializeField] private AnimationCurve _knockbackMultifly;
 
-    private Vector3 _formerPosition;
-    public bool IsHitFromMonster { get; private set; }
+    [SerializeField] private Skill _loadedSkill;
+    [SerializeField] private AttackCollider _baseSlashAttackCollider;
+
+    //private Vector3 _formerPosition;
+
+    //public bool IsHitFromMonster { get; private set; }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -194,9 +201,9 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
                 //IsHitFromMonster = true;
 
-                _characterController.enabled = false;
-                transform.position = _formerPosition;
-                _characterController.enabled = true;
+                //_characterController.enabled = false;
+                //transform.position = _formerPosition;
+                //_characterController.enabled = true;
 
                 Debug.Log("OnCollision character controller.velocity " + _characterController.velocity);
                 //Debug.Log("OnCollision character controller.velocity " + _characterController);
@@ -260,6 +267,7 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
     {
         base.Awake();
         _defence.OnCollision += AddAttackHit;
+        _baseSlashAttackCollider.SetBody(transform);
     }
 
     // 공격 피해를 담아 줌. 아직 적용된 피해가 아니고 중복되는 경우 막은 여부 취합.
@@ -299,19 +307,19 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
 
     void FixedUpdate()
     {
-        _formerPosition = transform.position;
-        IsHitFromMonster = false;
+        //_formerPosition = transform.position;
+        //IsHitFromMonster = false;
     }
 
     void Update()
     {
-        if (IsHitFromMonster)
-        {
-            _characterController.enabled = false;
-            transform.position = _formerPosition;
-            _characterController.enabled = true;
-            IsHitFromMonster = false;
-        }
+        //if (IsHitFromMonster)
+        //{
+        //    _characterController.enabled = false;
+        //    transform.position = _formerPosition;
+        //    _characterController.enabled = true;
+        //    IsHitFromMonster = false;
+        //}
     }
 
     void LateUpdate()
@@ -319,20 +327,46 @@ public partial class Player : Singleton<Player>, IDamageable, IStatus
         ApplyDamage();
     }
 
-    public ResultType ActSkill(int skillId)
+    public ResultType LoadSkill(int skillId)
     {
         if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
             StructSkillData skillData = DataBase.Skills[skillId];
             if (skillData.MpCost > Mp) return ResultType.SkillNotEnoughMP;
 
+            if (!_inputController.Skill(skillData.Type)) return ResultType.SkillBeingDifferentAnimation;
+
             Mp -= skillData.MpCost;
-            _inputController.Skill(skillId);
+
+            Debug.Log($"Player.ActSkill() {skillData.Name}");
+
+            GameObject skillObject = Instantiate(skillData.Prefab);
+            Skill skill = skillObject.GetComponent<Skill>();
+            skill.SetBody(transform);
+            skill.SetDamage(RealStatus.Atk);
+
+            if (skillData.Type == EnumSkillType.Action)
+            {
+                skill.SetTransformState(_actionSkillPosition);
+            }
+            else if (skillData.Type == EnumSkillType.Projectile)
+            {
+                skill.SetTransformState(_projectileSkillPosition);
+                (skill as ProjectileSkill).SetDirection(Camera.main.transform.forward);
+                _inputController.AlignPlayerDirectionWithCamera();
+            }
+
+            _loadedSkill = skill;
 
             return ResultType.SkillSuccess;
         }
 
         return ResultType.MouseEventOnObject;
+    }
+
+    public void ActivateSkill()
+    {
+        _loadedSkill.On();
     }
 
     private void ApplyDamage()

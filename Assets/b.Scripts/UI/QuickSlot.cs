@@ -200,7 +200,7 @@ namespace RPG.UI
                 Debug.Log($"Act Skill #{LinkedSkillId}, _coolTimeIndicator: {_coolTimeIndicator.gameObject.activeSelf}");
                 if (_coolTimeIndicator.gameObject.activeSelf) return;
 
-                if (Player.Instance.ActSkill(LinkedSkillId) == ResultType.SkillSuccess)
+                if (Player.Instance.LoadSkill(LinkedSkillId) == ResultType.SkillSuccess)
                 {
                     Debug.Log("Act Skill Success");
                     StructSkillData skillData = DataBase.Skills[LinkedSkillId];

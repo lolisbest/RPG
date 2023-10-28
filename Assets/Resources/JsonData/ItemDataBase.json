@@ -88,6 +88,15 @@
       "Id": 16
     },
     {
+      "Name": "스킬 북 [파이어 볼]",
+      "TypeString": "Consumable",
+      "IconPath": "Images/Item/Miscellaneous/Skill Book",
+      "Description" : "스킬 [파이어 볼]을 배울 수 있습니다.",
+      "BuyPrice" : 200,
+      "SkillId" : 2,
+      "Id": 17
+    },
+    {
       "Name": "하급 갑옷",
       "TypeString": "Equipment",
       "IconPath": "Images/Item/Equipment/Inferior Armor",

@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 7037330866761581426}
   m_Layer: 0
   m_Name: Bear
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1093,8 +1093,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   AttackerType: 2
   _body: {fileID: 421660671835013455}
+  _damageMultiply: 0
 --- !u!136 &6087794981755356937
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1301,8 +1303,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   AttackerType: 2
   _body: {fileID: 421660671835013455}
+  _damageMultiply: 0
 --- !u!1 &3258414231651155624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,8 +2179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   AttackerType: 2
   _body: {fileID: 421660671835013455}
+  _damageMultiply: 0
 --- !u!136 &8453291840472531900
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2801,8 +2807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   AttackerType: 2
   _body: {fileID: 421660671835013455}
+  _damageMultiply: 0
 --- !u!1 &8182559878413260105
 GameObject:
   m_ObjectHideFlags: 0

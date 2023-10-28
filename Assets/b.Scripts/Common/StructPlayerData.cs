@@ -64,7 +64,7 @@ namespace RPG.Common
             status.Level = 1;
             status.Experience = 0;
             status.LeftStatusPoints = 0;
-
+            status.AvailableSkillIds = new int[2] { 1, 2 };
             return status;
         }
     }

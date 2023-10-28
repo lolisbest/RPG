@@ -6,6 +6,14 @@ using System;
 
 namespace RPG.Common
 {
+    public enum EnumSkillType
+    {
+        None,
+        Action,
+        Point,
+        Projectile,
+    }
+
     [Serializable]
     public struct StructSkillData
     {
@@ -15,9 +23,16 @@ namespace RPG.Common
         public Sprite Icon;
         public string Description;
         public int MpCost;
+        
         public string[] WeaponTypeStrings;
         public EnumWeaponType WeaponType;
+
+        public string TypeString;
+        public EnumSkillType Type;
+
         public float CoolTime;
+        public string PrefabPath;
+        public GameObject Prefab;
 
         public override string ToString()
         {

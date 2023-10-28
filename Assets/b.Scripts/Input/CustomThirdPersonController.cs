@@ -108,7 +108,9 @@ namespace RPG.Input
         private int _animIDMotionSpeed;
 
         private int _animIDSlash;
-        private int _animIDSkill;
+        private int _animIDActionSkill;
+        private int _animIDProjectileSkill;
+
         private int _animIDBlock;
         private int _animIDHit;
         private int _animIDDeath;
@@ -322,7 +324,6 @@ namespace RPG.Input
         private void LateUpdate()
         {
             CameraRotation();
-            ClearSkillInput();
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace RPG.Input
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
 
             _animIDSlash = Animator.StringToHash("Slash");
-            _animIDSkill = Animator.StringToHash("Skill");
+            _animIDActionSkill = Animator.StringToHash("ActionSkill");
+            _animIDProjectileSkill = Animator.StringToHash("ProjectileSkill");
             _animIDBlock = Animator.StringToHash("Block");
             _animIDHit = Animator.StringToHash("Hit");
             _animIDDeath = Animator.StringToHash("Death");
@@ -388,23 +390,20 @@ namespace RPG.Input
             }
         }
 
-        public void Skill(int skillId)
+        public bool Skill(EnumSkillType skillType)
         {
-            if (IsIdleBlend && skillId > 0)
+            Debug.Log($"ThirdPersonController.Skill() {skillType}");
+            if (IsIdleBlend && skillType == EnumSkillType.Action)
             {
-                _animator.SetInteger(_animIDSkill, skillId);
+                _animator.SetTrigger(_animIDActionSkill);
+                return true;
             }
-        }
-
-        public void ClearSkillInput()
-        {
-            if (!IsIdleBlend)
+            else if (IsIdleBlend && skillType == EnumSkillType.Projectile)
             {
-                // Idle이 아니라면 Skill Parameter를 0으로 매 프레임마다 초기화
-                // 1) Idle 이 아니고 스킬 사용 중이라면 다음번 상태를 위한 셋팅.
-                // 2) Idle 이 아니고 다른 행동 중이라면 스킬 입력을 버림
-                _animator.SetInteger(_animIDSkill, 0);
+                _animator.SetTrigger(_animIDProjectileSkill);
+                return true;
             }
+            return false;
         }
 
         private void Block()
@@ -482,7 +481,6 @@ namespace RPG.Input
                                   _mainCamera.transform.eulerAngles.y;
 
                 deltaY = Mathf.Abs(NormalizeAngle(transform.eulerAngles.y - _targetRotation));
-
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
 
@@ -1003,6 +1001,14 @@ namespace RPG.Input
                 Debug.Log("Player.ToggleEscMenu()");
                 InGameUIManager.Instance.ToggleEscWindow();
             }
+        }
+
+        public void AlignPlayerDirectionWithCamera()
+        {
+            Vector3 cameraForward = Camera.main.transform.forward;
+            cameraForward.y = 0;
+            Quaternion newRotation = Quaternion.LookRotation(cameraForward);
+            transform.rotation = newRotation;
         }
     }
 }
