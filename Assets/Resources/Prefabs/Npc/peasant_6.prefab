@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 1405028256403629941}
   - component: {fileID: 1405028256403629938}
   - component: {fileID: 1405028256403629943}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: peasant_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}

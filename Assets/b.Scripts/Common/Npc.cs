@@ -50,7 +50,7 @@ namespace RPG.Common
         // Start is called before the first frame update
         void Start()
         {
-            gameObject.layer = InitialLayer;
+            gameObject.layer = LayerIndex;
             Data = DataBase.Npcs[Id];
             //Debug.Log($"{name} NameUI : " + NameUI);
             NameUI.SetName(Data.Name);

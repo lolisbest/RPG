@@ -610,9 +610,8 @@ GameObject:
   - component: {fileID: 5997148670947449653}
   - component: {fileID: 5997148670947449641}
   - component: {fileID: 5997148670947449640}
-  - component: {fileID: 5997148670947449642}
   - component: {fileID: 7037330866761581426}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Bear
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -693,6 +692,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6486d646b5096a44c9b9c6e5ad92b369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _status:
+    Name: 
+    Str: 0
+    End: 0
+    Sta: 0
+    Mag: 0
+    Level: 0
+    Experience: 0
+    LeftStatusPoints: 0
+    AvailableSkillIds: 
+  _hp: 0
+  _mp: 0
   _dropStartPosition: {fileID: 2267720428700308999}
   MonsterUI: {fileID: 799139079327635145}
   _state: 0
@@ -715,7 +726,7 @@ MonoBehaviour:
   - {fileID: 7366971822237657055}
   - {fileID: 6216441103017867060}
   - {fileID: 7470671368778945788}
-  _hitCollider: {fileID: 5997148670947449642}
+  _hitCollider: {fileID: 0}
   _characterController: {fileID: 7037330866761581426}
   _minimapIconRenderer: {fileID: 6224679216768527325}
   AttackStateStrings:
@@ -725,21 +736,6 @@ MonoBehaviour:
   - Base Layer.Attack.Attack3
   - Base Layer.Attack.Attack4
   AttackStateHashes: 
-  _hp: 0
-  _mp: 0
---- !u!65 &5997148670947449642
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1049860471085784053}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7, y: 1.7, z: 1.7}
-  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!143 &7037330866761581426
 CharacterController:
   m_ObjectHideFlags: 0
@@ -752,7 +748,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.4
-  m_Radius: 1.15
+  m_Radius: 1.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -1097,6 +1093,8 @@ MonoBehaviour:
   AttackerType: 2
   _body: {fileID: 421660671835013455}
   _damageMultiply: 0
+  _hitEffectPrefab: {fileID: 0}
+  _isKeepOnHit: 0
 --- !u!136 &6087794981755356937
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1307,6 +1305,8 @@ MonoBehaviour:
   AttackerType: 2
   _body: {fileID: 421660671835013455}
   _damageMultiply: 0
+  _hitEffectPrefab: {fileID: 0}
+  _isKeepOnHit: 0
 --- !u!1 &3258414231651155624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,6 +2183,8 @@ MonoBehaviour:
   AttackerType: 2
   _body: {fileID: 421660671835013455}
   _damageMultiply: 0
+  _hitEffectPrefab: {fileID: 0}
+  _isKeepOnHit: 0
 --- !u!136 &8453291840472531900
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2811,6 +2813,8 @@ MonoBehaviour:
   AttackerType: 2
   _body: {fileID: 421660671835013455}
   _damageMultiply: 0
+  _hitEffectPrefab: {fileID: 0}
+  _isKeepOnHit: 0
 --- !u!1 &8182559878413260105
 GameObject:
   m_ObjectHideFlags: 0

@@ -188,18 +188,18 @@ public class ShopWindow : MonoBehaviour
 
     void Update()
     {
-        if(Player.Instance.IsChangedInventory)
+        if(GameManager.Instance.Player.IsChangedInventory)
         {
             Debug.Log("Update Update");
             UpdatePlayerSlots();
-            Player.Instance.IsChangedInventory = false;
+            GameManager.Instance.Player.IsChangedInventory = false;
         }
     }
 
     public void Open(int npcId)
     {
         NpcName.text = DataBase.Npcs[npcId].Name;
-        PlayerName.text = Player.Instance.Status.Name;
+        PlayerName.text = GameManager.Instance.Player.Status.Name;
         int[] shopItemIds = DataBase.Npcs[npcId].SellingItems.Select(x => x).ToArray();
         UpdateShopSlots(shopItemIds);
         UpdatePlayerSlots();

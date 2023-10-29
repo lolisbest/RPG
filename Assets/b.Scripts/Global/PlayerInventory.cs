@@ -6,7 +6,7 @@ using RPG.Common;
 using RPG.UI;
 using System.Linq;
 
-public partial class Player
+public partial class Player : DamageableStatusMonoBehaviour
 {
     [SerializeField]
     private StructInventory _structInventory;
@@ -32,9 +32,7 @@ public partial class Player
     }
 
     private bool _isChangedInventory;
-    /// <summary>
-    /// true가 할당되면 UpdateStatus 호출
-    /// </summary>
+
     public bool IsChangedInventory
     {
         get => _isChangedInventory;

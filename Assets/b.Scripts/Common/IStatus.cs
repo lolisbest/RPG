@@ -7,7 +7,10 @@ namespace RPG.Common
     public interface IStatus
     {
         public StructRealStatus RealStatus { get; }
+
         public StructStatus Status { get; }
+
+        public bool IsChangedStatus { get; }
 
         public static StructRealStatus UpdateRealStatus(StructStatus newStatus, int[] equipIds)
         {
@@ -86,5 +89,7 @@ namespace RPG.Common
                 newAtk, newDef, newMaxHp, newMaxMp
                 );
         }
+
+        public void SetStatus(StructStatus status);
     }
 }

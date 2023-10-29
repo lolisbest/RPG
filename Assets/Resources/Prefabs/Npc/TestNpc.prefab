@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6338664638271760038}
   - component: {fileID: 6338664638271760037}
   - component: {fileID: 6338664638271760036}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TestNpc
   m_TagString: Untagged
   m_Icon: {fileID: 0}

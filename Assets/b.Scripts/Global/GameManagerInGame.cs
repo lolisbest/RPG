@@ -14,8 +14,6 @@ public partial class GameManager : Singleton<GameManager>
     [SerializeField] private GameObject _minimapCameraPrefab;
     [SerializeField] private FollowPosition _minimapFollowPosition;
 
-    [SerializeField] private GameObject _playerPrefab;
-
     public void InGame()
     {
         Debug.Log("GameManager UIManager");
@@ -39,7 +37,7 @@ public partial class GameManager : Singleton<GameManager>
         GameObject minimapCamera = Instantiate(_minimapCameraPrefab);
         if (minimapCamera.TryGetComponent<FollowPosition>(out _minimapFollowPosition))
         {
-            _minimapFollowPosition.SetTarget(@Player.Instance.transform);
+            _minimapFollowPosition.SetTarget(@Player.transform);
         }
     }
 

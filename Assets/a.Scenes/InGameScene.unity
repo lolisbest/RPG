@@ -250,7 +250,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 16384
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -957,6 +957,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7301242134392145097, guid: 2dc8ceec5e843c5469bc7f9069368855,
+        type: 3}
+      propertyPath: _playerPrefab
+      value: 
+      objectReference: {fileID: 1839089372817905746, guid: 14f923e1bbd887241859ecc9f237f907,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dc8ceec5e843c5469bc7f9069368855, type: 3}
 --- !u!1001 &485373452
@@ -1035,6 +1041,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 46559435, guid: b8b08aec1a9ced544be0ebe2a6a4e0ee, type: 3}
+      propertyPath: m_Size.z
+      value: 0.50822294
+      objectReference: {fileID: 0}
+    - target: {fileID: 46559435, guid: b8b08aec1a9ced544be0ebe2a6a4e0ee, type: 3}
+      propertyPath: m_Center.x
+      value: 0.6803906
+      objectReference: {fileID: 0}
+    - target: {fileID: 46559435, guid: b8b08aec1a9ced544be0ebe2a6a4e0ee, type: 3}
+      propertyPath: m_Center.z
+      value: -0.0070220884
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233292806, guid: b8b08aec1a9ced544be0ebe2a6a4e0ee, type: 3}
+      propertyPath: m_Size.z
+      value: 0.50620055
+      objectReference: {fileID: 0}
+    - target: {fileID: 1233292806, guid: b8b08aec1a9ced544be0ebe2a6a4e0ee, type: 3}
+      propertyPath: m_Center.z
+      value: -0.00912065
+      objectReference: {fileID: 0}
     - target: {fileID: 8603741630139016343, guid: b8b08aec1a9ced544be0ebe2a6a4e0ee,
         type: 3}
       propertyPath: m_RootOrder
@@ -1423,7 +1449,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2047
+    m_Bits: 43007
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

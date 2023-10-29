@@ -171,7 +171,7 @@ namespace RPG.UI
             _iconRectTransform = Icon.rectTransform;
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (LinkedSkillId > 0 && LeftCoolTime > 0)
             {
@@ -183,7 +183,7 @@ namespace RPG.UI
         {
             if(LinkedInventorySlotIndex != -1)
             {
-                int leftItemCount = Player.Instance.ConsumeItem(LinkedInventorySlotIndex);
+                int leftItemCount = GameManager.Instance.Player.ConsumeItem(LinkedInventorySlotIndex);
 
                 if (leftItemCount == 0)
                 {
@@ -199,12 +199,16 @@ namespace RPG.UI
             {
                 Debug.Log($"Act Skill #{LinkedSkillId}, _coolTimeIndicator: {_coolTimeIndicator.gameObject.activeSelf}");
                 if (_coolTimeIndicator.gameObject.activeSelf) return;
-
-                if (Player.Instance.LoadSkill(LinkedSkillId) == ResultType.SkillSuccess)
+                ResultType loadResult = GameManager.Instance.Player.LoadSkill(LinkedSkillId);
+                if (loadResult == ResultType.SkillSuccess)
                 {
                     Debug.Log("Act Skill Success");
                     StructSkillData skillData = DataBase.Skills[LinkedSkillId];
                     LeftCoolTime = skillData.CoolTime;
+                }
+                else
+                {
+                    Debug.Log("LoadSkill Fail " + loadResult);
                 }
             }
         }
@@ -220,7 +224,7 @@ namespace RPG.UI
             }
             else
             {
-                StructInventorySlot slot = Player.Instance.Items[LinkedInventorySlotIndex];
+                StructInventorySlot slot = GameManager.Instance.Player.Items[LinkedInventorySlotIndex];
                 if (slot.ItemId == -1 || slot.ItemCount == 0)
                 {
                     ClearQuickSlot();

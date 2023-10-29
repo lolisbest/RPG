@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5880065271229843239}
   - component: {fileID: 3411891309372561734}
   - component: {fileID: 5086906373353303803}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FireBall
   m_TagString: PlayerAttackEffect
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4034805282521792022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.883, y: 0, z: -9.65}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4710,9 +4710,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  AttackerType: 1
-  _body: {fileID: 0}
-  _damageMultiply: 2
+  _attacker: {fileID: 0}
+  _damageMultiply: 1
+  _hitEffectPrefab: {fileID: 7045927539163416590, guid: 842eed31fda1bc549928f135bd70e405,
+    type: 3}
+  _rigidbody: {fileID: 3411891309372561734}
+  _isKeepOnHit: 0
 --- !u!54 &3411891309372561734
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4744,8 +4747,5 @@ MonoBehaviour:
   _durationTime: 1
   _attackColliders:
   - {fileID: 5880065271229843239}
-  _hitEffectPrefab: {fileID: 7045927539163416590, guid: 842eed31fda1bc549928f135bd70e405,
-    type: 3}
-  _isKeepOnHit: 0
   _rigidbody: {fileID: 3411891309372561734}
   _speed: 60

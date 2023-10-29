@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1452745587847040770}
   - component: {fileID: 1452745587847040768}
   - component: {fileID: 1452745587847040769}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: vfxgraph_Slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 1452745588458824755}
   - component: {fileID: 1452745588458824754}
   - component: {fileID: 5298550240854556467}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: vfx_Slash
   m_TagString: PlayerAttackEffect
   m_Icon: {fileID: 0}
@@ -176,9 +176,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc98f5b9b1c3ebe43817fb5e667f713b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackerType: 1
-  _body: {fileID: 0}
+  _damage: 0
+  _attacker: {fileID: 0}
   _damageMultiply: 1
+  _hitEffectPrefab: {fileID: 0}
+  _isKeepOnHit: 1
 --- !u!1 &7488924678134934512
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +192,7 @@ GameObject:
   - component: {fileID: 9148108318737925508}
   - component: {fileID: 352691367826431974}
   - component: {fileID: 104153383522503378}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ThreeSlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

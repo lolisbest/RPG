@@ -225,7 +225,7 @@ namespace RPG.Input
             _fallTimeoutDelta = FallTimeout;
 
             @UIManager = InGameUIManager.Instance;
-            @Player = Player.Instance;
+            @Player = GameManager.Instance.Player;
         }
 
         private void FixedUpdate()
@@ -785,11 +785,13 @@ namespace RPG.Input
                     ObjectToInteractWith = null;
                 }
 
-                int exceptLayers = ~InteractableObject.InitialLayer;
+                int targetLayerMask = 1 << InteractableObject.LayerIndex;
+
                 Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * CameraRayCastMaxDistance);
 
                 // 카메라 방향으로 상호 작용 가능한 오브젝트 검사
-                if (Physics.SphereCast(Camera.main.transform.position, Radius, Camera.main.transform.forward, out RaycastHit hit, CameraRayCastMaxDistance, exceptLayers, QueryTriggerInteraction.UseGlobal))
+                if (Physics.SphereCast(Camera.main.transform.position, Radius, Camera.main.transform.forward, 
+                    out RaycastHit hit, CameraRayCastMaxDistance, targetLayerMask))
                 {
                     ObjectToInteractWith = hit.transform.gameObject.GetComponent<InteractableObject>();
                 }

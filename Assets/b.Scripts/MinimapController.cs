@@ -30,7 +30,7 @@ public class MinimapController : MonoBehaviour
         GameObject minimapCameraObject = Instantiate(_minimapCameraPrefab);
         Camera minimapCamera = minimapCameraObject.GetComponent<Camera>();
         FollowPosition followPosition = minimapCameraObject.GetComponent<FollowPosition>();
-        followPosition.SetTarget(Player.Instance.transform);
+        followPosition.SetTarget(GameManager.Instance.Player.transform);
         _minimapCamera = minimapCamera;
 
         // 초기에 미니맵 줌을 최대 확대로

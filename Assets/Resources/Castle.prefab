@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7296909, y: 1.2495276, z: 0.66910636}
-  m_Center: {x: 0.7155746, y: 0.6238149, z: -0.0298354}
+  m_Size: {x: 0.659322, y: 1.2495276, z: 0.4985683}
+  m_Center: {x: 0.68039054, y: 0.6238149, z: -0.0021947625}
 --- !u!1 &183429002
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 183429003}
   - component: {fileID: 183429004}
   - component: {fileID: 183429005}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InBaseCamp
   m_TagString: PlaceBoundary
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 223069425}
   - component: {fileID: 223069426}
   - component: {fileID: 223069427}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OutBaseCamp
   m_TagString: PlaceBoundary
   m_Icon: {fileID: 0}
@@ -206,8 +206,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7296946, y: 1.2495276, z: 0.66910636}
-  m_Center: {x: -0.7210892, y: 0.6238149, z: -0.0298354}
+  m_Size: {x: 0.7296946, y: 1.2495276, z: 0.49009836}
+  m_Center: {x: -0.7210891, y: 0.6238149, z: -0.0010695783}
 --- !u!1 &1525509283
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,8 +251,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.80593044, y: 0.7276393, z: 0.66910636}
-  m_Center: {x: 0.014831284, y: 0.8847606, z: -0.029835401}
+  m_Size: {x: 0.80593044, y: 0.7276393, z: 0.59123915}
+  m_Center: {x: 0.014831284, y: 0.8847606, z: -0.065281495}
 --- !u!1 &8603741630139016346
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,7 +6536,7 @@ PrefabInstance:
     - target: {fileID: 7374278236729201979, guid: dc07df76fa6da5646a7b3a0c6a34dd86,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc07df76fa6da5646a7b3a0c6a34dd86, type: 3}

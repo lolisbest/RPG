@@ -79,20 +79,20 @@ namespace RPG.UI
 
         public void Buy()
         {
-            if (Player.Instance.Money < TotalPrice)
+            if (GameManager.Instance.Player.Money < TotalPrice)
                 return;
 
             if (ItemCount == 0) return;
 
             if (ItemCount < 0) throw new System.Exception("Buy ItemCount < 0");
 
-            ResultType result = Player.Instance.AddItem(TransactionItemData.Id, ItemCount);
+            ResultType result = GameManager.Instance.Player.AddItem(TransactionItemData.Id, ItemCount);
             Debug.Log("Buy result: " + result);
 
             if (result == ResultType.Success)
             {
                 // 추가가 완료되면 골드 소비
-                Player.Instance.AddMoney(-TotalPrice);
+                GameManager.Instance.Player.AddMoney(-TotalPrice);
                 Close();
             }
 
@@ -101,7 +101,7 @@ namespace RPG.UI
 
         public void Sell()
         {
-            ResultType result = Player.Instance.SellItem(_toSellplayerInventorySlotIndx, ItemCount);
+            ResultType result = GameManager.Instance.Player.SellItem(_toSellplayerInventorySlotIndx, ItemCount);
             //Debug.Log("Sell result: " + result);
 
             if (result == ResultType.Success)
@@ -132,7 +132,7 @@ namespace RPG.UI
             Mode = TransactionMode.Player;
             _toSellplayerInventorySlotIndx = toSellPlayerSlotIndex;
             // 이름, 테두리 색, 아이콘, 개당 가격 설정
-            StructInventorySlot playerSlot = Player.Instance.Items[_toSellplayerInventorySlotIndx];
+            StructInventorySlot playerSlot = GameManager.Instance.Player.Items[_toSellplayerInventorySlotIndx];
             StructItemData itemData = DataBase.Items[playerSlot.ItemId];
             TransactionItemData = itemData;
             // 개수는 1부터
@@ -166,9 +166,9 @@ namespace RPG.UI
         {
             if (Mode == TransactionMode.Player)
             {
-                if (Player.Instance.Items[_toSellplayerInventorySlotIndx].ItemCount < ItemCount + delta)
+                if (GameManager.Instance.Player.Items[_toSellplayerInventorySlotIndx].ItemCount < ItemCount + delta)
                 {
-                    int correctCount = Player.Instance.Items[_toSellplayerInventorySlotIndx].ItemCount;
+                    int correctCount = GameManager.Instance.Player.Items[_toSellplayerInventorySlotIndx].ItemCount;
                     Debug.Log($"보유 개수 부족. 판매 개수 제한 {ItemCount + delta} -> {correctCount}");
                     ItemCount = correctCount;
                     return;
@@ -176,9 +176,9 @@ namespace RPG.UI
             }
             else if (Mode == TransactionMode.ShopKeeper)
             {
-                if (Player.Instance.Money < _itemUnitPrice * (ItemCount + delta))
+                if (GameManager.Instance.Player.Money < _itemUnitPrice * (ItemCount + delta))
                 {
-                    int correctCount = (int)(Player.Instance.Money / (float)_itemUnitPrice);
+                    int correctCount = (int)(GameManager.Instance.Player.Money / (float)_itemUnitPrice);
                     Debug.Log($"보유 골드 부족. 구매 개수 제한 {ItemCount + delta} -> {ItemCount}");
                     ItemCount = correctCount;
                     return;

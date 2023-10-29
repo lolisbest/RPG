@@ -85,20 +85,20 @@ namespace RPG.UI
         public void Equip()
         {
             Debug.Log($"Equip : {ItemNameText.text}");
-            Player.Instance.EquipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
+            GameManager.Instance.Player.EquipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
         }
 
         public void Unequip()
         {
             Debug.Log($"{name} Unequip CurrentSelectedSlotIndex : {InGameUIManager.Instance.CurrentSelectedSlotIndex}");
             Debug.Log($"{name} Unequip : {ItemNameText.text}");
-            Player.Instance.UnequipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
+            GameManager.Instance.Player.UnequipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
         }
 
         public void Use()
         {
             Debug.Log($"Use : {ItemNameText.text}");
-            Player.Instance.ConsumeItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
+            GameManager.Instance.Player.ConsumeItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
         }
 
         private void SetStatusOption(int attack, int def, int maxHp, int maxMp)

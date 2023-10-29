@@ -6,10 +6,13 @@ using UnityEngine;
 public class ProjectileSkill : Skill
 {
     [SerializeField] private Rigidbody _rigidbody;
+    
     [SerializeField] float _speed;
 
-
     public Vector3 Direction { get; private set; }
+
+    private Vector3 _formerPosition;
+
     public void SetDirection(Vector3 direction)
     {
         Direction = direction.normalized;
@@ -23,6 +26,6 @@ public class ProjectileSkill : Skill
 
     void Start()
     {
-        _rigidbody.velocity = Direction * _speed;
+        SetVelocity(Direction * _speed);
     }
 }

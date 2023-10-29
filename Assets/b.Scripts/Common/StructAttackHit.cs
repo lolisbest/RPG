@@ -12,5 +12,6 @@ namespace RPG.Common
         public int RawDamage;
         public AttackCollider AttackCollider;
         public Vector3 HitPosition;
+        public Transform Attacker;
     }
 }

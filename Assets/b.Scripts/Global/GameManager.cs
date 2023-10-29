@@ -5,9 +5,16 @@ using RPG.Common;
 using RPG.UI;
 using System;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public partial class GameManager : Singleton<GameManager>
 {
+    public Player @Player { get; private set; }
+
+    public GameObject FollowCamPrefab;
+
+    [SerializeField] private GameObject _playerPrefab;
+
     public override void Initialize()
     {
         throw new System.NotImplementedException();
@@ -25,14 +32,17 @@ public partial class GameManager : Singleton<GameManager>
         DataBase.Load();
 
         CurrentPlayerData = StructPlayerData.GetTempData();
-        //Debug.Log("Test " + CurrentPlayerData);
+        Debug.Log("Test " + CurrentPlayerData);
 
         InteractableObject.SetLayerMaskValue();
+
+        Debug.Log("Awake() _playerPrefab " + _playerPrefab);
     }
 
     void Start()
     {
         Debug.Log("GameManager.Start");
+        Debug.Log("Start() _playerPrefab " + _playerPrefab);
     }
 
     private void OnEnable()
@@ -59,4 +69,32 @@ public partial class GameManager : Singleton<GameManager>
     {
 
     }
+
+    public void SpawnPlayer()
+    {
+        Vector3 spawnPosition = new Vector3(CurrentPlayerData.SpwanX, CurrentPlayerData.SpwanY, CurrentPlayerData.SpwanZ);
+
+        Debug.Log("SpawnPlayer() PlayerPrefab " + _playerPrefab);
+        Debug.Log("spawnPosition " + spawnPosition);
+        GameObject playerObject = Instantiate(_playerPrefab, spawnPosition, Quaternion.identity);
+        Player player = playerObject.GetComponent<Player>();
+        if (!player) Utils.CheckNull(player, "loaded player is null");
+
+        GameObject followObject = Instantiate(FollowCamPrefab, transform.position, Quaternion.identity);
+        CinemachineVirtualCamera virtualCamera = followObject.GetComponent<CinemachineVirtualCamera>();
+
+        Debug.Log("virtualCamera: " + virtualCamera);
+        Debug.Log("Player.Instance.CameraRoot: " + player.CameraRoot);
+
+        virtualCamera.Follow = player.CameraRoot;
+
+        @Player = player;
+    }
+
+    public void RespawnPlayer(Vector3 respawnPosition)
+    {
+        //Debug.Log("Respwan Position " + PlayerSpwanPosition.position);
+        @Player.Spwan(respawnPosition);
+    }
+
 }

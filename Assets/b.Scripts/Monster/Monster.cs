@@ -20,7 +20,7 @@ namespace RPG.Monster
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
-    public partial class Monster : MonoBehaviour, IStatus, IDamageable
+    public partial class Monster : DamageableStatusMonoBehaviour
     {
         #region Animation String Hashs
         private readonly int _animState = Animator.StringToHash("State");
@@ -37,33 +37,6 @@ namespace RPG.Monster
         private readonly int _animStateRun = Animator.StringToHash("Base Layer.Run");
         private readonly int _animStateAttack = Animator.StringToHash("Base Layer.Attack");
 
-        #endregion
-
-        #region IDamageable Property Implements
-        public bool IsDie { get; protected set; }
-        public void OnDeath()
-        {
-            //Debug.Log($"{name} die");
-            _questManager.CallbackQuestCondition(QuestConditionType.Kill, Id, 1);
-            IsDie = true;
-            gameObject.SetActive(false);
-
-            _itemDropper.DropItemBox(Id, _dropStartPosition.position);
-        }
-
-        public void OnDamage(int damageAmount)
-        {
-            //Debug.Log($"{name} : {Hp} -> {Hp - damageAmount}");
-
-            //Debug.Log("DropStartPosition.position " + DropStartPosition.position);
-            InGameUIManager.Instance.ShowDamageText(damageAmount, _dropStartPosition.position);
-
-            Hp -= damageAmount;
-            if (Hp <= 0f)
-            {
-                OnDeath();
-            }
-        }
         #endregion
 
         [SerializeField] private Transform _dropStartPosition;
@@ -193,10 +166,9 @@ namespace RPG.Monster
             Utils.CheckNull(_anim, "_anim is null");
             Utils.CheckNull(_attackColliders, "_attackCollider is null");
             Utils.CheckNull(_dropStartPosition, "_dropStartPosition is null");
-            Utils.CheckNull(_hitCollider, "_hitCollider is null");
-            _hitCollider.isTrigger = true;
 
             SetAttackStateHashes();
+            TakenHits = new();
         }
 
         void Start()
@@ -235,33 +207,31 @@ namespace RPG.Monster
             transform.rotation = _initialRotation;
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            //Debug.Log($"{name} collision with {other.transform.parent?.name}");
-            if (other.CompareTag(StringStatic.PlayerAttackEffectTag))
-            {
-                AttackCollider attackCollider = other.gameObject.GetComponent<AttackCollider>();
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    Debug.Log($"{name} OnTriggerEnter. ohter:{other.GetType()} + {other.gameObject.name}");
+        //    //Debug.Log($"{name} collision with {other.transform.parent?.name}");
+        //    if (other.CompareTag(StringStatic.PlayerAttackEffectTag))
+        //    {
+        //        AttackCollider attackCollider = other.gameObject.GetComponent<AttackCollider>();
 
-                if (attackCollider != null)
-                {
-                    Debug.Log($"{name} hit attackCollider.Damage: " + attackCollider.Damage);
-                    int realDamage = Utils.Calculate.RealDamage(attackCollider.Damage, RealStatus.Def);
-                    if (realDamage != 0)
-                    {
-                        OnDamage(realDamage);
+        //        if (attackCollider != null)
+        //        {
+        //            StructAttackHit attackHit = new StructAttackHit
+        //            {
+        //                AttackCollider = attackCollider,
+        //                AttackScriptId = attackCollider.GetHashCode(),
+        //                IsBlocked = false,
+        //                IsApplied = false,
+        //                RawDamage = attackCollider.Damage,
+        //                HitPosition = _dropStartPosition.position,
+        //                Attacker = attackCollider.Attacker
+        //            };
 
-                        if (!ToAttackTarget)
-                        {
-                            ToAttackTarget = attackCollider.Body;
-                        }
-                    }
-                    else
-                    {
-                        OnDamage(0);
-                    }
-                }
-            }
-        }
+        //            OnDamage(attackHit);
+        //        }
+        //    }
+        //}
 
         private void Update()
         {
@@ -303,6 +273,11 @@ namespace RPG.Monster
                 default:
                     break;
             }
+        }
+        
+        void LateUpdate()
+        {
+            ApplyDamage();
         }
 
         private float? GetDistanceFromTarget(Transform target)
@@ -636,6 +611,13 @@ namespace RPG.Monster
 
             //Debug.Log("Not Attack State");
             return false;
+        }
+
+        public void SetMonsterDetails(int monsterId)
+        {
+            StructMonsterData monsterData = DataBase.Monsters[monsterId];
+            Status = monsterData.Status;
+            SpawnInterval = monsterData.SpawnInterval;
         }
     }
 }

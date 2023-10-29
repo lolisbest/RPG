@@ -138,7 +138,9 @@ namespace RPG.Common
             playerData.Status = StructStatus.GetTempData();
             playerData.Inventory = StructInventory.GetTempData();
             playerData.HumanEquipSlots = StructHumanEquipSlots.GetTempData();
-
+            playerData.SpwanX = 358.15f;
+            playerData.SpwanY = 0.84f;
+            playerData.SpwanZ = 101.78f;
             return playerData;
         }
     }

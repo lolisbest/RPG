@@ -14,6 +14,8 @@ public class Defence : MonoBehaviour
 
     [SerializeField] private Collider _collider;
 
+    [SerializeField] private DamageableStatusMonoBehaviour _body;
+
     /// <summary>
     /// 1) Player.AddAttackHit
     /// </summary>
@@ -25,11 +27,11 @@ public class Defence : MonoBehaviour
         TryDefence(other);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        //Debug.Log($"OnTriggerStay {other.name}");
-        TryDefence(other);
-    }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    //Debug.Log($"OnTriggerStay {other.name}");
+    //    TryDefence(other);
+    //}
 
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -46,10 +48,10 @@ public class Defence : MonoBehaviour
         AttackCollider attackCollider = otherCollider.GetComponent<AttackCollider>();
         if (attackCollider != null)
         {
-            if (attackCollider.AttackerType == EnumAttackerType.Player)
+            if (attackCollider.Attacker == _body.transform)
                 return;
 
-            float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
+            //float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
 
             //Debug.Log("Denfence Ok");
             Vector3 closestPoint = otherCollider.ClosestPoint(transform.position);
@@ -63,43 +65,44 @@ public class Defence : MonoBehaviour
                     IsBlocked = true,
                     IsApplied = false,
                     RawDamage = attackCollider.Damage,
-                    HitPosition = closestPoint
+                    HitPosition = closestPoint,
+                    Attacker = attackCollider.Attacker
                 });
         }
     }
 
-    private void TryDefence(Collision collision)
-    {
-        AttackCollider attackCollider = collision.gameObject.GetComponent<AttackCollider>();
-        if (attackCollider != null)
-        {
-            if (attackCollider.AttackerType == EnumAttackerType.Player)
-                return;
+    //private void TryDefence(Collision collision)
+    //{
+    //    AttackCollider attackCollider = collision.gameObject.GetComponent<AttackCollider>();
+    //    if (attackCollider != null)
+    //    {
+    //        if (attackCollider.AttackerType == EnumAttackerType.Player)
+    //            return;
 
-            //float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
+    //        //float dot = Vector3.Dot(attackCollider.transform.up, transform.forward);
 
-            Vector3 sum = Vector3.zero;
+    //        Vector3 sum = Vector3.zero;
 
-            foreach(var contact in collision.contacts)
-            {
-                sum += contact.point;
-            }
+    //        foreach(var contact in collision.contacts)
+    //        {
+    //            sum += contact.point;
+    //        }
 
-            Vector3 averagePosition = sum / collision.contacts.Length;
+    //        Vector3 averagePosition = sum / collision.contacts.Length;
 
-            OnCollision?.Invoke(
-                new StructAttackHit
-                {
-                    AttackCollider = attackCollider,
-                    AttackScriptId = attackCollider.GetHashCode(),
-                    IsBlocked = true,
-                    IsApplied = false,
-                    RawDamage = attackCollider.Damage,
-                    HitPosition = averagePosition
-                });
+    //        OnCollision?.Invoke(
+    //            new StructAttackHit
+    //            {
+    //                AttackCollider = attackCollider,
+    //                AttackScriptId = attackCollider.GetHashCode(),
+    //                IsBlocked = true,
+    //                IsApplied = false,
+    //                RawDamage = attackCollider.Damage,
+    //                HitPosition = averagePosition
+    //            });
 
-        }
-    }
+    //    }
+    //}
 
     public void OnBlockSuccess()
     {

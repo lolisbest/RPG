@@ -6,9 +6,9 @@
       "PrefabPath" : "Prefabs/Skill/ThreeSlash",
       "IconPath" : "Images/Skill/ThreeSlash",
       "Description": "검을 세 번 빠르게 휘두릅니다.",
-      "MpCost" : 0,
+      "MpCost" : 0.1,
       "WeaponTypeStrings" : ["TwoHandedSword" ],
-      "CoolTime" : 0,
+      "CoolTime" : 0.1,
       "TypeString" : "Action"
     },
     {
@@ -17,9 +17,9 @@
       "PrefabPath" : "Prefabs/Skill/FireBall",
       "IconPath" : "Images/Skill/FireBall",
       "Description": "화염 구체를 던집니다.",
-      "MpCost" : 0,
+      "MpCost" : 0.1,
       "WeaponTypeStrings" : [],
-      "CoolTime" : 0,
+      "CoolTime" : 0.1,
       "TypeString" : "Projectile"
     }
   ]

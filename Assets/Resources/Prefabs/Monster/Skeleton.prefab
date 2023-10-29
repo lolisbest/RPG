@@ -1490,10 +1490,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4057941623814721459}
   - component: {fileID: 4057941623814721458}
-  - component: {fileID: 4057941623814721454}
   - component: {fileID: 4057941623814721453}
   - component: {fileID: 4057941623814721452}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Skeleton
   m_TagString: Monter
   m_Icon: {fileID: 0}
@@ -1537,20 +1536,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.49, z: 0}
---- !u!136 &4057941623814721454
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4057941623814721457}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.6
-  m_Height: 3
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.49, z: 0}
 --- !u!195 &4057941623814721453
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1585,6 +1570,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6486d646b5096a44c9b9c6e5ad92b369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _status:
+    Name: 
+    Str: 0
+    End: 0
+    Sta: 0
+    Mag: 0
+    Level: 0
+    Experience: 0
+    LeftStatusPoints: 0
+    AvailableSkillIds: 
+  _hp: 0
+  _mp: 0
   _dropStartPosition: {fileID: 4057941624304641097}
   MonsterUI: {fileID: 5436477131464183611}
   _state: 0
@@ -1604,14 +1601,12 @@ MonoBehaviour:
   _toAttackTarget: {fileID: 0}
   _attackColliders:
   - {fileID: 1953849296004976549}
-  _hitCollider: {fileID: 4057941623814721454}
+  _hitCollider: {fileID: 4057941623814721458}
   _characterController: {fileID: 4057941623814721458}
   _minimapIconRenderer: {fileID: 1795153725141394648}
   AttackStateStrings:
   - Base Layer.Attack.Attack0
   AttackStateHashes: 
-  _hp: 0
-  _mp: 0
 --- !u!1 &4057941624304641096
 GameObject:
   m_ObjectHideFlags: 0
@@ -3247,8 +3242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 0
   AttackerType: 2
-  _body: {fileID: 0}
+  _body: {fileID: 4057941623814721459}
   _damageMultiply: 0
+  _hitEffectPrefab: {fileID: 0}
+  _isKeepOnHit: 0
 --- !u!1 &7027301113693345738
 GameObject:
   m_ObjectHideFlags: 0

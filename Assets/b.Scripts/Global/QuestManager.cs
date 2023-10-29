@@ -14,7 +14,7 @@ public class QuestManager : Singleton<QuestManager>
     {
         CurrentInProgressQuests = new();
         @UIManager = InGameUIManager.Instance;
-        @Player = Player.Instance;
+        @Player = GameManager.Instance.Player;
     }
 
     // CurrentInProgressQuests 에 퀘스트 추가

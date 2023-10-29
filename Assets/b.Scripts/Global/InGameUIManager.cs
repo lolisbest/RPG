@@ -570,7 +570,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     public void RespawnPlayer()
     {
         CloseOnDeathWindow();
-        MapManager.Instance.RespawnPlayer();
+        MapManager.Instance.RespawnPlayerAtStartPosition();
     }
 
     private void UploadPlayerData()

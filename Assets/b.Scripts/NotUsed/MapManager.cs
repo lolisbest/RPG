@@ -14,10 +14,8 @@ public class MapManager : Singleton<MapManager>
 
     public Transform PlayerSpwanPosition;
 
-    public GameObject PlayerPrefab;
-    public GameObject FollowCamPrefab;
 
-    [SerializeField] private MonsterSpawnPoint[] _spawnPoints;
+    [SerializeField] private MonsterSpawnPoint[] _monsterSpawnPoints;
 
     protected override void Awake()
     {
@@ -31,15 +29,15 @@ public class MapManager : Singleton<MapManager>
     void Start()
     {
         SpawnPlayer();
-        _spawnPoints = FindObjectsOfType<MonsterSpawnPoint>();
+        _monsterSpawnPoints = FindObjectsOfType<MonsterSpawnPoint>();
         SetMonsterIntoSpawnPoint();
     }
 
     private void SetMonsterIntoSpawnPoint()
     {
-        for (int i = 0; i < _spawnPoints.Length; i++)
+        for (int i = 0; i < _monsterSpawnPoints.Length; i++)
         {
-            MonsterSpawnPoint spawnPoint = _spawnPoints[i];
+            MonsterSpawnPoint spawnPoint = _monsterSpawnPoints[i];
             Monster monster = CreateMonster(spawnPoint.SpawnMonsterId);
             monster.transform.position = spawnPoint.SpawnPosition;
             monster.SetIntialPoseRot(spawnPoint.SpawnPosition, spawnPoint.transform.rotation);
@@ -69,22 +67,6 @@ public class MapManager : Singleton<MapManager>
         ;
     }
 
-    public void RespawnPlayer()
-    {
-        //Debug.Log("Respwan Position " + PlayerSpwanPosition.position);
-        Player.Instance.Spwan(PlayerSpwanPosition.position);
-    }
-
-    private void SpawnPlayer()
-    {
-        //Debug.Log("First Spwan Position " + PlayerSpwanPosition.position);
-        GameObject playerObject = Instantiate(PlayerPrefab, PlayerSpwanPosition.position, Quaternion.identity);
-        GameObject followObject = Instantiate(FollowCamPrefab, transform.position, Quaternion.identity);
-        CinemachineVirtualCamera virtualCamera = followObject.GetComponent<CinemachineVirtualCamera>();
-        Debug.Log("virtualCamera: " + virtualCamera);
-        Debug.Log("Player.Instance.CameraRoot: " + Player.Instance.CameraRoot);
-        virtualCamera.Follow = Player.Instance.CameraRoot;
-    }
 
     private Monster CreateMonster(int monsterId)
     {
@@ -92,5 +74,15 @@ public class MapManager : Singleton<MapManager>
         Monster monster = monsterObject.GetComponent<Monster>();
         monster.SetMonsterDetails(monsterId);
         return monster;
+    }
+
+    public void RespawnPlayerAtStartPosition()
+    {
+        GameManager.Instance.RespawnPlayer(PlayerSpwanPosition.position);
+    }
+
+    private void SpawnPlayer()
+    {
+        GameManager.Instance.SpawnPlayer();
     }
 }

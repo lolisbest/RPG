@@ -108,7 +108,7 @@ namespace RPG.UI
             //otherSlot.SetItemInfo(ItemId, ItemCount, IsEquipped);
             //SetItemInfo(otherSlotItemId, otherSlotItemCount, otherSlotIsEquipped);
 
-            Player.Instance.SwapItemSlot(SlotIndex, otherSlot.SlotIndex);
+            GameManager.Instance.Player.SwapItemSlot(SlotIndex, otherSlot.SlotIndex);
         }
     } 
 }

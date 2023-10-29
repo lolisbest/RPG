@@ -39,7 +39,7 @@ namespace RPG.Item
             rb.isKinematic = false;
             rb.useGravity = true;
             Items = new();
-            gameObject.layer = InitialLayer;
+            gameObject.layer = LayerIndex;
 
             _startTime = Time.time;
 

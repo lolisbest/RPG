@@ -50,7 +50,7 @@ public class StatusWindow : MonoBehaviour
 
     void Start()
     {
-        @Player = Player.Instance;
+        @Player = GameManager.Instance.Player;
         IsChangedTempStatus = false;
     }
 
@@ -58,7 +58,7 @@ public class StatusWindow : MonoBehaviour
     {
         if(@Player == null)
         {
-            @Player = Player.Instance;
+            @Player = GameManager.Instance.Player;
         }
 
         UpdateStatus();
@@ -78,7 +78,7 @@ public class StatusWindow : MonoBehaviour
             Debug.Log("UpdateStatusInfo");
             UpdateStatus();
             UpdateWindow();
-            @Player.IsChangedStatus = false;
+            GameManager.Instance.Player.IsChangedStatus = false;
         }
 
         if(IsChangedTempStatus)

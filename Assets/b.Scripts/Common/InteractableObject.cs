@@ -15,10 +15,10 @@ namespace RPG.Common
         //public Color OutlineColor;
         
         public static readonly string DetectedLayerName = "DetectedInteractableObject";
-        public static int DetectedLayer { get; protected set; }
+        public static int DetectedLayerIndex { get; protected set; }
 
-        public static readonly string InitialLayerName = "InteractableObject";
-        public static int InitialLayer { get; protected set; }
+        public static readonly string LayerName = "InteractableObject";
+        public static int LayerIndex { get; protected set; }
         public bool IsUsing { get; protected set; } = false;
 
         /// <summary>
@@ -42,19 +42,19 @@ namespace RPG.Common
         public static void SetLayerMaskValue()
         {
             Debug.Log("SetLayerMaskValue");
-            DetectedLayer = LayerMask.NameToLayer(DetectedLayerName);
-            InitialLayer = LayerMask.NameToLayer(InitialLayerName);
+            DetectedLayerIndex = LayerMask.NameToLayer(DetectedLayerName);
+            LayerIndex = LayerMask.NameToLayer(LayerName);
         }
 
         public virtual void ActivateDetectedOutline()
         {
-            if (DetectedLayer == 0 || InitialLayer == 0) throw new System.Exception("InteractableObject.SetLayerMaskValue Call??");
-            SetLayers(DetectedLayer);
+            if (DetectedLayerIndex == 0 || LayerIndex == 0) throw new System.Exception("InteractableObject.SetLayerMaskValue Call??");
+            SetLayers(DetectedLayerIndex);
         }
 
         public virtual void DeactivateOutLine()
         {
-            SetLayers(InitialLayer);
+            SetLayers(LayerIndex);
         }
 
         private void SetLayers(int newLayer)
