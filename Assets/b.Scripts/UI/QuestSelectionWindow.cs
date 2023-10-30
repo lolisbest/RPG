@@ -59,10 +59,12 @@ namespace RPG.UI
                 StructQuestData questData = DataBase.Quests[questIds[questIndex]];
                 bool canStart = true;
 
+                // 사전에 완료 해야하는 퀘스트가 모두 완료되었는지
                 foreach (var questId in questData.RequiredQuestIds)
                 {
-                    if (!DataBase.Quests[questId].IsClear)
+                    if (!GameManager.Instance.Player.ClearedQuestIds.Contains(questId))
                     {
+                        // 클리어 되지 않았다면 중단
                         canStart = false;
                         break;
                     }

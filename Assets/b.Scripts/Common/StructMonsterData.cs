@@ -17,7 +17,7 @@ namespace RPG.Common
         public StructIdCount[] DropItems;
 
         public int DropExperience { get => Status.Experience; }
-
+        public string PrefabPath;
         public GameObject Prefab;
 
         public float SpawnInterval;

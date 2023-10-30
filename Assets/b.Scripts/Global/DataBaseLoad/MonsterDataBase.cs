@@ -10,7 +10,7 @@ public static partial class DataBase
     {
         public string DataFileName { get; private set; } = "MonsterDataBase";
         // <Monster Id, Struct Monster Data>
-        public static readonly string MonsterPrefabDirPath = "Prefabs/Monster";
+        //public static readonly string MonsterPrefabDirPath = "Prefabs/Monster";
         public static Dictionary<int, StructMonsterData> Monsters;
         public static Dictionary<int, GameObject> MonsterPrefabs;
 
@@ -31,7 +31,8 @@ public static partial class DataBase
                 StructMonsterData monsterData = monsterDataArray[i];
                 //Debug.Log("Add " + monsterData);
                 Monsters.Add(monsterData.Id, monsterData);
-                GameObject prefab = Resources.Load<GameObject>(MonsterPrefabDirPath + "/" + monsterData.Status.Name);
+                GameObject prefab = Resources.Load<GameObject>(monsterData.PrefabPath);
+                Debug.Log($"{monsterData.PrefabPath} {prefab}");
                 MonsterPrefabs.Add(monsterData.Id, prefab);
                 //Debug.Log(monsterData);
             }

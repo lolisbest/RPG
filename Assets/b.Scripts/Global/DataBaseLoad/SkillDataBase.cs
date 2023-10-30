@@ -32,8 +32,8 @@ public static partial class DataBase
                     skillData.WeaponType |= weaponType;
                 }
 
-                Debug.Log($"skillData.TypeString : {skillData.TypeString} : null? {skillData.TypeString == null}, \"\"?: {skillData.TypeString == ""}, empty?: {skillData.TypeString == string.Empty}");
-                skillData.Type = Utils.StringToEnum<EnumSkillType>(skillData.TypeString);
+                Debug.Log($"skillData.LocationTypeString : {skillData.LocationTypeString} : null? {skillData.LocationTypeString == null}, \"\"?: {skillData.LocationTypeString == ""}, empty?: {skillData.LocationTypeString == string.Empty}");
+                skillData.LocationType = Utils.StringToEnum<EnumLocationType>(skillData.LocationTypeString);
                 skillData.Prefab = Resources.Load<GameObject>(skillData.PrefabPath);
                 Debug.Log($"{skillData.Name} prefab : {skillData.Prefab}");
                 skillData.Icon = Resources.Load<Sprite>(skillData.IconPath);

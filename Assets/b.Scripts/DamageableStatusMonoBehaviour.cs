@@ -69,6 +69,7 @@ public abstract class DamageableStatusMonoBehaviour : MonoBehaviour, IDamageable
         }
         else
         {
+            Debug.Log("attackHit damage raw " + attackHit.RawDamage);
             // 새로운 공격 피해라면 추가
             TakenHits.Add(attackHit.AttackScriptId, attackHit);
         }

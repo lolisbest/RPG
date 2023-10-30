@@ -4,7 +4,7 @@
       "Id": 1,
       "Name" : "시작의 비석",
       "ServiceStrings" : ["Talk", "Quest", "Rest", "Shop"],
-      "QuestIds" : [1, 2],
+      "QuestIds" : [1, 2, 3],
       "StartDialogIds" : [1],
       "SellingItems" : [
         10, 11, 12, 13, 14, 15, 16, 17,

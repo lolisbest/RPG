@@ -218,6 +218,9 @@ public partial class Player : DamageableStatusMonoBehaviour
         int itemId = _structInventory.Items[slotIndex].ItemId;
         StructItemData itemData = DataBase.Items[itemId];
 
+        Debug.Log($"ConsumeItem #{slotIndex} - itemData " + itemData);
+        Debug.Log($"ConsumeItem #{slotIndex} - slotData " + Items[slotIndex]);
+
         if (itemData.SkillId > 0)
         {
             // 이미 습득한 스킬이면 사용 안 함
@@ -242,10 +245,14 @@ public partial class Player : DamageableStatusMonoBehaviour
             return -1;
         }
 
+        //Debug.Log("itemData.RecoveryHpAmount " + itemData.RecoveryHpAmount);
+        //Debug.Log("itemData.RecoveryMpAmount " + itemData.RecoveryMpAmount);
+
         Hp += itemData.RecoveryHpAmount;
         Mp += itemData.RecoveryMpAmount;
 
-        AddSkill(itemData.SkillId);
+        // 유효한 스킬 아이디라면
+        if (itemData.SkillId > 0) AddSkill(itemData.SkillId);
 
         _structInventory.Items[slotIndex].ItemCount -= 1;
 
@@ -266,12 +273,15 @@ public partial class Player : DamageableStatusMonoBehaviour
 
     private void AddSkill(int skillId)
     {
+        Debug.Log($"## AddSkill before : {string.Join(", ", Status.AvailableSkillIds)}");
+
         StructStatus newStatus = Status;
         int newSize = Status.AvailableSkillIds.Length + 1;
         Array.Resize(ref newStatus.AvailableSkillIds, newSize);
         newStatus.AvailableSkillIds[newSize-1] = skillId;
         Status = newStatus;
-        Debug.Log($"New Player Available Skills {string.Join(",", newStatus.AvailableSkillIds)}");
+
+        Debug.Log($"## AddSkill After : {string.Join(", ", Status.AvailableSkillIds)}");
     }
 
     private void RemoveItem(int slotIndex)
@@ -330,6 +340,10 @@ public partial class Player : DamageableStatusMonoBehaviour
 
         HumanEquipSlots = newHumanEquipSlots;
         Items[slotIndex].IsOnEquip = true;
+
+        // just for update Hp,Mp guage UI
+        Hp += 0;
+        Mp += 0;
     }
 
     public void UnequipItem(int slotIndex)

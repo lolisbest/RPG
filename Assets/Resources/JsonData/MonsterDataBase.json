@@ -14,15 +14,16 @@
       "DropItems" : [
         { "Id" : 3, "Count" : 100 }, {"Id" : 11, "Count" : 2  }, { "Id" : 12, "Count" : 2  }, { "Id" : 13, "Count" : 2  }, { "Id" : 14, "Count" : 2  }
       ],
-      "SpawnInterval" : 1
+      "SpawnInterval" : 1,
+      "PrefabPath" : "Prefabs/Monster/TestMonster"
     },
     {
       "Id" : 2,
       "Status" : {
         "Name": "Bear",
-        "Str" : 1,
+        "Str" : 30,
         "End" : 10,
-        "Sta" : 10,
+        "Sta" : 50,
         "Mag" : 0,
         "Level" : 2,
         "Experience" : 1
@@ -32,15 +33,16 @@
         { "Id" : 14, "Count" : 3  }, { "Id" : 104, "Count" : 1  }, { "Id" : 105, "Count" : 1  }, { "Id" : 106, "Count" : 1  }, { "Id" : 107, "Count" : 1  },
         { "Id" : 1000, "Count" : 2  }
       ],
-      "SpawnInterval" : 3
+      "SpawnInterval" : 3,
+      "PrefabPath" : "Prefabs/Monster/Bear"
     },
     {
       "Id" : 3,
       "Status" : {
         "Name": "Skeleton",
-        "Str" : 1,
-        "End" : 10,
-        "Sta" : 10,
+        "Str" : 15,
+        "End" : 5,
+        "Sta" : 25,
         "Mag" : 0,
         "Level" : 2,
         "Experience" : 1
@@ -50,7 +52,8 @@
         { "Id" : 14, "Count" : 3  }, { "Id" : 104, "Count" : 1  }, { "Id" : 105, "Count" : 1  }, { "Id" : 106, "Count" : 1  }, { "Id" : 107, "Count" : 1  },
         { "Id" : 1000, "Count" : 2  }
       ],
-      "SpawnInterval" : 3
+      "SpawnInterval" : 3,
+      "PrefabPath" : "Prefabs/Monster/Skeleton"
     }
 
   ]

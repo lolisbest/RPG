@@ -11,8 +11,6 @@ public class ProjectileSkill : Skill
 
     public Vector3 Direction { get; private set; }
 
-    private Vector3 _formerPosition;
-
     public void SetDirection(Vector3 direction)
     {
         Direction = direction.normalized;

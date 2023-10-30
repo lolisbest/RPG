@@ -4630,7 +4630,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3085487193234320029}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6351922123776091325}
+        m_TargetAssemblyTypeName: RPG.UI.QuestSelectionWindow, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1433675309383338255
 GameObject:
   m_ObjectHideFlags: 0
@@ -13097,8 +13109,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Description
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fbea9e8c96db7784680d05ed106d0088, type: 2}
-  m_sharedMaterial: {fileID: 4246761519694915891, guid: fbea9e8c96db7784680d05ed106d0088,
+  m_fontAsset: {fileID: 11400000, guid: fe12a797031dab84987e938e5422e000, type: 2}
+  m_sharedMaterial: {fileID: -7599721087553926402, guid: fe12a797031dab84987e938e5422e000,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -15851,8 +15863,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: QuestTitle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bd803fa53f03afd41ab9e4af469147da, type: 2}
-  m_sharedMaterial: {fileID: 4246761519694915891, guid: bd803fa53f03afd41ab9e4af469147da,
+  m_fontAsset: {fileID: 11400000, guid: fe12a797031dab84987e938e5422e000, type: 2}
+  m_sharedMaterial: {fileID: -7599721087553926402, guid: fe12a797031dab84987e938e5422e000,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -18259,8 +18271,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: QuestTitle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bd803fa53f03afd41ab9e4af469147da, type: 2}
-  m_sharedMaterial: {fileID: 4246761519694915891, guid: bd803fa53f03afd41ab9e4af469147da,
+  m_fontAsset: {fileID: 11400000, guid: fe12a797031dab84987e938e5422e000, type: 2}
+  m_sharedMaterial: {fileID: -7599721087553926402, guid: fe12a797031dab84987e938e5422e000,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -18819,8 +18831,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Description
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fbea9e8c96db7784680d05ed106d0088, type: 2}
-  m_sharedMaterial: {fileID: 4246761519694915891, guid: fbea9e8c96db7784680d05ed106d0088,
+  m_fontAsset: {fileID: 11400000, guid: fe12a797031dab84987e938e5422e000, type: 2}
+  m_sharedMaterial: {fileID: -7599721087553926402, guid: fe12a797031dab84987e938e5422e000,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -25911,7 +25923,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4375850332698141483}
         m_TargetAssemblyTypeName: RPG.UI.InventoryItemInfoWindow, Assembly-CSharp
-        m_MethodName: Use
+        m_MethodName: UseItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

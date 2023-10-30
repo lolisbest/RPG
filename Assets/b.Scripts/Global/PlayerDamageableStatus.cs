@@ -36,6 +36,7 @@ public partial class Player : DamageableStatusMonoBehaviour
     public override void OnDamage(StructAttackHit attackHit)
     {
         int realDamage = Utils.Calculate.RealDamage(attackHit.RawDamage, RealStatus.Def);
+        Debug.Log("attackHit damage real " + attackHit.RawDamage);
 
         if (attackHit.IsBlocked)
         {

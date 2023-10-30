@@ -1,28 +1,10 @@
 {
   "Data": [
     {
-      "Name": "Silver Coins",
-      "TypeString": "Currency",
-      "IconPath": "Images/Item/Currency/Silver Coins",
-      "Id": 1
-    },
-    {
-      "Name": "Silver Bar",
-      "TypeString": "Currency",
-      "IconPath": "Images/Item/Currency/Silver Bar",
-      "Id": 2
-    },
-    {
       "Name": "Gold Coins",
       "TypeString": "Currency",
       "IconPath": "Images/Item/Currency/Gold Coins",
       "Id": 3
-    },
-    {
-      "Name": "Gold Bar",
-      "TypeString": "Currency",
-      "IconPath": "Images/Item/Currency/Gold Bar",
-      "Id": 4
     },
     {
       "Name": "소량 HP 회복 포션",

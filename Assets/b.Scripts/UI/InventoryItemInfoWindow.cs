@@ -95,7 +95,7 @@ namespace RPG.UI
             GameManager.Instance.Player.UnequipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
         }
 
-        public void Use()
+        public void UseItem()
         {
             Debug.Log($"Use : {ItemNameText.text}");
             GameManager.Instance.Player.ConsumeItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);

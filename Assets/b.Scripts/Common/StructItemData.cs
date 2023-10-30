@@ -52,6 +52,11 @@ namespace RPG.Common
                 $"ItemType:{ItemType}\n" +
                 $"EquipPartTypeString:{EquipPartTypeString}\n" +
                 $"EquipType:{EquipType}\n" +
+                $"Grade:{Grade}\n" +
+                $"BuyPrice:{BuyPrice}\n" +
+                $"RecoveryHpAmount:{RecoveryHpAmount}\n" +
+                $"RecoveryMpAmount:{RecoveryMpAmount}\n" +
+                $"SkillId:{SkillId}\n" +
                 $"-------------------";
         }
 

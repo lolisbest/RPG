@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
+    public int SkillId { get; protected set; }
     [SerializeField] protected float _durationTime;
     [SerializeField] protected AttackCollider[] _attackColliders;
+    [SerializeField] protected Vector3 _startPosition;
 
     public virtual void On()
     {
@@ -37,8 +39,18 @@ public class Skill : MonoBehaviour
 
     public void SetTransformState(Transform startPoint)
     {
+        SetFormerPosition(startPoint.position);
         transform.position = startPoint.position;
         transform.rotation = startPoint.rotation;
+        _startPosition = startPoint.position;
+    }
+
+    private void SetFormerPosition(Vector3 initPosition)
+    {
+        for (int i = 0; i < _attackColliders.Length; i++)
+        {
+            _attackColliders[i].InitFormerPosition(initPosition);
+        }
     }
 
     protected void SetVelocity(Vector3 velocity)

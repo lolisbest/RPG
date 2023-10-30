@@ -243,13 +243,9 @@ namespace RPG.Input
                 //Debug.Log("InteractingWithPlayer ");
                 _input.ClearInputsOnIntraction();
             }
-
-            if (@Player.IsDie)
+            else
             {
-                // 죽었다면 return;
-                //Debug.Log("Player Is Die");
-                _input.ClearBoolInputs(); 
-                return;
+                Slash();
             }
 
             if (_input.noMouseRotation)
@@ -259,17 +255,10 @@ namespace RPG.Input
                 _input.attack = false;
             }
 
+
             // 점프 후, 그라운드 체크
             JumpAndGravity();
             GroundedCheck();
-
-
-            // Animation
-
-            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-            {
-                Slash();
-            }
 
             // 현재 막기 중이면 Move 호출하지 않음.
             if(!IsBlocking)
@@ -390,15 +379,15 @@ namespace RPG.Input
             }
         }
 
-        public bool Skill(EnumSkillType skillType)
+        public bool Skill(EnumLocationType locationType)
         {
-            Debug.Log($"ThirdPersonController.Skill() {skillType}");
-            if (IsIdleBlend && skillType == EnumSkillType.Action)
+            Debug.Log($"ThirdPersonController.Skill() {locationType}");
+            if (IsIdleBlend && locationType == EnumLocationType.FixedOnPlayer)
             {
                 _animator.SetTrigger(_animIDActionSkill);
                 return true;
             }
-            else if (IsIdleBlend && skillType == EnumSkillType.Projectile)
+            else if (IsIdleBlend && locationType == EnumLocationType.Moveable)
             {
                 _animator.SetTrigger(_animIDProjectileSkill);
                 return true;

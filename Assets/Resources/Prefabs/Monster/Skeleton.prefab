@@ -3241,10 +3241,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  AttackerType: 2
-  _body: {fileID: 4057941623814721459}
-  _damageMultiply: 0
+  _attacker: {fileID: 4057941623814721459}
+  _damageMultiply: 1
   _hitEffectPrefab: {fileID: 0}
+  _rigidbody: {fileID: 0}
   _isKeepOnHit: 0
 --- !u!1 &7027301113693345738
 GameObject:

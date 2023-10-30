@@ -611,6 +611,7 @@ GameObject:
   - component: {fileID: 5997148670947449641}
   - component: {fileID: 5997148670947449640}
   - component: {fileID: 7037330866761581426}
+  - component: {fileID: 3716157316292733883}
   m_Layer: 15
   m_Name: Bear
   m_TagString: Monster
@@ -747,13 +748,26 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.4
-  m_Radius: 1.25
+  m_Height: 0
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.11, z: 0}
+  m_Center: {x: 0, y: 0.48, z: 0}
+--- !u!135 &3716157316292733883
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049860471085784053}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0.84, z: 0}
 --- !u!1 &1143968454985995951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,10 +1104,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  AttackerType: 2
-  _body: {fileID: 421660671835013455}
-  _damageMultiply: 0
+  _attacker: {fileID: 421660671835013455}
+  _damageMultiply: 1
   _hitEffectPrefab: {fileID: 0}
+  _rigidbody: {fileID: 0}
   _isKeepOnHit: 0
 --- !u!136 &6087794981755356937
 CapsuleCollider:
@@ -1302,10 +1316,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  AttackerType: 2
-  _body: {fileID: 421660671835013455}
-  _damageMultiply: 0
+  _attacker: {fileID: 421660671835013455}
+  _damageMultiply: 1
   _hitEffectPrefab: {fileID: 0}
+  _rigidbody: {fileID: 0}
   _isKeepOnHit: 0
 --- !u!1 &3258414231651155624
 GameObject:
@@ -2180,10 +2194,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  AttackerType: 2
-  _body: {fileID: 421660671835013455}
-  _damageMultiply: 0
+  _attacker: {fileID: 421660671835013455}
+  _damageMultiply: 1
   _hitEffectPrefab: {fileID: 0}
+  _rigidbody: {fileID: 0}
   _isKeepOnHit: 0
 --- !u!136 &8453291840472531900
 CapsuleCollider:
@@ -2810,10 +2824,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 0
-  AttackerType: 2
-  _body: {fileID: 421660671835013455}
-  _damageMultiply: 0
+  _attacker: {fileID: 421660671835013455}
+  _damageMultiply: 1
   _hitEffectPrefab: {fileID: 0}
+  _rigidbody: {fileID: 0}
   _isKeepOnHit: 0
 --- !u!1 &8182559878413260105
 GameObject:

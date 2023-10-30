@@ -6,12 +6,12 @@ using System;
 
 namespace RPG.Common
 {
-    public enum EnumSkillType
+    public enum EnumLocationType
     {
         None,
-        Action,
-        Point,
-        Projectile,
+        FixedOnPlayer,
+        Moveable,
+        SpecificPoint,
     }
 
     [Serializable]
@@ -27,8 +27,11 @@ namespace RPG.Common
         public string[] WeaponTypeStrings;
         public EnumWeaponType WeaponType;
 
-        public string TypeString;
-        public EnumSkillType Type;
+        public string LocationTypeString;
+        /// <summary>
+        /// 스킬의 위치 유형. 1) 캐릭터 주위. 2) 이동형. 3) 특정 지점
+        /// </summary>
+        public EnumLocationType LocationType;
 
         public float CoolTime;
         public string PrefabPath;

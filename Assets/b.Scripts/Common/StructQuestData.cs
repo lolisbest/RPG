@@ -40,7 +40,6 @@ namespace RPG.Common
         public string Title;
         public string Description;
         public int[] RequiredQuestIds;
-        public bool IsClear;
         public StructQuestCondition[] Conditions;
         public StructIdCount[] RewardItems;
         public int RewardExp;
@@ -51,7 +50,6 @@ namespace RPG.Common
                 $"Id : {Id}\n" +
                 $"Description : {Description}\n" +
                 $"RequiredQuestIds : {string.Join(", ", RequiredQuestIds)}\n" +
-                $"IsClear : {IsClear}\n" +
                 $"Conditions : {string.Join(" / ", Conditions)}\n" +
                 $"Rewards : {RewardString(RewardItems)}\n" + 
                 $"RewardExp : {RewardExp}\n" +
@@ -77,26 +75,26 @@ namespace RPG.Common
             return retString.ToString();
         }
 
-        public bool IsClearRequiredQuests(int questId)
-        {
-            if (DataBase.Quests == null)
-            {
-                throw new System.NotImplementedException("QuestDataLoad.QuestDataDict is null");
-            }
+        //public bool IsClearRequiredQuests(int questId)
+        //{
+        //    if (DataBase.Quests == null)
+        //    {
+        //        throw new System.NotImplementedException("QuestDataLoad.QuestDataDict is null");
+        //    }
 
-            StructQuestData questData = DataBase.Quests[questId];
-            if (!questData.IsClear)
-            {
-                foreach (var reqQuestId in questData.RequiredQuestIds)
-                {
-                    StructQuestData requiredQuestData = DataBase.Quests[reqQuestId];
-                    if (!requiredQuestData.IsClear)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+        //    StructQuestData questData = DataBase.Quests[questId];
+        //    if (GameManager.Instance.Player.ClearedQuestIds.Contains(questId))
+        //    {
+        //        foreach (var reqQuestId in questData.RequiredQuestIds)
+        //        {
+        //            StructQuestData requiredQuestData = DataBase.Quests[reqQuestId];
+        //            if (!requiredQuestData.IsClear)
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //    return true;
+        //}
     }
 }

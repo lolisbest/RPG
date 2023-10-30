@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Common;
 using RPG.UI;
+using System;
+using System.Linq;
 
 public class QuestManager : Singleton<QuestManager>
 {
@@ -26,7 +28,7 @@ public class QuestManager : Singleton<QuestManager>
             // 이미 진행 중인 퀘스트라면
             throw new System.Exception($"Already In Progress Quest. Id:{questId}, Title:{DataBase.Quests[questId].Title}");
 
-        if (DataBase.Quests[questId].IsClear)
+        if (GameManager.Instance.Player.ClearedQuestIds.Contains(questId))
             throw new System.Exception($"Already Clear Id:{questId}, Title:{DataBase.Quests[questId].Title}");
 
         Debug.Log($"Add Quest to CurrentInProgressQuests : {DataBase.Quests[questId].Id}:{DataBase.Quests[questId].Title}");
@@ -119,7 +121,7 @@ public class QuestManager : Singleton<QuestManager>
                 {
                     CurrentInProgressQuests.RemoveAt(i);
                     Debug.Log($"Removed : {copyQuestData}");
-                    copyQuestData.IsClear = true;
+                    GameManager.Instance.Player.AddClearedQuest(questId);
                     // DataBase Quest Updated
                     DataBase.Quests[questId] = copyQuestData;
                     Debug.Log("DataBase.Quets Updated: " + copyQuestData);

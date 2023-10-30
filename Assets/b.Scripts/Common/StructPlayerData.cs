@@ -64,7 +64,9 @@ namespace RPG.Common
             status.Level = 1;
             status.Experience = 0;
             status.LeftStatusPoints = 0;
-            status.AvailableSkillIds = new int[2] { 1, 2 };
+            status.AvailableSkillIds = new int[] { };
+
+            Debug.Log($"## GetTempData AvailableSkillIds : {string.Join(", ", status.AvailableSkillIds)}");
             return status;
         }
     }
@@ -121,6 +123,8 @@ namespace RPG.Common
 
         public string SpawnPlaceId;
 
+        public int[] ClearedQuestIds;
+
         public override string ToString()
         {
 
@@ -128,6 +132,9 @@ namespace RPG.Common
                 $"Status : {Status}\n" +
                 $"Inventory : {Inventory}\n" +
                 $"{HumanEquipSlots}\n" +
+                $"SpwanX {SpwanX}\n" +
+                $"SpwanY {SpwanY}\n" +
+                $"SpwanZ {SpwanZ}\n" +
                 $"----------------------------";
         }
 
@@ -141,6 +148,8 @@ namespace RPG.Common
             playerData.SpwanX = 358.15f;
             playerData.SpwanY = 0.84f;
             playerData.SpwanZ = 101.78f;
+            playerData.ClearedQuestIds = new int[] { };
+            Debug.Log($"## GetTempData ClearedQuestIds : {string.Join(", ", playerData.ClearedQuestIds)}");
             return playerData;
         }
     }

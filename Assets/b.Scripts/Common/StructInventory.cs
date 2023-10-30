@@ -21,9 +21,9 @@ namespace RPG.Common
         public static StructInventory GetTempData()
         {
             StructInventory inventory = new();
-            inventory.InventorySlotNumber = 36;
+            inventory.InventorySlotNumber = 21;
             inventory.Items = new StructInventorySlot[0];
-            inventory.Money = 1000;
+            inventory.Money = 0;
             inventory.MaxMoney = 99999;
 
             return inventory;

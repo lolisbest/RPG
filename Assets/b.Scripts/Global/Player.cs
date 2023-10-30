@@ -5,6 +5,7 @@ using UnityEngine;
 using RPG.UI;
 using RPG.Input;
 using UnityEngine.SceneManagement;
+using System.Linq;
 using System;
 
 public partial class Player : DamageableStatusMonoBehaviour
@@ -23,6 +24,8 @@ public partial class Player : DamageableStatusMonoBehaviour
 
     [SerializeField] private Skill _loadedSkill;
     [SerializeField] private AttackCollider _baseSlashAttackCollider;
+
+    public List<int> ClearedQuestIds { get; private set; }
 
     //private Vector3 _formerPosition;
 
@@ -200,6 +203,7 @@ public partial class Player : DamageableStatusMonoBehaviour
         //Debug.Log("playerData.Status:" + playerData.Status);
         HumanEquipSlots = playerData.HumanEquipSlots;
         Status = playerData.Status;
+        ClearedQuestIds = playerData.ClearedQuestIds.ToList();
 
         if (Status.AvailableSkillIds == null)
         {
@@ -229,7 +233,7 @@ public partial class Player : DamageableStatusMonoBehaviour
             StructSkillData skillData = DataBase.Skills[skillId];
             if (skillData.MpCost > Mp) return ResultType.SkillNotEnoughMP;
 
-            if (!_inputController.Skill(skillData.Type)) return ResultType.SkillBeingDifferentAnimation;
+            if (!_inputController.Skill(skillData.LocationType)) return ResultType.SkillBeingDifferentAnimation;
 
             Mp -= skillData.MpCost;
 
@@ -241,11 +245,11 @@ public partial class Player : DamageableStatusMonoBehaviour
             skill.SetAttacker(transform);
             skill.SetDamage(RealStatus.Atk);
 
-            if (skillData.Type == EnumSkillType.Action)
+            if (skillData.LocationType == EnumLocationType.FixedOnPlayer)
             {
                 skill.SetTransformState(_actionSkillPosition);
             }
-            else if (skillData.Type == EnumSkillType.Projectile)
+            else if (skillData.LocationType == EnumLocationType.Moveable)
             {
                 _inputController.AlignPlayerDirectionWithCamera();
                 skill.SetTransformState(_projectileSkillPosition);
@@ -279,6 +283,15 @@ public partial class Player : DamageableStatusMonoBehaviour
         IsDie = false;
     }
 
+    public void AddClearedQuest(int questId)
+    {
+        if (ClearedQuestIds.Contains(questId))
+        {
+            throw new System.Exception("Already Cleared Quest " + questId);
+        }
+
+        ClearedQuestIds.Add(questId);
+    }
 
     public StructPlayerData GetPlayerData()
     {
@@ -287,7 +300,10 @@ public partial class Player : DamageableStatusMonoBehaviour
         playerData.Status = _status;
         playerData.Inventory = _structInventory;
         playerData.HumanEquipSlots = _humanEquipSlots;
-        
+        playerData.SpwanX = transform.position.x;
+        playerData.SpwanY = transform.position.y;
+        playerData.SpwanZ = transform.position.z;
+        playerData.ClearedQuestIds = ClearedQuestIds.ToArray();
         /// todo:
         //playerData.DataId = -1
         //playerData.SpawnPlaceId = -1

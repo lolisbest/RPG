@@ -165,6 +165,7 @@ namespace RPG.Monster
             Utils.CheckNull(_naviMeshAgent, "_naviMeshAgent is null");
             Utils.CheckNull(_anim, "_anim is null");
             Utils.CheckNull(_attackColliders, "_attackCollider is null");
+
             Utils.CheckNull(_dropStartPosition, "_dropStartPosition is null");
 
             SetAttackStateHashes();
@@ -192,6 +193,7 @@ namespace RPG.Monster
                 AttackStateHashes[i] = Animator.StringToHash(AttackStateStrings[i]);
             }
         }
+
 
         public void Spawn()
         {

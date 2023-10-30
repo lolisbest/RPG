@@ -246,6 +246,8 @@ public class InGameUIManager : Singleton<InGameUIManager>
 
     public void CloseInventoryWindow()
     {
+        Debug.Log("CloseInventoryWindow");
+
         if (@InventoryWindow) @InventoryWindow.Close();
         if (@InventoryItemInfoWindow) @InventoryItemInfoWindow.Close();
         if (@StatusWindow) @StatusWindow.Close();
@@ -280,7 +282,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
     {
         int[] availableQuestIds = (from questId in CurrentNpc.Data.QuestIds
                                        // 진행 중이지 않은 Quuest Ids
-                                   where @QuestManager.IsInProgress(questId) == false && !DataBase.Quests[questId].IsClear
+                                   where @QuestManager.IsInProgress(questId) == false && !GameManager.Instance.Player.ClearedQuestIds.Contains(questId)
                                    select questId).ToArray();
 
         //Debug.Log($"Npc:{CurrentNpc.Data.Name} Available QuestIds : {string.Join(",", availableQuestIds)}");
@@ -352,7 +354,7 @@ public class InGameUIManager : Singleton<InGameUIManager>
             foreach (var requiredNotClearedQuestId in requiredNotClearedQuestIds)
             {
                 // 아직 완료 안 했는지
-                if (!DataBase.Quests[requiredNotClearedQuestId].IsClear)
+                if (!GameManager.Instance.Player.ClearedQuestIds.Contains(requiredNotClearedQuestId))
                 {
                     // 완료 되지 않았다면 조건 만족
                     conditionPassed += 1;
@@ -585,4 +587,6 @@ public class InGameUIManager : Singleton<InGameUIManager>
         UploadPlayerData();
         LoadingSceneController.Load("IntroScene");
     }
+
+
 }

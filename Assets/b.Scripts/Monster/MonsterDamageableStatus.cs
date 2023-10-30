@@ -100,12 +100,13 @@ namespace RPG.Monster
         }
         #endregion
 
-        private void SetAttackColliderDamage(int baseDamage)
+        private void SetAttackColliderDamage(int atk)
         {
+            Debug.Log($"{name} SetAttackColliderDamage : " + atk);
             foreach (var attackCollider in _attackColliders)
             {
                 attackCollider.SetAttacker(transform);
-                attackCollider.SetDamage(baseDamage);
+                attackCollider.SetDamage(atk);
                 attackCollider.SetKeep(true);
             }
         }
