@@ -78928,7 +78928,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 2.4
-    functionName: OpenOnDeatthWindow
+    functionName: OpenOnDeathWindow
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

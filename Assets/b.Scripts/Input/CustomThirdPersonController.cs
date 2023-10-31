@@ -402,6 +402,8 @@ namespace RPG.Input
 
         private void Move()
         {
+            if (@Player.IsDie) return;
+
             Vector2 move;
             bool sprint;
 
@@ -1000,6 +1002,14 @@ namespace RPG.Input
             cameraForward.y = 0;
             Quaternion newRotation = Quaternion.LookRotation(cameraForward);
             transform.rotation = newRotation;
+        }
+
+        /// <summary>
+        /// AnimationClip Event
+        /// </summary>
+        public void OpenOnDeathWindow()
+        {
+            @UIManager.OpenOnDeathWindow();
         }
     }
 }

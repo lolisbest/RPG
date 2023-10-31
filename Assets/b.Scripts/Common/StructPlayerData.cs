@@ -64,7 +64,7 @@ namespace RPG.Common
             status.Level = 1;
             status.Experience = 0;
             status.LeftStatusPoints = 0;
-            status.AvailableSkillIds = new int[] { };
+            status.AvailableSkillIds = new int[] { 1, 2 };
 
             Debug.Log($"## GetTempData AvailableSkillIds : {string.Join(", ", status.AvailableSkillIds)}");
             return status;
