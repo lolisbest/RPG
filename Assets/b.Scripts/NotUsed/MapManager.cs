@@ -12,32 +12,33 @@ public class MapManager : Singleton<MapManager>
 
     public int CurrentMapId = 1;
 
-    public Transform PlayerSpwanPosition;
-
-
     [SerializeField] private MonsterSpawnPoint[] _monsterSpawnPoints;
+
+    [SerializeField] private PlayerRespawnPoint _playerRespawnPoint;
 
     protected override void Awake()
     {
         base.Awake();
         Initialize();
-        MonstersInMap = new();
     }
 
     // Start is called before the first frame update
 
     void Start()
     {
-        SpawnPlayer();
-        _monsterSpawnPoints = FindObjectsOfType<MonsterSpawnPoint>();
-        SetMonsterIntoSpawnPoint();
+        InstantiateMonsters();
+        GameManager.Instance.SpawnPlayer(_playerRespawnPoint.RespawnPosition);
     }
 
-    private void SetMonsterIntoSpawnPoint()
+    /// <summary>
+    /// 몬스터 프리팹을 인스턴스화하고, 각 몬스터 별 transform 설정. MonstersInMap에 추가
+    /// </summary>
+    private void InstantiateMonsters()
     {
         for (int i = 0; i < _monsterSpawnPoints.Length; i++)
         {
             MonsterSpawnPoint spawnPoint = _monsterSpawnPoints[i];
+            spawnPoint.name = $"MonsterSpawnPoint[{i}] - ({spawnPoint.transform.position})";
             Monster monster = CreateMonster(spawnPoint.SpawnMonsterId);
             monster.transform.position = spawnPoint.SpawnPosition;
             monster.SetIntialPoseRot(spawnPoint.SpawnPosition, spawnPoint.transform.rotation);
@@ -64,7 +65,13 @@ public class MapManager : Singleton<MapManager>
 
     public override void Initialize()
     {
-        ;
+        MonstersInMap = new();
+
+        _monsterSpawnPoints = FindObjectsOfType<MonsterSpawnPoint>();
+
+        PlayerRespawnPoint[] playerRespawnPoints = FindObjectsOfType<PlayerRespawnPoint>();
+        Debug.Assert(playerRespawnPoints.Length == 1, "PlayerSpawnPoint in Current Map is not single.");
+        _playerRespawnPoint = playerRespawnPoints[0];
     }
 
 
@@ -78,11 +85,6 @@ public class MapManager : Singleton<MapManager>
 
     public void RespawnPlayerAtStartPosition()
     {
-        GameManager.Instance.RespawnPlayer(PlayerSpwanPosition.position);
-    }
-
-    private void SpawnPlayer()
-    {
-        GameManager.Instance.SpawnPlayer();
+        GameManager.Instance.RespawnPlayer(_playerRespawnPoint.RespawnPosition);
     }
 }

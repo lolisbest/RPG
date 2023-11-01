@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using NpcId = System.Int32;
-using System.IO;
-using System.Linq;
-using RPG.UI;
 
 namespace RPG.Common
 {
@@ -16,10 +11,10 @@ namespace RPG.Common
 
         public StructNpcData Data;
 
-        public InGameUIManager @UIManager;
+        private RPG.UI.UIManager _uiManager;
         public override void Interact()
         {
-            if(@UIManager.TryOpenNpcServiceSelectionWindow(this))
+            if(_uiManager.TryOpenNpcServiceSelectionWindow(this))
             {
                 IsUsing = true;
             }
@@ -28,21 +23,21 @@ namespace RPG.Common
         public override void StopInteraction()
         {
             base.StopInteraction();
-            if(@UIManager.IsOpenNpcServiceSelectionWindow) // Npc 기능 선택 창이 열려 있다면
+            if(_uiManager.IsOpenNpcServiceSelectionWindow) // Npc 기능 선택 창이 열려 있다면
             {
-                @UIManager.CloseNpcServiceSelectionWindow();
+                _uiManager.CloseNpcServiceSelectionWindow();
             }
-            else if(@UIManager.IsOpenNpcQuestDetailWindow) // 퀘스트 창이 열려 있다면
+            else if(_uiManager.IsOpenNpcQuestDetailWindow) // 퀘스트 창이 열려 있다면
             {
-                @UIManager.CloseNpcQuestDetailWindow();
+                _uiManager.CloseNpcQuestDetailWindow();
             }
-            else if (@UIManager.IsOpenQuestSelectionWindow) // 퀘스트 선택창이 열려 있다면
+            else if (_uiManager.IsOpenQuestSelectionWindow) // 퀘스트 선택창이 열려 있다면
             {
-                @UIManager.CloseQuestSelectionWindow();
+                _uiManager.CloseQuestSelectionWindow();
             }
-            else if (@UIManager.IsOpenDialogWindow) // 대화 창이 열려 있다면
+            else if (_uiManager.IsOpenDialogWindow) // 대화 창이 열려 있다면
             {
-                @UIManager.CloseDialogWindow();
+                _uiManager.CloseDialogWindow();
             }
 
         }
@@ -54,7 +49,7 @@ namespace RPG.Common
             Data = DataBase.Npcs[Id];
             //Debug.Log($"{name} NameUI : " + NameUI);
             NameUI.SetName(Data.Name);
-            @UIManager = InGameUIManager.Instance;
+            _uiManager = RPG.UI.UIManager.Instance;
         }
 
 

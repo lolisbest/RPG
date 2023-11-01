@@ -58,9 +58,9 @@ namespace RPG.UI
             TextRect.localScale = Vector3.one;
         }
 
-        public void SetDrawer()
+        public void Init(DamageTextDrawer damageTextDrawer)
         {
-            _drawer = DamageTextDrawer.Instance;
+            _drawer = damageTextDrawer;
             TextRect.anchorMin = Vector2.zero;
             TextRect.anchorMax = Vector2.zero;
         }

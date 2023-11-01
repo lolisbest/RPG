@@ -40,7 +40,7 @@ namespace RPG.UI
 
             ResetFloatingIconSize();
 
-            _tempCopyImage.transform.SetParent(InGameUIManager.Instance.transform);
+            _tempCopyImage.transform.SetParent(_uiManager.transform);
         }
 
         public void SetDragable(bool can)
@@ -77,7 +77,7 @@ namespace RPG.UI
                     IconItemSlot otherItemSlot = result.gameObject.GetComponent<IconItemSlot>();
                     if(otherItemSlot != null)
                     {
-                        InGameUIManager.Instance.CLoseInventoryItemInfoWindow();
+                        _uiManager.CLoseInventoryItemInfoWindow();
                         Swap(otherItemSlot);
                     }
                 }

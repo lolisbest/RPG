@@ -8,16 +8,31 @@ using TMPro;
 
 namespace RPG.UI
 {
-
     public class QuickSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public Image Icon; // 퀵슬롯 버튼에 표시할 아이템 아이콘 이미지
 
         public int Key { get; private set; }
+
         public TextMeshProUGUI KeyText;
 
-        public int LinkedInventorySlotIndex;
-        public int LinkedSkillId;
+        public EnumQuickSlotType Type { get; private set; }
+
+        //public int LinkedInventorySlotIndex;
+        //public int LinkedSkillId;
+
+        /// <summary>
+        /// Skill이라면 Skill Id, 아이템이라면 Inventory slot Index
+        /// </summary>
+        private int _link;
+        public int Link
+        {
+            get => _link;
+            private set
+            {
+                _link = value;
+            }
+        }
 
         public TextMeshProUGUI ItemCountText;
 
@@ -26,6 +41,7 @@ namespace RPG.UI
         [SerializeField] private Image _coolTimeIndicator;
 
         [SerializeField] private float _leftCoolTime;
+
         public float LeftCoolTime
         {
             get => _leftCoolTime;
@@ -34,11 +50,12 @@ namespace RPG.UI
                 _coolTimeIndicator.gameObject.SetActive(false);
                 _leftCoolTime = value;
 
-                if (LinkedSkillId <= 0) return;
+                // _link가 스킬이 아니라면
+                if (Link == -1 && Type != EnumQuickSlotType.Skill) return;
 
                 if (_leftCoolTime <= 0) return;
 
-                StructSkillData skillData = DataBase.Skills[LinkedSkillId];
+                StructSkillData skillData = DataBase.Skills[Link];
                 _coolTimeIndicator.fillAmount = Mathf.Clamp01(_leftCoolTime / skillData.CoolTime);
                 _coolTimeIndicator.gameObject.SetActive(true);
             }
@@ -51,7 +68,7 @@ namespace RPG.UI
             _quickSlotManager = quickSlotManager;
         }
 
-        private void AddItemToQuickSlot(Sprite itemSprite, int linkedInventoryslotIndex)
+        private void RegisterItem(Sprite itemSprite, int linkedInventoryslotIndex)
         {
             _quickSlotManager.TryClearSlotWidthSameItem(linkedInventoryslotIndex);
 
@@ -61,19 +78,20 @@ namespace RPG.UI
             }
 
 
-            LinkedInventorySlotIndex = linkedInventoryslotIndex;
+            Link = linkedInventoryslotIndex;
+            Type = EnumQuickSlotType.Item;
             Icon.sprite = itemSprite;
 
             Debug.Log("Quick LinkedInventorySlotIndex : " + linkedInventoryslotIndex);
             Debug.Log("Quick itemSprite : " + itemSprite);
 
-            UpdateItmeCount();
+            UpdateItemCount();
 
             if (itemSprite != null)
                 Icon.enabled = true;
         }
 
-        private void AddSkillToQuickSlot(Sprite skillSprite, int skillId)
+        private void RegisterSkill(Sprite skillSprite, int skillId)
         {
             _quickSlotManager.TryClearSlotWidthSameSkill(skillId);
 
@@ -84,8 +102,9 @@ namespace RPG.UI
 
             //throw new System.NotImplementedException("Add Skill To QuickSlot");
 
-            LinkedSkillId = skillId;
+            Link = skillId;
             Icon.sprite = skillSprite;
+            Type = EnumQuickSlotType.Skill;
 
             if (skillSprite != null)
                 Icon.enabled = true;
@@ -98,14 +117,22 @@ namespace RPG.UI
         {
             Icon.enabled = false;
             Icon.raycastTarget = false;
-            LinkedInventorySlotIndex = -1;
-            LinkedSkillId = -1;
+            Link = -1;
+            Type = EnumQuickSlotType.None;
             ItemCountText.text = null;
         }
 
         public bool IsEmpty()
         {
-            return LinkedSkillId == -1 && LinkedSkillId == -1 && Icon.sprite == null;
+            if (
+                (Link != -1 && Type == EnumQuickSlotType.None) ||
+                (Link == -1 && Type != EnumQuickSlotType.None)
+                )
+            {
+                throw new System.Exception("Link and Type is Wrong");
+            }
+
+            return Link == -1 && Type == EnumQuickSlotType.None;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -133,17 +160,17 @@ namespace RPG.UI
 
         public void AddElement(GameObject elmentObject)
         {
-            Debug.Log("AddElement");
+            //Debug.Log("AddElement");
 
             IconItemSlot itemSlot = elmentObject.GetComponent<IconItemSlot>();
             if (itemSlot != null)
             {
+                // 소모성 아이템이 아니라면 추가 되지 않음
                 if (itemSlot.ItemType != EnumItemType.Consumable)
                     return;
 
                 Debug.Log("Register Item");
-                AddItemToQuickSlot(itemSlot.ItemIcon.sprite, itemSlot.SlotIndex);
-                LinkedSkillId = -1;
+                RegisterItem(itemSlot.ItemIcon.sprite, itemSlot.SlotIndex);
                 return;
             }
             else
@@ -152,12 +179,33 @@ namespace RPG.UI
                 if (skillSlot != null)
                 {
                     Debug.Log("Register Skill");
-                    AddSkillToQuickSlot(skillSlot.SkillIcon.sprite, skillSlot.SkillId);
-                    LinkedInventorySlotIndex = -1;
+                    RegisterSkill(skillSlot.SkillIcon.sprite, skillSlot.SkillId);
                     return;
                 }
             }
         }
+
+        public void AddElement(EnumQuickSlotType type, int link)
+        {
+            //Debug.Log("AddElement");
+            if (type == EnumQuickSlotType.Item)
+            {
+                StructInventorySlot inventorySlot = GameManager.Instance.Player.Items[link];
+                StructItemData itemData = DataBase.Items[inventorySlot.ItemId];
+
+                Debug.Log("Register Item");
+                RegisterItem(itemData.Sprite, link);
+                return;
+            }
+            else if (type == EnumQuickSlotType.Skill)
+            {
+                StructSkillData skillData = DataBase.Skills[link];
+                Debug.Log("Register Skill");
+                RegisterSkill(skillData.Icon, link);
+                return;
+            }
+        }
+
 
         public void SetKey(int key)
         {
@@ -173,7 +221,7 @@ namespace RPG.UI
 
         void FixedUpdate()
         {
-            if (LinkedSkillId > 0 && LeftCoolTime > 0)
+            if (Type == EnumQuickSlotType.Skill && Link > 0 && LeftCoolTime > 0)
             {
                 LeftCoolTime -= Time.deltaTime;
             }
@@ -181,34 +229,40 @@ namespace RPG.UI
 
         public void Use()
         {
-            if(LinkedInventorySlotIndex != -1)
+            if (Type == EnumQuickSlotType.Item)
             {
-                int leftItemCount = GameManager.Instance.Player.ConsumeItem(LinkedInventorySlotIndex);
+                if (Link != -1)
+                {
+                    int leftItemCount = GameManager.Instance.Player.ConsumeItem(Link);
 
-                if (leftItemCount == 0)
-                {
-                    ClearQuickSlot();
-                }
-                else if (leftItemCount > 0)
-                {
-                    // 개수 표시 업데이트
-                    UpdateItmeCount();
+                    if (leftItemCount == 0)
+                    {
+                        ClearQuickSlot();
+                    }
+                    else if (leftItemCount > 0)
+                    {
+                        // 개수 표시 업데이트
+                        UpdateItemCount();
+                    }
                 }
             }
-            else if(LinkedSkillId != -1)
+            else if (Type == EnumQuickSlotType.Skill)
             {
-                Debug.Log($"Act Skill #{LinkedSkillId}, _coolTimeIndicator: {_coolTimeIndicator.gameObject.activeSelf}");
-                if (_coolTimeIndicator.gameObject.activeSelf) return;
-                ResultType loadResult = GameManager.Instance.Player.LoadSkill(LinkedSkillId);
-                if (loadResult == ResultType.SkillSuccess)
+                if (Link != -1)
                 {
-                    Debug.Log("Act Skill Success");
-                    StructSkillData skillData = DataBase.Skills[LinkedSkillId];
-                    LeftCoolTime = skillData.CoolTime;
-                }
-                else
-                {
-                    Debug.Log("LoadSkill Fail " + loadResult);
+                    Debug.Log($"Act Skill #{Link}, _coolTimeIndicator: {_coolTimeIndicator.gameObject.activeSelf}");
+                    if (_coolTimeIndicator.gameObject.activeSelf) return;
+                    ResultType loadResult = GameManager.Instance.Player.LoadSkill(Link);
+                    if (loadResult == ResultType.SkillSuccess)
+                    {
+                        Debug.Log("Act Skill Success");
+                        StructSkillData skillData = DataBase.Skills[Link];
+                        LeftCoolTime = skillData.CoolTime;
+                    }
+                    else
+                    {
+                        Debug.Log("LoadSkill Fail " + loadResult);
+                    }
                 }
             }
         }
@@ -216,15 +270,11 @@ namespace RPG.UI
         /// <summary>
         /// LinkedInventorySlotIndex를 이용하여 ItemCountText를 업데이트
         /// </summary>
-        public void UpdateItmeCount()
+        public void UpdateItemCount()
         {
-            if (LinkedInventorySlotIndex == -1)
+            if (Type == EnumQuickSlotType.Item)
             {
-                ItemCountText.text = "";
-            }
-            else
-            {
-                StructInventorySlot slot = GameManager.Instance.Player.Items[LinkedInventorySlotIndex];
+                StructInventorySlot slot = GameManager.Instance.Player.Items[Link];
                 if (slot.ItemId == -1 || slot.ItemCount == 0)
                 {
                     ClearQuickSlot();
@@ -234,6 +284,10 @@ namespace RPG.UI
                     int itemLeftNumber = slot.ItemCount;
                     ItemCountText.text = itemLeftNumber.ToString();
                 }
+            }
+            else if (Type == EnumQuickSlotType.Skill)
+            {
+                ItemCountText.text = "";
             }
         }
 

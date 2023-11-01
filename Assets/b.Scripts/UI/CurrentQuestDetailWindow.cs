@@ -33,6 +33,8 @@ namespace RPG.UI
 
         public Button FinishButton;
 
+        [SerializeField] private UIManager _uiManager;
+
         public void Initialize()
         {
             RewardItemSlots = new();
@@ -139,7 +141,7 @@ namespace RPG.UI
 
         public void Finsh()
         {
-            InGameUIManager.Instance.FinishQuest(QuestId);
+            _uiManager.FinishQuest(QuestId);
         }
 
         public void Quit()

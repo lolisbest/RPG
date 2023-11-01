@@ -37,7 +37,7 @@ namespace RPG.UI
 
             ResetFloatingIconSize();
 
-            _tempCopyImage.transform.SetParent(InGameUIManager.Instance.transform);
+            _tempCopyImage.transform.SetParent(_uiManager.transform);
         }
 
         public void OnDrag(PointerEventData eventData)

@@ -2,7 +2,6 @@ using RPG.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RPG.UI;
 using RPG.Input;
 using UnityEngine.SceneManagement;
 using System.Linq;
@@ -24,6 +23,8 @@ public partial class Player : DamageableStatusMonoBehaviour
 
     [SerializeField] private Skill _loadedSkill;
     [SerializeField] private AttackCollider _baseSlashAttackCollider;
+
+    private RPG.UI.UIManager _uiManager;
 
     public List<int> ClearedQuestIds { get; private set; }
 
@@ -60,7 +61,7 @@ public partial class Player : DamageableStatusMonoBehaviour
         if (other.CompareTag(StringStatic.PlaceBoundaryTag))
         {
             PlaceBoundary boundary = other.GetComponent<PlaceBoundary>();
-            InGameUIManager.Instance.SetPlaceName(boundary.EnteringPlaceName);
+            _uiManager.SetPlaceName(boundary.EnteringPlaceName);
             return;
         }
 
@@ -146,13 +147,17 @@ public partial class Player : DamageableStatusMonoBehaviour
 
     void Start()
     {
+        _uiManager = RPG.UI.UIManager.Instance;
+
         SetPlayerData(GameManager.Instance.CurrentPlayerData);
         Debug.Log("Player Set Data " + GameManager.Instance.CurrentPlayerData);
-        InGameUIManager.Instance.SetPlayerInstance(this);
+        _uiManager.SetPlayerInstance(this);
         Debug.Log("Player Awake()");
         RecoveryAll();
         TakenHits = new();
         IsDie = false;
+
+        _uiManager.LoadQuickSlots();
     }
 
     void FixedUpdate()
@@ -228,40 +233,35 @@ public partial class Player : DamageableStatusMonoBehaviour
 
     public ResultType LoadSkill(int skillId)
     {
-        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        StructSkillData skillData = DataBase.Skills[skillId];
+        if (skillData.MpCost > Mp) return ResultType.SkillNotEnoughMP;
+
+        if (!_inputController.Skill(skillData.LocationType)) return ResultType.SkillBeingDifferentAnimation;
+
+        Mp -= skillData.MpCost;
+
+        //Debug.Log($"Player.ActSkill() {skillData.Name}");
+        //Debug.Log("Create skillObject");
+        GameObject skillObject = Instantiate(skillData.Prefab);
+        //Debug.Log("Created skillObject.position0: " + skillObject.transform.position);
+        Skill skill = skillObject.GetComponent<Skill>();
+        skill.SetAttacker(transform);
+        skill.SetDamage(RealStatus.Atk);
+
+        if (skillData.LocationType == EnumLocationType.FixedOnPlayer)
         {
-            StructSkillData skillData = DataBase.Skills[skillId];
-            if (skillData.MpCost > Mp) return ResultType.SkillNotEnoughMP;
-
-            if (!_inputController.Skill(skillData.LocationType)) return ResultType.SkillBeingDifferentAnimation;
-
-            Mp -= skillData.MpCost;
-
-            Debug.Log($"Player.ActSkill() {skillData.Name}");
-            Debug.Log("Create skillObject");
-            GameObject skillObject = Instantiate(skillData.Prefab);
-            Debug.Log("Created skillObject.position0: " + skillObject.transform.position);
-            Skill skill = skillObject.GetComponent<Skill>();
-            skill.SetAttacker(transform);
-            skill.SetDamage(RealStatus.Atk);
-
-            if (skillData.LocationType == EnumLocationType.FixedOnPlayer)
-            {
-                skill.SetTransformState(_actionSkillPosition);
-            }
-            else if (skillData.LocationType == EnumLocationType.Moveable)
-            {
-                _inputController.AlignPlayerDirectionWithCamera();
-                skill.SetTransformState(_projectileSkillPosition);
-                (skill as ProjectileSkill).SetDirection(Camera.main.transform.forward);
-            }
-            Debug.Log("Created skillObject.position1: " + skillObject.transform.position);
-            _loadedSkill = skill;
-
-            return ResultType.SkillSuccess;
+            skill.SetTransformState(_actionSkillPosition);
         }
+        else if (skillData.LocationType == EnumLocationType.Moveable)
+        {
+            _inputController.AlignPlayerDirectionWithCamera();
+            skill.SetTransformState(_projectileSkillPosition);
+            (skill as ProjectileSkill).SetDirection(Camera.main.transform.forward);
+        }
+        //Debug.Log("Created skillObject.position1: " + skillObject.transform.position);
+        _loadedSkill = skill;
 
-        return ResultType.MouseEventOnObject;
+        return ResultType.SkillSuccess;
     }
 
     public void ActivateSkill()
@@ -304,6 +304,11 @@ public partial class Player : DamageableStatusMonoBehaviour
         playerData.SpwanY = transform.position.y;
         playerData.SpwanZ = transform.position.z;
         playerData.ClearedQuestIds = ClearedQuestIds.ToArray();
+
+        var (slotTypes, linkes) = _uiManager.GetQuickSlotLinkes();
+
+        playerData.QuickSlotTypes = slotTypes;
+        playerData.QuickSlotLinkes = linkes;
         /// todo:
         //playerData.DataId = -1
         //playerData.SpawnPlaceId = -1

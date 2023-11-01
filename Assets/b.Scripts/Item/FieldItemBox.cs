@@ -16,7 +16,7 @@ namespace RPG.Item
 
         //public List<StructIdCount> Items;
 
-        public InGameUIManager @UIManager;
+        private UIManager _uiManager;
 
         public List<StructIdCount> Items { get; private set; }
 
@@ -27,7 +27,7 @@ namespace RPG.Item
         public override void Interact()
         {
             //Debug.Log($"{name} Interact()");
-            if (@UIManager.TryOpenItemBoxWindow(this))
+            if (_uiManager.TryOpenItemBoxWindow(this))
             {
                 IsUsing = true;
             }
@@ -43,7 +43,7 @@ namespace RPG.Item
 
             _startTime = Time.time;
 
-            @UIManager = InGameUIManager.Instance;
+            _uiManager = UIManager.Instance;
 
             //Debug.Log($"{name} layer : {gameObject.layer}");
         }

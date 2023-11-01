@@ -6,6 +6,7 @@ namespace RPG.UI
 {
     public abstract class Slot<T> : MonoBehaviour where T : struct
     {
+        [SerializeField] protected UIManager _uiManager;
         public T SlotData { get; private set; }
         public virtual void SetSlotData(T data)
         {
@@ -15,6 +16,10 @@ namespace RPG.UI
         public virtual void Off()
         {
             gameObject.SetActive(false);
+        }
+        protected virtual void Awake()
+        {
+            _uiManager = UIManager.Instance;
         }
 
         public virtual void On()

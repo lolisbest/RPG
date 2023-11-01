@@ -64,7 +64,7 @@ namespace RPG.Common
             status.Level = 1;
             status.Experience = 0;
             status.LeftStatusPoints = 0;
-            status.AvailableSkillIds = new int[] { 1, 2 };
+            status.AvailableSkillIds = new int[] { };
 
             Debug.Log($"## GetTempData AvailableSkillIds : {string.Join(", ", status.AvailableSkillIds)}");
             return status;
@@ -125,6 +125,11 @@ namespace RPG.Common
 
         public int[] ClearedQuestIds;
 
+        public bool IsNewCharacter;
+
+        public string[] QuickSlotTypes;
+        public int[] QuickSlotLinkes;
+
         public override string ToString()
         {
 
@@ -145,10 +150,13 @@ namespace RPG.Common
             playerData.Status = StructStatus.GetTempData();
             playerData.Inventory = StructInventory.GetTempData();
             playerData.HumanEquipSlots = StructHumanEquipSlots.GetTempData();
-            playerData.SpwanX = 358.15f;
-            playerData.SpwanY = 0.84f;
-            playerData.SpwanZ = 101.78f;
+            playerData.SpwanX = 0f;
+            playerData.SpwanY = 0f;
+            playerData.SpwanZ = 0f;
             playerData.ClearedQuestIds = new int[] { };
+            playerData.IsNewCharacter = true;
+            playerData.QuickSlotTypes = new string[] { "None", "None", "None", "None", "None", "None", "None", "None", "None", "None" };
+            playerData.QuickSlotLinkes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
             Debug.Log($"## GetTempData ClearedQuestIds : {string.Join(", ", playerData.ClearedQuestIds)}");
             return playerData;
         }

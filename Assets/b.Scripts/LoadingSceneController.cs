@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using RPG.UI;
 
 public class LoadingSceneController : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class LoadingSceneController : MonoBehaviour
                 {
                     Debug.Log("Progress End LoadingSceneController");
                     op.allowSceneActivation = true;
+                    UIManager.Instance.SwitchToInGame();
                     yield break;
                 }
             }

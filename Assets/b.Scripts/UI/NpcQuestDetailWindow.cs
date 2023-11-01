@@ -31,6 +31,8 @@ namespace RPG.UI
         public int QuestId;
         private int _defaultCount = 10;
 
+        [SerializeField] private UIManager _uiManager;
+
         public void Initialize()
         {
             RewardItemSlots = new();
@@ -137,7 +139,7 @@ namespace RPG.UI
         public void Accept()
         {
 
-            InGameUIManager.Instance.AddQuestToCurrentQuestsWindow(QuestId);
+            _uiManager.AddQuestToCurrentQuestsWindow(QuestId);
             Close();
         }
 

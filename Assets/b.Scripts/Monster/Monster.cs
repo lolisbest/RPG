@@ -87,9 +87,10 @@ namespace RPG.Monster
             }
         }
 
+        [SerializeField] private int _id;
+
         private float _accumulatedRotation;
 
-        public int Id;
         // 쫓아가는 최대 거리
         private float _followMaxDistance;
         // 제자리 상태 혹은 Walk, Idle, Attack 공격 조건으로 사용
@@ -109,6 +110,8 @@ namespace RPG.Monster
 
         [SerializeField] private QuestManager _questManager;
         [SerializeField] private ItemDropper _itemDropper;
+
+        private RPG.UI.UIManager _uiManager;
 
         [SerializeField] private NavMeshAgent _naviMeshAgent;
         [SerializeField] private Animator _anim;
@@ -179,7 +182,7 @@ namespace RPG.Monster
 
             _questManager = QuestManager.Instance;
             _itemDropper = ItemDropper.Instance;
-
+            _uiManager = RPG.UI.UIManager.Instance;
             Spawn();
         }
 
@@ -618,6 +621,7 @@ namespace RPG.Monster
         public void SetMonsterDetails(int monsterId)
         {
             StructMonsterData monsterData = DataBase.Monsters[monsterId];
+            _id = monsterId;
             Status = monsterData.Status;
             SpawnInterval = monsterData.SpawnInterval;
         }

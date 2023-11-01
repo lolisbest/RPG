@@ -10,6 +10,7 @@ namespace RPG.UI
 {
     public class InventoryWindow : MonoBehaviour
     {
+        [SerializeField] private UIManager _uiManager;
         public RectTransform SlotsRoot;
         [Header("인밴토리 슬롯 UI 목록")]
         public List<IconItemSlot> Slots;
@@ -110,7 +111,7 @@ namespace RPG.UI
             }
 
             SetMoney(@Player.Money);
-            InGameUIManager.Instance.UpdateInventoryItemInfoWindow();
+            _uiManager.UpdateInventoryItemInfoWindow();
         }
 
         void Update()
@@ -120,7 +121,7 @@ namespace RPG.UI
             if(@Player.IsChangedInventory)
             {
                 UpdateItemAll();
-                InGameUIManager.Instance.UpdateQuickSlots();
+                _uiManager.UpdateQuickSlots();
                 @Player.IsChangedInventory = false;
                 
             }
@@ -169,5 +170,6 @@ namespace RPG.UI
         {
             MoneyText.text = newMoney.ToString();
         }
+
     }
 }

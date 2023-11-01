@@ -14,11 +14,11 @@ namespace RPG.Monster
         public override void OnDeath()
         {
             //Debug.Log($"{name} die");
-            _questManager.CallbackQuestCondition(QuestConditionType.Kill, Id, 1);
+            _questManager.CallbackQuestCondition(QuestConditionType.Kill, _id, 1);
             IsDie = true;
             gameObject.SetActive(false);
 
-            _itemDropper.DropItemBox(Id, _dropStartPosition.position);
+            _itemDropper.DropItemBox(_id, _dropStartPosition.position);
         }
 
         public override void OnDamage(StructAttackHit attackHit)
@@ -28,7 +28,7 @@ namespace RPG.Monster
             Debug.Log($"{name} : {Hp} -> {Hp - realDamage}");
 
             //Debug.Log("DropStartPosition.position " + DropStartPosition.position);
-            InGameUIManager.Instance.ShowDamageText(realDamage, _dropStartPosition.position);
+            _uiManager.ShowDamageText(realDamage, _dropStartPosition.position);
 
             try
             {

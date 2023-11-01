@@ -26,7 +26,7 @@ namespace RPG.UI
         {
             foreach (var quickSlot in QuickSlots)
             {
-                quickSlot.UpdateItmeCount();
+                quickSlot.UpdateItemCount();
             }
         }
 
@@ -34,7 +34,7 @@ namespace RPG.UI
         {
             foreach(var quickSlot in QuickSlots)
             {
-                if (quickSlot.LinkedSkillId == skillId) quickSlot.ClearQuickSlot();
+                if (quickSlot.Link == skillId) quickSlot.ClearQuickSlot();
             }
         }
 
@@ -42,7 +42,29 @@ namespace RPG.UI
         {
             foreach (var quickSlot in QuickSlots)
             {
-                if (quickSlot.LinkedInventorySlotIndex == inventorySlotIndex) quickSlot.ClearQuickSlot();
+                if (quickSlot.Link == inventorySlotIndex) quickSlot.ClearQuickSlot();
+            }
+        }
+
+        public (string[], int[]) GetQuickSlotLinkes()
+        {
+            int[] linkes = new int[QuickSlots.Count];
+            string[] slotTypes = new string[QuickSlots.Count];
+
+            for (int i = 0; i < QuickSlots.Count; i++)
+            {
+                slotTypes[i] = QuickSlots[i].Type.ToString();
+                linkes[i] = QuickSlots[i].Link;
+            }
+
+            return (slotTypes, linkes);
+        }
+
+        public void SetQuickSlots(string[] types, int[] linkes)
+        {
+            for (int i = 0; i < QuickSlots.Count; i++)
+            {
+                QuickSlots[i].AddElement(Utils.StringToEnum<RPG.Common.EnumQuickSlotType>(types[i]), linkes[i]);
             }
         }
     }

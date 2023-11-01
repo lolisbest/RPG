@@ -32,6 +32,8 @@ namespace RPG.UI
         private readonly string MaxHpOptionBaseText = "MaxHp + {0}";
         private readonly string MaxMpOptionBaseText = "MaxMp + {0}";
 
+        [SerializeField] private UIManager _uiManager;
+
         public void Open()
         {
             gameObject.SetActive(true);
@@ -39,7 +41,7 @@ namespace RPG.UI
 
         public void Close()
         {
-            InGameUIManager.Instance.SelectInventorySlot(-1);
+            _uiManager.SelectInventorySlot(-1);
             gameObject.SetActive(false);
         }
 
@@ -85,20 +87,20 @@ namespace RPG.UI
         public void Equip()
         {
             Debug.Log($"Equip : {ItemNameText.text}");
-            GameManager.Instance.Player.EquipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
+            GameManager.Instance.Player.EquipItem(_uiManager.CurrentSelectedSlotIndex);
         }
 
         public void Unequip()
         {
-            Debug.Log($"{name} Unequip CurrentSelectedSlotIndex : {InGameUIManager.Instance.CurrentSelectedSlotIndex}");
+            Debug.Log($"{name} Unequip CurrentSelectedSlotIndex : {_uiManager.CurrentSelectedSlotIndex}");
             Debug.Log($"{name} Unequip : {ItemNameText.text}");
-            GameManager.Instance.Player.UnequipItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
+            GameManager.Instance.Player.UnequipItem(_uiManager.CurrentSelectedSlotIndex);
         }
 
         public void UseItem()
         {
             Debug.Log($"Use : {ItemNameText.text}");
-            GameManager.Instance.Player.ConsumeItem(InGameUIManager.Instance.CurrentSelectedSlotIndex);
+            GameManager.Instance.Player.ConsumeItem(_uiManager.CurrentSelectedSlotIndex);
         }
 
         private void SetStatusOption(int attack, int def, int maxHp, int maxMp)

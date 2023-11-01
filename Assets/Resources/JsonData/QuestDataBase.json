@@ -39,7 +39,7 @@
       "Id": 3,
       "Title": "Bear 처치",
       "Description": "브뢰멘 성 밖 Bear 처치",
-      "RequiredQuestIds" : [3],
+      "RequiredQuestIds" : [2],
       "Conditions" : [
         { 
           "TypeString" : "Kill", "TargetId" : 2, "CurrentCount" : 0, "ObjectiveCount" : 1

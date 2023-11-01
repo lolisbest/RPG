@@ -29,12 +29,13 @@ namespace RPG.UI
         [SerializeField] private int _linkedInventorySlotIndex;
         public int ItemId { get; private set; }
 
-
         public TransactionMode Mode { get; private set; }
 
         [SerializeField] private StructItemData _currentItemData;
 
         [SerializeField] private Button _button;
+
+        [SerializeField] private UIManager _uiManager;
 
         private void SetItemInfo(int itemId)
         {
@@ -63,6 +64,11 @@ namespace RPG.UI
             ItemPriceNumberText.text = string.Empty;
             HoldingItemCountPanel.SetActive(false);
             ItemPriceNumberText.text = string.Empty;
+        }
+
+        private void Awake()
+        {
+            _uiManager = UIManager.Instance;
         }
 
         public void Off()
@@ -94,11 +100,11 @@ namespace RPG.UI
             //Debug.Log($"OpenTransactionWindow Mode : {Mode}");
             if(Mode == TransactionMode.ShopKeeper)
             {
-                InGameUIManager.Instance.OpenItemShopKeeperModeTransactionWindow(_currentItemData);
+                _uiManager.OpenItemShopKeeperModeTransactionWindow(_currentItemData);
             }
             else if (Mode == TransactionMode.Player)
             {
-                InGameUIManager.Instance.OpenItemPlayerModeTransactionWindow(_linkedInventorySlotIndex);
+                _uiManager.OpenItemPlayerModeTransactionWindow(_linkedInventorySlotIndex);
             }
         }
 

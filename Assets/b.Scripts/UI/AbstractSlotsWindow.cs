@@ -10,6 +10,10 @@ namespace RPG.UI
         [SerializeField] private GameObject _slotPrefab;
         [SerializeField] private Transform _slotsRoot;
 
+        /// <summary>
+        /// AspectRatioKeeper 의 other용.
+        /// </summary>
+        [Header("AspectRatioKeeper 의 other용")]
         [SerializeField] private RectTransform _slotRateRef;
 
 

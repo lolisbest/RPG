@@ -11,9 +11,8 @@ namespace RPG.UI
     {
         // Start is called before the first frame update
         [SerializeField] private TMP_InputField _inputField;
-        [SerializeField] private IntroSceneUIManager _introUIManager;
-
         [SerializeField] private GameObject[] _characters;
+        [SerializeField] private UIManager _uiManager;
 
         private int _currentCharacterIndex;
 
@@ -52,6 +51,9 @@ namespace RPG.UI
             StructPlayerData newPlayerData = StructPlayerData.GetTempData();
             newPlayerData.Status.Name = _inputField.text;
             Debug.Log(newPlayerData);
+
+            Debug.Log("_uiManager.ReturnToMain()");
+            
             GameManager.Instance.SetCurrentPlayerData(newPlayerData);
             GameManager.Instance.LoadInGameScene();
         }

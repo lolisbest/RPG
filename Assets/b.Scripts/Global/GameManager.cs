@@ -9,6 +9,8 @@ using Cinemachine;
 
 public partial class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private bool _isInIntroScene;
+
     public Player @Player { get; private set; }
 
     public GameObject FollowCamPrefab;
@@ -41,6 +43,15 @@ public partial class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        if (_isInIntroScene)
+        {
+            _uiManager.SwitchToIntro();
+        }
+        else
+        {
+            _uiManager.SwitchToInGame();
+        }
+
         Debug.Log("GameManager.Start");
         Debug.Log("Start() _playerPrefab " + _playerPrefab);
     }
@@ -70,9 +81,17 @@ public partial class GameManager : Singleton<GameManager>
 
     }
 
-    public void SpawnPlayer()
+    /// <summary>
+    /// CurrentPlayerData.IsNewCharacter 가 true 라면, spwanPosition에 스폰. false라면 저장된 스폰 위치에 생성
+    /// </summary>
+    /// <param name="spwanPosition"></param>
+    public void SpawnPlayer(Vector3 spwanPosition)
     {
         Vector3 spawnPosition = new Vector3(CurrentPlayerData.SpwanX, CurrentPlayerData.SpwanY, CurrentPlayerData.SpwanZ);
+        if (CurrentPlayerData.IsNewCharacter)
+        {
+            spawnPosition = spwanPosition;
+        }
 
         Debug.Log("SpawnPlayer() PlayerPrefab " + _playerPrefab);
         Debug.Log("spawnPosition " + spawnPosition);

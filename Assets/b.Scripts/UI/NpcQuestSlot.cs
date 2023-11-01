@@ -11,12 +11,13 @@ namespace RPG.UI
     {
         public TextMeshProUGUI Text;
         public int QuestId;
+        [SerializeField] private UIManager _uiManager;
 
         void Awake()
         {
             base.Initialize();
             ClearOff();
-            
+            _uiManager = UIManager.Instance;
         }
 
         public void SetInfo(int questId, string questTitle)
@@ -39,7 +40,7 @@ namespace RPG.UI
         {
             //InitializeText();
             //gameObject.SetActive(false);
-            InGameUIManager.Instance.OpenNpcQuestDetailWindow(QuestId);
+            _uiManager.OpenNpcQuestDetailWindow(QuestId);
 
         }
 

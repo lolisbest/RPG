@@ -128,7 +128,7 @@ namespace RPG.Input
         [Header("Raycast로 감지된 오브젝트")]
         public InteractableObject ObjectToInteractWith;
 
-        public InGameUIManager @UIManager;
+        private UIManager _uiManager;
 
         public Player @Player;
 
@@ -224,7 +224,7 @@ namespace RPG.Input
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
 
-            @UIManager = InGameUIManager.Instance;
+            _uiManager = RPG.UI.UIManager.Instance;
             @Player = GameManager.Instance.Player;
         }
 
@@ -238,7 +238,7 @@ namespace RPG.Input
             // esc window
             ToggleEscMenu();
 
-            if (@UIManager.IsInteractingWithPlayer || @Player.IsDie)
+            if (_uiManager.IsInteractingWithPlayer || @Player.IsDie)
             {
                 //Debug.Log("InteractingWithPlayer ");
                 _input.ClearInputsOnIntraction();
@@ -659,15 +659,15 @@ namespace RPG.Input
         private void TryDisplayInteractionKeyMessage()
         {
             //Debug.Log($"TryDisplayInteractionKeyMessage : {ObjectToInteractWith}, {InGameUIManager.Instance.IsInteractingWithPlayer}");
-            if (ObjectToInteractWith != null && !@UIManager.IsInteractingWithPlayer)
+            if (ObjectToInteractWith != null && !_uiManager.IsInteractingWithPlayer)
             {
                 //Debug.Log("TryDisplayInteractionKeyMessage");
-                @UIManager.ActivateInteractionKeyMessage(ObjectToInteractWith.Type);
+                _uiManager.ActivateInteractionKeyMessage(ObjectToInteractWith.Type);
                 ObjectToInteractWith.ActivateDetectedOutline();
                 return;
             }
 
-            @UIManager.DeactivateInteractionKeyMessage();
+            _uiManager.DeactivateInteractionKeyMessage();
         }
 
         private void Interact()
@@ -680,9 +680,9 @@ namespace RPG.Input
 
         private void LootAll()
         {
-            if(_input.lootAll && @UIManager.IsOpenItemBoxWindow)
+            if(_input.lootAll && _uiManager.IsOpenItemBoxWindow)
             {
-                StructIdCount[] droppedItems = @UIManager.CurrentBeingOpenItemBox.Items.ToArray();
+                StructIdCount[] droppedItems = _uiManager.CurrentBeingOpenItemBox.Items.ToArray();
                 Debug.Log($"PutAwayAll : {droppedItems.Length}");
 
                 for (int itemIndex = 0; itemIndex < droppedItems.Length; itemIndex++)
@@ -691,11 +691,11 @@ namespace RPG.Input
                     if(itemData.ItemType == EnumItemType.Currency)
                     {
                         @Player.AddMoney(droppedItems[itemIndex].Count);
-                        @UIManager.CurrentBeingOpenItemBox.RemoveItem(droppedItems[itemIndex].Id);
+                        _uiManager.CurrentBeingOpenItemBox.RemoveItem(droppedItems[itemIndex].Id);
                     }
                     else if (@Player.AddItem(droppedItems[itemIndex].Id, droppedItems[itemIndex].Count) == ResultType.Success)
                     {
-                        @UIManager.CurrentBeingOpenItemBox.RemoveItem(droppedItems[itemIndex].Id);
+                        _uiManager.CurrentBeingOpenItemBox.RemoveItem(droppedItems[itemIndex].Id);
                     }
                     else
                     {
@@ -707,11 +707,11 @@ namespace RPG.Input
 
         private void CloseNpcServiceSelectionWindow()
         {
-            if(@UIManager.IsOpenNpcServiceSelectionWindow)
+            if(_uiManager.IsOpenNpcServiceSelectionWindow)
             {
                 if (_input.quit)
                 {
-                    @UIManager.CloseNpcServiceSelectionWindow();
+                    _uiManager.CloseNpcServiceSelectionWindow();
                 }
 
             }
@@ -719,15 +719,15 @@ namespace RPG.Input
 
         private void CloseItemBoxWindow()
         {
-            if (@UIManager.IsOpenItemBoxWindow)
+            if (_uiManager.IsOpenItemBoxWindow)
             {
                 if (_input.quit)
                 {
-                    @UIManager.CloseItemBoxWindow();
+                    _uiManager.CloseItemBoxWindow();
                 }
-                else if (@UIManager.CurrentBeingOpenItemBox != null && Vector3.Distance(transform.position, InGameUIManager.Instance.CurrentBeingOpenItemBox.transform.position) > MaxDistanceOnInteraction)
+                else if (_uiManager.CurrentBeingOpenItemBox != null && Vector3.Distance(transform.position, _uiManager.CurrentBeingOpenItemBox.transform.position) > MaxDistanceOnInteraction)
                 {
-                    @UIManager.CloseItemBoxWindow();
+                    _uiManager.CloseItemBoxWindow();
                 }
             }
         }
@@ -740,7 +740,7 @@ namespace RPG.Input
         private void RaycastFromCamera()
         {
             // 현재 UI가 상호 작용 중인지
-            if (@UIManager.IsInteractingWithPlayer)
+            if (_uiManager.IsInteractingWithPlayer)
             {
                 if (ObjectToInteractWith == null)
                     return;
@@ -795,13 +795,13 @@ namespace RPG.Input
             {
                 //Debug.Log("@UIManager.IsOpenInventoryWindow: " + @UIManager.IsOpenInventoryWindow);
                 //Debug.Log("@UIManager.IsInteractingWithPlayer: " + @UIManager.IsInteractingWithPlayer);
-                if (!@UIManager.IsOpenInventoryWindow && !@UIManager.IsInteractingWithPlayer)
+                if (!_uiManager.IsOpenInventoryWindow && !_uiManager.IsInteractingWithPlayer)
                 {
-                    @UIManager.OpenInventoryWindow();
+                    _uiManager.OpenInventoryWindow();
                 }
-                else if(@UIManager.IsOpenInventoryWindow)
+                else if(_uiManager.IsOpenInventoryWindow)
                 {
-                    @UIManager.CloseInventoryWindow();
+                    _uiManager.CloseInventoryWindow();
                 }
             }
         }
@@ -812,119 +812,119 @@ namespace RPG.Input
             {
                 //Debug.Log("@UIManager.IsOpenInventoryWindow: " + @UIManager.IsOpenInventoryWindow);
                 //Debug.Log("@UIManager.IsInteractingWithPlayer: " + @UIManager.IsInteractingWithPlayer);
-                if (!@UIManager.IsOpenSkillsWindow && !@UIManager.IsInteractingWithPlayer)
+                if (!_uiManager.IsOpenSkillsWindow && !_uiManager.IsInteractingWithPlayer)
                 {
-                    @UIManager.OpenSkillsWindow();
+                    _uiManager.OpenSkillsWindow();
                 }
-                else if (@UIManager.IsOpenSkillsWindow)
+                else if (_uiManager.IsOpenSkillsWindow)
                 {
-                    @UIManager.CloseSkillsWindow();
+                    _uiManager.CloseSkillsWindow();
                 }
             }
         }
 
         private void TalkWithNpc()
         {
-            if(@UIManager.IsOpenNpcServiceSelectionWindow)
+            if(_uiManager.IsOpenNpcServiceSelectionWindow)
             {
                 if (_input.npcTalk)
                 {
-                    @UIManager.OpenDialogWindow();
+                    _uiManager.OpenDialogWindow();
                 }
             }
         }
 
         private void NextNpcDialog()
         {
-            if (@UIManager.IsOpenDialogWindow && @UIManager.IsPresentDialogNextButton)
+            if (_uiManager.IsOpenDialogWindow && _uiManager.IsPresentDialogNextButton)
             {
                 if (_input.npcTalkNext)
                 {
-                    @UIManager.NextDialog();
+                    _uiManager.NextDialog();
                 }
             }
         }
 
         private void CloseNpcDialogWindow()
         {
-            if(@UIManager.IsOpenDialogWindow && @UIManager.IsPresentDialogQuitButton)
+            if(_uiManager.IsOpenDialogWindow && _uiManager.IsPresentDialogQuitButton)
             {
                 if(_input.quit)
                 {
-                    @UIManager.CloseDialogWindow();
+                    _uiManager.CloseDialogWindow();
                 }
             }
         }
 
         private void OpenQuestSelectionWindow()
         {
-            if (@UIManager.IsOpenNpcServiceSelectionWindow)
+            if (_uiManager.IsOpenNpcServiceSelectionWindow)
             {
                 if (_input.npcQuest)
                 {
-                    @UIManager.OpenQuestSelectionWindow();
+                    _uiManager.OpenQuestSelectionWindow();
                 }
             }
         }
 
         private void CloseQuestSelectionWindow()
         {
-            if (@UIManager.IsOpenQuestSelectionWindow)
+            if (_uiManager.IsOpenQuestSelectionWindow)
             {
                 if (_input.quit)
                 {
-                    @UIManager.CloseQuestSelectionWindow();
+                    _uiManager.CloseQuestSelectionWindow();
                 }
             }
         }
 
         private void AcceptQuest()
         {
-            if (@UIManager.IsOpenNpcQuestDetailWindow)
+            if (_uiManager.IsOpenNpcQuestDetailWindow)
             {
                 if (_input.npcQuestAccept)
                 {
-                    @UIManager.AcceptNpcQuest();
+                    _uiManager.AcceptNpcQuest();
                 }
             }
         }
 
         private void CloseNpcQuestDetailWindow()
         {
-            if (@UIManager.IsOpenNpcQuestDetailWindow)
+            if (_uiManager.IsOpenNpcQuestDetailWindow)
             {
                 if (_input.quit)
                 {
-                    @UIManager.CloseNpcQuestDetailWindow();
+                    _uiManager.CloseNpcQuestDetailWindow();
                 }
             }
         }
 
         private void OpenNpcShopWindow()
         {
-            if (@UIManager.IsOpenNpcServiceSelectionWindow)
+            if (_uiManager.IsOpenNpcServiceSelectionWindow)
             {
                 if (_input.npcShop)
                 {
-                    InGameUIManager.Instance.OpenShop();
+                    _uiManager.OpenShop();
                 }
             }
         }
 
         private void CloseNpcShopWindow()
         {
-            if (@UIManager.IsOpenShopWindow)
+            if (_uiManager.IsOpenShopWindow)
             {
                 if (_input.quit)
                 {
-                    InGameUIManager.Instance.CloseShop();
+                    _uiManager.CloseShop();
                 }
             }
         }
 
         private void RequestNpcRest()
         {
-            if (@UIManager.IsOpenNpcServiceSelectionWindow)
+            if (_uiManager.IsOpenNpcServiceSelectionWindow)
             {
                 if (_input.npcRest)
                 {
@@ -937,53 +937,53 @@ namespace RPG.Input
         {
             if(_input.slot1)
             {
-                @UIManager.UseQuickSlot(1);
+                _uiManager.UseQuickSlot(1);
             } 
 
             if (_input.slot2)
             {
-                @UIManager.UseQuickSlot(2);
+                _uiManager.UseQuickSlot(2);
             }
 
             if (_input.slot3)
             {
-                @UIManager.UseQuickSlot(3);
+                _uiManager.UseQuickSlot(3);
             }
 
             if (_input.slot4)
             {
-                @UIManager.UseQuickSlot(4);
+                _uiManager.UseQuickSlot(4);
             }
 
             if (_input.slot5)
             {
-                @UIManager.UseQuickSlot(5);
+                _uiManager.UseQuickSlot(5);
             }
 
             if (_input.slot6)
             {
                 //Debug.Log("Quick 6");
-                @UIManager.UseQuickSlot(6);
+                _uiManager.UseQuickSlot(6);
             }
 
             if (_input.slot7)
             {
-                @UIManager.UseQuickSlot(7);
+                _uiManager.UseQuickSlot(7);
             }
 
             if (_input.slot8)
             {
-                @UIManager.UseQuickSlot(8);
+                _uiManager.UseQuickSlot(8);
             }
 
             if (_input.slot9)
             {
-                @UIManager.UseQuickSlot(9);
+                _uiManager.UseQuickSlot(9);
             }
 
             if (_input.slot0)
             {
-                @UIManager.UseQuickSlot(0);
+                _uiManager.UseQuickSlot(0);
             }
         }
 
@@ -992,7 +992,7 @@ namespace RPG.Input
             if (_input.esc)
             {
                 Debug.Log("Player.ToggleEscMenu()");
-                InGameUIManager.Instance.ToggleEscWindow();
+                _uiManager.ToggleEscWindow();
             }
         }
 
@@ -1009,7 +1009,7 @@ namespace RPG.Input
         /// </summary>
         public void OpenOnDeathWindow()
         {
-            @UIManager.OpenOnDeathWindow();
+            _uiManager.OpenOnDeathWindow();
         }
     }
 }

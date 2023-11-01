@@ -11,13 +11,13 @@ public partial class GameManager : Singleton<GameManager>
     [Header("Http 통신")]
     [SerializeField] private HttpCommunicate _httpComunicate;
 
-    [SerializeField] private IntroSceneUIManager _introSceneUIManager;
+    [SerializeField] private UIManager _uiManager;
 
     public StructPlayerData CurrentPlayerData { get; private set; }
 
-    public void SetIntroUIManager(IntroSceneUIManager uiManager)
+    public void SetUIManager(UIManager uiManager)
     {
-        _introSceneUIManager = uiManager;
+        _uiManager = uiManager;
     }
 
     public void SetCurrentPlayerData(StructPlayerData playerData)
@@ -29,6 +29,7 @@ public partial class GameManager : Singleton<GameManager>
     {
         Debug.Log("LoadInGameScene GameManager");
         //UIManager.Instance.CloseIntroUIs();
+        
         LoadingSceneController.Load(StringStatic.SceneInGame);
     }
 
@@ -56,12 +57,12 @@ public partial class GameManager : Singleton<GameManager>
 
     public void OpenServerCommunicationErrorWindow(string message)
     {
-        _introSceneUIManager.OpenServerCommunicationErrorWindow(message);
+        _uiManager.OpenServerCommunicationErrorWindow(message);
     }
 
     public void ToggleProgressIndicator(bool active)
     {
-        _introSceneUIManager.ToggleProgressIndicator(active);
+        _uiManager.ToggleProgressIndicator(active);
     }
 
     public void Test()

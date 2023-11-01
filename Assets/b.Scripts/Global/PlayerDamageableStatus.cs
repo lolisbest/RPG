@@ -74,7 +74,7 @@ public partial class Player : DamageableStatusMonoBehaviour
             //Debug.Log($"_hp {_hp} -> {value}");
             _hp = value < 0 ? 0 : value;
             float rate = (float)_hp / RealStatus.MaxHp;
-            InGameUIManager.Instance.UpdateHpGauge(rate);
+            _uiManager.UpdateHpGauge(rate);
         }
     }
 
@@ -85,7 +85,7 @@ public partial class Player : DamageableStatusMonoBehaviour
         {
             _mp = value < 0 ? 0 : value;
             float rate = (float)_mp / RealStatus.MaxMp;
-            InGameUIManager.Instance.UpdateMpGauge(rate);
+            _uiManager.UpdateMpGauge(rate);
         }
     }
     #endregion

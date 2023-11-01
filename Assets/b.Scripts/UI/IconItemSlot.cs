@@ -12,11 +12,13 @@ namespace RPG.UI
     {
         public int SlotIndex { get; set; }
         public Button @Button;
-        private int _currentItemId;
+        [SerializeField] private int _currentItemId;
 
         public GameObject EquipMark;
 
         public Image GradeBorder;
+
+        [SerializeField] private UIManager _uiManager;
 
         public bool IsEquipped { get; private set; }
      
@@ -100,7 +102,7 @@ namespace RPG.UI
 
         public void OnSelected()
         {
-            InGameUIManager.Instance.SelectInventorySlot(SlotIndex);
+            _uiManager.SelectInventorySlot(SlotIndex);
         }
 
         public void ToggleEquipMark(bool on)
@@ -113,6 +115,7 @@ namespace RPG.UI
             // _rectTransform 를 드래그에서만 사용한다면, 드래그를 한다는 건 그 이전에 Awake() 됐다는 뜻.
             _slotRectTransform = GetComponent<RectTransform>();
             CanDrag = true;
+            _uiManager = UIManager.Instance;
         }
     }
 }

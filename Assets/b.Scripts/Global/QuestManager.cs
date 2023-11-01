@@ -2,20 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Common;
-using RPG.UI;
-using System;
-using System.Linq;
+
 
 public class QuestManager : Singleton<QuestManager>
 {
     public List<StructQuestData> CurrentInProgressQuests;
-    public InGameUIManager @UIManager;
+    private RPG.UI.UIManager _uiManager;
     public Player @Player;
 
     public override void Initialize()
     {
         CurrentInProgressQuests = new();
-        @UIManager = InGameUIManager.Instance;
+        _uiManager = RPG.UI.UIManager.Instance;
         @Player = GameManager.Instance.Player;
     }
 
@@ -44,15 +42,17 @@ public class QuestManager : Singleton<QuestManager>
             // 퀘스트 정보 하나 가져오기
             StructQuestData questData = CurrentInProgressQuests[i];
             //Debug.Log($"Matched QuestCondition: QuestId:{questData.Id}, QuestTitle:{questData.Title}");
+            Debug.Log($"QuestCondition type: {type}, targetId: {targetId}, count: {count}");
+
             StructQuestCondition[] conditions = questData.Conditions;
             for (int condIndex = 0; condIndex < conditions.Length; condIndex++)
             {
                 // 퀘스트 달성 조건 하나 가져오기
                 StructQuestCondition copyCondition = conditions[condIndex];
+                //Debug.Log($"condition[{condIndex}] {copyCondition}");
                 // 퀘스트 조건 유형과 목표 대상이 일치하는지
                 if (copyCondition.Type == type && copyCondition.TargetId == targetId)
                 {
-                    //Debug.Log(copyCondition);
                     // 해당 퀘스트 조건의 CurrentCount 셋팅
                     switch (type)
                     {
@@ -77,6 +77,8 @@ public class QuestManager : Singleton<QuestManager>
                             throw new System.NotImplementedException($"{typeof(StructQuestCondition)}.{type}");
                     }
                 }
+
+                Debug.Log($"After Condition CurrentCount {conditions[condIndex].CurrentCount}");
             }
         }
     }

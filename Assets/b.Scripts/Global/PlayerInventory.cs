@@ -213,13 +213,13 @@ public partial class Player : DamageableStatusMonoBehaviour
     /// <returns></returns>
     public int ConsumeItem(int slotIndex)
     {
-        Debug.Log("ConsumeItem");
+        //Debug.Log("ConsumeItem");
 
         int itemId = _structInventory.Items[slotIndex].ItemId;
         StructItemData itemData = DataBase.Items[itemId];
 
-        Debug.Log($"ConsumeItem #{slotIndex} - itemData " + itemData);
-        Debug.Log($"ConsumeItem #{slotIndex} - slotData " + Items[slotIndex]);
+        //Debug.Log($"ConsumeItem #{slotIndex} - itemData " + itemData);
+        //Debug.Log($"ConsumeItem #{slotIndex} - slotData " + Items[slotIndex]);
 
         if (itemData.SkillId > 0)
         {
@@ -261,7 +261,7 @@ public partial class Player : DamageableStatusMonoBehaviour
         if (_structInventory.Items[slotIndex].ItemCount == 0)
         {
             RemoveItem(slotIndex);
-            InGameUIManager.Instance.CLoseInventoryItemInfoWindow();
+            _uiManager.CLoseInventoryItemInfoWindow();
         }
         else if (_structInventory.Items[slotIndex].ItemCount < 0)
         {

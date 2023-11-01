@@ -31,7 +31,7 @@ public class DamageTextDrawer : Singleton<DamageTextDrawer>
         GameObject obj = Instantiate(DamageTextPrefab);
         obj.transform.SetParent(transform);
         DamageText damageText = obj.GetComponent<DamageText>();
-        damageText.SetDrawer();
+        damageText.Init(this);
         return damageText;
     }
 

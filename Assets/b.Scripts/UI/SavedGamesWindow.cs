@@ -10,9 +10,12 @@ namespace RPG.UI
     public class SavedGamesWindow : SlotsWindow<StructPlayerData>
     {
         [SerializeField] private SavedGameSlot _selectedSlot;
+        [SerializeField] UIManager _uiManager;
 
         public void StartGame()
         {
+            Debug.Log("_uiManager.ReturnToMain()");
+            //_uiManager.ReturnToMain();
             GameManager.Instance.SetCurrentPlayerData(_selectedSlot.SlotData);
             GameManager.Instance.LoadInGameScene();
             return;
