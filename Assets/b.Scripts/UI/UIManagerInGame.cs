@@ -14,7 +14,7 @@ namespace RPG.UI
     {
         [Space(10f)]
         [Header("------- 인게임 씬 -------")]
-        public QuestManager @QuestManager;
+        [SerializeField] private QuestManager _questManager;
         public Player @Player { get; private set; }
 
         public TextMeshProUGUI FpsText;
@@ -23,92 +23,93 @@ namespace RPG.UI
         private double _fps;
 
         [Header("상호 작용 키 입력 메시지 팝업 창")]
-        public GameObject InteractionKeyMessagePanel;
-        public TextMeshProUGUI InteractionKeyMessageTxt;
-        public InteractionType LastInteractionType;
+        [SerializeField] private GameObject _interactionKeyMessagePanel;
+        [SerializeField] private TextMeshProUGUI _interactionKeyMessageTxt;
+        [SerializeField] private InteractionType _lastInteractionType;
 
         public bool IsInteractingWithPlayer
         {
             get
             {
-                return IsOpenItemBoxWindow || IsOpenInventoryWindow ||
+                return IsOpenItemBoxWindow ||
                 IsOpenNpcServiceSelectionWindow || IsOpenNpcQuestDetailWindow || IsOpenQuestSelectionWindow ||
-                IsOpenNpcQuestDetailWindow || IsOpenCurrentQuestDetailWindow || IsOpenDialogWindow ||
-                IsOpenShopWindow || IsOpenTransactionWindow || IsOpenEscWindow || IsOpenSkillsWindow;
+                IsOpenNpcQuestDetailWindow || IsOpenDialogWindow ||
+                IsOpenShopWindow || IsOpenTransactionWindow || IsOpenEscWindow;
             }
         }
 
         public static readonly string KeyPressMessage = "Press [F] to {0}";
 
         [Header("ItemBox 창")]
-        public ItemBoxWindow @ItemBoxWindow;
-        public FieldItemBox CurrentBeingOpenItemBox;
-
-        public bool IsOpenItemBoxWindow { get => @ItemBoxWindow.gameObject.activeSelf; }
+        [SerializeField] private ItemBoxWindow _itemBoxWindow;
+        public bool IsOpenItemBoxWindow { get => _itemBoxWindow.gameObject.activeSelf; }
+        public FieldItemBox CurrentBeingOpenItemBox { get; private set; }
 
 
         [Header("인벤토리 창")]
-        public InventoryWindow @InventoryWindow;
-        public bool IsOpenInventoryWindow { get => @InventoryWindow.gameObject.activeSelf; }
+        [SerializeField] private InventoryWindow _inventoryWindow;
+        public bool IsOpenInventoryWindow { get => _inventoryWindow.gameObject.activeSelf; }
 
         [Header("아이템 정보 창")]
-        public InventoryItemInfoWindow @InventoryItemInfoWindow;
+        [SerializeField] private InventoryItemInfoWindow _inventoryItemInfoWindow;
+        public bool IsOpenInventoryItemInfoWindow { get => _inventoryItemInfoWindow.gameObject.activeSelf; }
 
         public int CurrentSelectedSlotIndex;
 
         [Header("NPC 서비스 선택 창")]
-        public NpcServiceSelectionWindow @NpcServiceSelectionWindow;
-        public bool IsOpenNpcServiceSelectionWindow { get => NpcServiceSelectionWindow.gameObject.activeSelf; }
+        [SerializeField] private NpcServiceSelectionWindow _npcServiceSelectionWindow;
+        public bool IsOpenNpcServiceSelectionWindow { get => _npcServiceSelectionWindow.gameObject.activeSelf; }
         public Npc CurrentNpc;
 
         [Header("퀘스트 선택 창")]
-        public QuestSelectionWindow QuestSelectionWindow;
-        public bool IsOpenQuestSelectionWindow { get => QuestSelectionWindow.gameObject.activeSelf; }
+        [SerializeField] private QuestSelectionWindow _questSelectionWindow;
+        public bool IsOpenQuestSelectionWindow { get => _questSelectionWindow.gameObject.activeSelf; }
 
         [Header("Npc 퀘스트 창")]
-        public NpcQuestDetailWindow @NpcQuestDetailWindow;
-        public bool IsOpenNpcQuestDetailWindow { get => @NpcQuestDetailWindow.gameObject.activeSelf; }
+        [SerializeField] private NpcQuestDetailWindow _npcQuestDetailWindow;
+        public bool IsOpenNpcQuestDetailWindow { get => _npcQuestDetailWindow.gameObject.activeSelf; }
 
         [Header("현재 진행 중인 퀘스트 목록 창")]
-        public CurrentQuestsWindow @CurrentQuestsWindow;
+        [SerializeField] private CurrentQuestsWindow _currentQuestsWindow;
+        public bool IsOpenCurrentQuestsWindow { get => _currentQuestsWindow.gameObject.activeSelf; }
 
         [Header("선택된 진행 중인 퀘스트 창")]
-        public CurrentQuestDetailWindow @CurrentQuestDetailWindow;
-        public bool IsOpenCurrentQuestDetailWindow { get => @CurrentQuestDetailWindow.gameObject.activeSelf; }
+        [SerializeField] private CurrentQuestDetailWindow _currentQuestDetailWindow;
+        public bool IsOpenCurrentQuestDetailWindow { get => _currentQuestDetailWindow.gameObject.activeSelf; }
 
         [Header("대화 창")]
-        public DialogWindow @DialogWindow;
-        public bool IsOpenDialogWindow { get => @DialogWindow.gameObject.activeSelf; }
+        [SerializeField] private DialogWindow _dialogWindow;
+        public bool IsOpenDialogWindow { get => _dialogWindow.gameObject.activeSelf; }
 
-        public bool IsPresentDialogQuitButton { get => @DialogWindow.QuitButton.gameObject.activeSelf; }
+        public bool IsPresentDialogQuitButton { get => _dialogWindow.QuitButton.gameObject.activeSelf; }
         public bool IsPresentDialogNextButton
         {
-            get => @DialogWindow.NextButton.gameObject.activeSelf;
+            get => _dialogWindow.NextButton.gameObject.activeSelf;
         }
 
         [Header("Hp Gauge")]
-        public Gauge HpGauge;
+        [SerializeField] private Gauge _hpGauge;
 
         [Header("Mp Gauge")]
-        public Gauge MpGauge;
+        [SerializeField] private Gauge _mpGauge;
 
         [Header("스텟 창")]
-        public StatusWindow @StatusWindow;
-        public bool IsOpenStatusWindow { get => @StatusWindow.gameObject.activeSelf; }
+        [SerializeField] private StatusWindow _statusWindow;
+        public bool IsOpenStatusWindow { get => _statusWindow.gameObject.activeSelf; }
 
         [Header("퀵슬롯")]
-        public QuickSlotManager @QuickSlotManager;
+        [SerializeField] private QuickSlotManager _quickSlotManager;
 
         [Header("대미지 텍스트")]
-        public DamageTextDrawer @DamageTextDrawer;
+        [SerializeField] private DamageTextDrawer _damageTextDrawer;
 
         [Header("상점")]
-        public ShopWindow @ShopWindow;
-        public bool IsOpenShopWindow { get => @ShopWindow.gameObject.activeSelf; }
+        [SerializeField] private ShopWindow _shopWindow;
+        public bool IsOpenShopWindow { get => _shopWindow.gameObject.activeSelf; }
 
         [Header("거래 조율 창")]
-        public TransactionConfirmWindow TransactionWindow;
-        public bool IsOpenTransactionWindow { get => TransactionWindow.gameObject.activeSelf; }
+        [SerializeField] private TransactionConfirmWindow _transactionWindow;
+        public bool IsOpenTransactionWindow { get => _transactionWindow.gameObject.activeSelf; }
 
         [Header("미니맵")]
         [SerializeField] private MinimapController _minimapController;
@@ -127,65 +128,65 @@ namespace RPG.UI
 
         public void InitializeInGame()
         {
-            LastInteractionType = InteractionType.Open;
-            if (InteractionKeyMessageTxt != null)
-                InteractionKeyMessageTxt.text = string.Format(KeyPressMessage, LastInteractionType.ToString());
+            _lastInteractionType = InteractionType.Open;
+            if (_interactionKeyMessageTxt != null)
+                _interactionKeyMessageTxt.text = string.Format(KeyPressMessage, _lastInteractionType.ToString());
 
-            @NpcServiceSelectionWindow.Initialize();
-            @QuestSelectionWindow.Initialize();
-            @QuestManager = QuestManager.Instance;
-            @NpcQuestDetailWindow.Initialize();
-            @DamageTextDrawer.Initialize();
+            _npcServiceSelectionWindow.Initialize();
+            _questSelectionWindow.Initialize();
+            _questManager = QuestManager.Instance;
+            _npcQuestDetailWindow.Initialize();
+            _damageTextDrawer.Initialize();
 
-            @InventoryWindow.Initialize();
-            @CurrentQuestsWindow.Initialize();
-            @DialogWindow.Initialize();
-            @CurrentQuestDetailWindow.Initialize();
-            @ShopWindow.Initialize();
+            _inventoryWindow.Initialize();
+            _currentQuestsWindow.Initialize();
+            _dialogWindow.Initialize();
+            _currentQuestDetailWindow.Initialize();
+            _shopWindow.Initialize();
         }
 
         public void SetPlayerInstance(Player player)
         {
             @Player = player;
-            @InventoryWindow.SetPlayerInstance(player);
-            @ShopWindow.SetPlayerInstance(player);
+            _inventoryWindow.SetPlayerInstance(player);
+            _shopWindow.SetPlayerInstance(player);
             _minimapController.Intit();
         }
 
         public void ActivateInteractionKeyMessage(InteractionType type)
         {
-            if (InteractionKeyMessagePanel == null)
+            if (_interactionKeyMessagePanel == null)
             {
                 //Debug.Log("InteractionKeyMessagePanel is null");
                 return;
             }
 
-            if (LastInteractionType != type)
+            if (_lastInteractionType != type)
             {
-                LastInteractionType = type;
+                _lastInteractionType = type;
                 //string formerText = InteractionKeyMessageTxt.text;
-                InteractionKeyMessageTxt.text = string.Format(KeyPressMessage, LastInteractionType.ToString());
+                _interactionKeyMessageTxt.text = string.Format(KeyPressMessage, _lastInteractionType.ToString());
                 //Debug.Log($"{formerText} => {InteractionKeyMessageTxt.text}");
             }
 
-            if (!InteractionKeyMessagePanel.activeSelf)
+            if (!_interactionKeyMessagePanel.activeSelf)
             {
-                InteractionKeyMessagePanel.SetActive(true);
+                _interactionKeyMessagePanel.SetActive(true);
             }
         }
 
         public void DeactivateInteractionKeyMessage()
         {
-            if (InteractionKeyMessagePanel == null)
+            if (_interactionKeyMessagePanel == null)
             {
                 //Debug.Log("InteractionKeyMessagePanel is null");
                 return;
             }
 
-            if (!InteractionKeyMessagePanel.activeSelf)
+            if (!_interactionKeyMessagePanel.activeSelf)
                 return;
 
-            InteractionKeyMessagePanel.SetActive(false);
+            _interactionKeyMessagePanel.SetActive(false);
         }
 
         public bool TryOpenItemBoxWindow(FieldItemBox itemBox)
@@ -196,13 +197,13 @@ namespace RPG.UI
             if (IsInteractingWithPlayer)
                 return false;
 
-            if (@ItemBoxWindow == null)
+            if (_itemBoxWindow == null)
                 return false;
 
             //Debug.Log($"TryOpenItemBoxWindow Items:{itemBox.Items.Count}");
             CurrentBeingOpenItemBox = itemBox;
-            @ItemBoxWindow.Link(CurrentBeingOpenItemBox);
-            @ItemBoxWindow.Open();
+            _itemBoxWindow.Link(CurrentBeingOpenItemBox);
+            _itemBoxWindow.Open();
 
             return true;
         }
@@ -215,36 +216,36 @@ namespace RPG.UI
                 CurrentBeingOpenItemBox = null;
             }
 
-            @ItemBoxWindow.Close();
+            _itemBoxWindow.Close();
         }
 
         public void OpenInventoryWindow()
         {
-            if (@InventoryWindow) @InventoryWindow.Open();
-            if (@StatusWindow) @StatusWindow.Open();
+            if (_inventoryWindow) { _inventoryWindow.Open(); _inventoryWindow.transform.SetAsLastSibling(); }
+            if (_statusWindow) { _statusWindow.Open(); _statusWindow.transform.SetAsLastSibling(); }
         }
 
         public void CloseInventoryWindow()
         {
             Debug.Log("CloseInventoryWindow");
 
-            if (@InventoryWindow) @InventoryWindow.Close();
-            if (@InventoryItemInfoWindow) @InventoryItemInfoWindow.Close();
-            if (@StatusWindow) @StatusWindow.Close();
+            if (_inventoryWindow) _inventoryWindow.Close();
+            if (_inventoryItemInfoWindow) _inventoryItemInfoWindow.Close();
+            if (_statusWindow) _statusWindow.Close();
         }
 
         public void CLoseInventoryItemInfoWindow()
         {
-            InventoryItemInfoWindow.Close();
+            _inventoryItemInfoWindow.Close();
         }
 
         public bool TryOpenNpcServiceSelectionWindow(Npc npc)
         {
             CurrentNpc = npc;
 
-            @NpcServiceSelectionWindow.SetNpcName(npc.Data.Name);
-            @NpcServiceSelectionWindow.SetServices(npc.Data.Services);
-            @NpcServiceSelectionWindow.Open();
+            _npcServiceSelectionWindow.SetNpcName(npc.Data.Name);
+            _npcServiceSelectionWindow.SetServices(npc.Data.Services);
+            _npcServiceSelectionWindow.Open();
             return true;
         }
 
@@ -255,57 +256,57 @@ namespace RPG.UI
         public void CloseNpcServiceSelectionWindow()
         {
             CurrentNpc = null;
-            @NpcServiceSelectionWindow.Close();
+            _npcServiceSelectionWindow.Close();
         }
 
         public void OpenQuestSelectionWindow()
         {
             int[] availableQuestIds = (from questId in CurrentNpc.Data.QuestIds
                                            // 진행 중이지 않은 Quuest Ids
-                                       where @QuestManager.IsInProgress(questId) == false && !GameManager.Instance.Player.ClearedQuestIds.Contains(questId)
+                                       where _questManager.IsInProgress(questId) == false && !GameManager.Instance.Player.ClearedQuestIds.Contains(questId)
                                        select questId).ToArray();
 
             //Debug.Log($"Npc:{CurrentNpc.Data.Name} Available QuestIds : {string.Join(",", availableQuestIds)}");
-            QuestSelectionWindow.UpdateQuest(availableQuestIds);
-            QuestSelectionWindow.Open();
+            _questSelectionWindow.UpdateQuest(availableQuestIds);
+            _questSelectionWindow.Open();
             CloseNpcServiceSelectionWindow(); // CurrentNpc = null;
         }
 
         public void CloseQuestSelectionWindow()
         {
-            @QuestSelectionWindow.Close();
+            _questSelectionWindow.Close();
         }
 
         public void OpenNpcQuestDetailWindow(int questId)
         {
             // Open을 먼저해서 CurrentNpc를 넘겨주고
             // CloseNpcServiceSelectionWindow 에서 CurrentNpc를 null로 셋팅
-            @NpcQuestDetailWindow.OpenDetailWindow(questId);
+            _npcQuestDetailWindow.OpenDetailWindow(questId);
             CloseQuestSelectionWindow();
         }
 
         public void AcceptNpcQuest()
         {
-            @NpcQuestDetailWindow.Accept();
+            _npcQuestDetailWindow.Accept();
         }
 
         public void CloseNpcQuestDetailWindow()
         {
-            @NpcQuestDetailWindow.Deny();
+            _npcQuestDetailWindow.Deny();
         }
 
         public void AddQuestToCurrentQuestsWindow(int questId)
         {
-            if (@CurrentQuestsWindow) @CurrentQuestsWindow.AddQuest(questId);
-            if (@QuestManager) @QuestManager.AddQuest(questId);
+            if (_currentQuestsWindow) _currentQuestsWindow.AddQuest(questId);
+            if (_questManager) _questManager.AddQuest(questId);
         }
 
         public void OpenCurrentQuestDetailWindow(int questId)
         {
-            StructQuestData[] questDataArray = @QuestManager.CurrentInProgressQuests.Where(x => x.Id == questId).ToArray();
+            StructQuestData[] questDataArray = _questManager.CurrentInProgressQuests.Where(x => x.Id == questId).ToArray();
             if (questDataArray.Length == 1)
             {
-                @CurrentQuestDetailWindow.OpenDetailWindow(questDataArray[0]);
+                _currentQuestDetailWindow.OpenDetailWindow(questDataArray[0]);
             }
             else
             {
@@ -357,29 +358,29 @@ namespace RPG.UI
             }
 
             //Debug.Log("toOpenDialogId " + toOpenDialogId);
-            @QuestManager.CallbackQuestCondition(QuestConditionType.Talk, CurrentNpc.Id, 1);
-            DialogWindow.Open(CurrentNpc.Data.Name, toOpenDialogId);
+            _questManager.CallbackQuestCondition(QuestConditionType.Talk, CurrentNpc.Id, 1);
+            _dialogWindow.Open(CurrentNpc.Data.Name, toOpenDialogId);
             // CurrentNpc를 null 만들기 때문에 마지막에 호출
             CloseNpcServiceSelectionWindow();
         }
 
         public void NextDialog()
         {
-            @DialogWindow.Next();
+            _dialogWindow.Next();
         }
 
         public void CloseDialogWindow()
         {
-            @DialogWindow.Quit();
+            _dialogWindow.Quit();
         }
 
         public void FinishQuest(int questId)
         {
-            if (@QuestManager.FinishQuest(questId))
+            if (_questManager.FinishQuest(questId))
             {
                 // Successful Finishing Quest
-                @CurrentQuestDetailWindow.Quit();
-                @CurrentQuestsWindow.DeleteQuest(questId);
+                _currentQuestDetailWindow.Quit();
+                _currentQuestsWindow.DeleteQuest(questId);
                 StructIdCount[] RewardItems = DataBase.Quests[questId].RewardItems;
                 foreach (var item in RewardItems)
                 {
@@ -398,12 +399,12 @@ namespace RPG.UI
         public void UpdateHpGauge(float rate)
         {
             //Debug.Log("UpdateHpGauge " + rate);
-            HpGauge.SetCurretRate(rate);
+            _hpGauge.SetCurretRate(rate);
         }
 
         public void UpdateMpGauge(float rate)
         {
-            MpGauge.SetCurretRate(rate);
+            _mpGauge.SetCurretRate(rate);
         }
 
         public void SelectInventorySlot(int slotIndex)
@@ -415,13 +416,13 @@ namespace RPG.UI
                 return;
             }
 
-            IconItemSlot slot = @InventoryWindow.Slots[slotIndex];
+            IconItemSlot slot = _inventoryWindow.Slots[slotIndex];
             if (slot.ItemId == -1)
                 return;
 
             //Debug.Log("slot.ItemId: " + slot.ItemId);
-            @InventoryItemInfoWindow.SetItemInfo(slot.ItemId, slot.IsEquipped);
-            @InventoryItemInfoWindow.Open();
+            _inventoryItemInfoWindow.SetItemInfo(slot.ItemId, slot.IsEquipped);
+            _inventoryItemInfoWindow.Open();
         }
 
         /// <summary>
@@ -435,34 +436,34 @@ namespace RPG.UI
                 return;
             }
 
-            IconItemSlot slot = @InventoryWindow.Slots[CurrentSelectedSlotIndex];
+            IconItemSlot slot = _inventoryWindow.Slots[CurrentSelectedSlotIndex];
 
             if (slot.ItemId == -1)
                 return;
 
             //Debug.Log("slot.ItemId: " + slot.ItemId);
-            @InventoryItemInfoWindow.SetItemInfo(slot.ItemId, slot.IsEquipped);
+            _inventoryItemInfoWindow.SetItemInfo(slot.ItemId, slot.IsEquipped);
         }
 
         public void OpenStatusWindow()
         {
-            @StatusWindow.Open();
+            _statusWindow.Open();
         }
 
         public void CloseStatusWindow()
         {
-            @StatusWindow.Close();
+            _statusWindow.Close();
         }
 
         public void UpdateQuickSlots()
         {
-            @QuickSlotManager.UpdateSlots();
+            _quickSlotManager.UpdateSlots();
         }
 
         public void UseQuickSlot(int quickSlotNumber)
         {
             //Debug.Log("Try UseQuickSlost quickSlotNumber " + quickSlotNumber);
-            foreach (var slot in @QuickSlotManager.QuickSlots)
+            foreach (var slot in _quickSlotManager.QuickSlots)
             {
                 if (slot.Key == quickSlotNumber)
                 {
@@ -474,31 +475,31 @@ namespace RPG.UI
 
         public void ShowDamageText(int damage, Vector3 worldPosition)
         {
-            @DamageTextDrawer.ShowDamageText(damage, worldPosition);
+            _damageTextDrawer.ShowDamageText(damage, worldPosition);
         }
 
         public void OpenShop()
         {
-            @ShopWindow.Open(CurrentNpc.Id);
+            _shopWindow.Open(CurrentNpc.Id);
             CloseNpcServiceSelectionWindow();
         }
 
         public void CloseShop()
         {
-            @ShopWindow.Close();
-            TransactionWindow.Close();
+            _shopWindow.Close();
+            _transactionWindow.Close();
         }
 
         public void OpenItemPlayerModeTransactionWindow(int playerInventorySlotIndex)
         {
             //Debug.Log("OpenItemPlayerModeTransactionWindow");
-            TransactionWindow.OpenPlayerMode(playerInventorySlotIndex);
+            _transactionWindow.OpenPlayerMode(playerInventorySlotIndex);
         }
 
         public void OpenItemShopKeeperModeTransactionWindow(StructItemData itemData)
         {
             //Debug.Log("OpenItemShopKeeperModeTransactionWindow");
-            TransactionWindow.OpenShopKeeperMode(itemData);
+            _transactionWindow.OpenShopKeeperMode(itemData);
         }
 
         public void ToggleFpsText(bool open)
@@ -529,10 +530,13 @@ namespace RPG.UI
 
         public void OpenSkillsWindow()
         {
-            StructSkillData[] skills = @Player.Status.AvailableSkillIds.Select(x => DataBase.Skills[x]).ToArray();
-
-            _skillsWindow.LoadDataIntoSlots(skills);
-            _skillsWindow.Open();
+            if (_skillsWindow) 
+            {
+                StructSkillData[] skills = @Player.Status.AvailableSkillIds.Select(x => DataBase.Skills[x]).ToArray();
+                _skillsWindow.LoadDataIntoSlots(skills);
+                _skillsWindow.Open(); 
+                _skillsWindow.transform.SetAsLastSibling(); 
+            }
         }
 
         public void CloseSkillsWindow()
@@ -549,6 +553,7 @@ namespace RPG.UI
         {
             _onDeathWindow.SetActive(false);
         }
+
         public void RespawnPlayer()
         {
             CloseOnDeathWindow();
@@ -572,7 +577,7 @@ namespace RPG.UI
 
         public (string[], int[]) GetQuickSlotLinkes()
         {
-            return @QuickSlotManager.GetQuickSlotLinkes();
+            return _quickSlotManager.GetQuickSlotLinkes();
         }
 
         public void LoadQuickSlots()
@@ -585,7 +590,81 @@ namespace RPG.UI
             //Debug.Log($"quickSlotTypes : {string.Join(",", quickSlotTypes)}");
             //Debug.Log($"quickSlotLinkes : {string.Join(",", quickSlotLinkes)}");
 
-            @QuickSlotManager.SetQuickSlots(quickSlotTypes, quickSlotLinkes);
+            _quickSlotManager.SetQuickSlots(quickSlotTypes, quickSlotLinkes);
+        }
+
+        public void CloseInGameWindows()
+        {
+            _inGameUIRoot.gameObject.SetActive(false);
+            if (IsOpenItemBoxWindow) _itemBoxWindow.Close();
+            
+            if (IsOpenNpcServiceSelectionWindow) _npcServiceSelectionWindow.Close();
+            if (IsOpenDialogWindow) _dialogWindow.Quit();
+            if (IsOpenQuestSelectionWindow) _questSelectionWindow.Close();
+            if (IsOpenNpcQuestDetailWindow) _npcQuestDetailWindow.Close();
+            if (IsOpenCurrentQuestDetailWindow) _currentQuestDetailWindow.Close();
+
+            if (IsOpenCurrentQuestsWindow) _currentQuestsWindow.Close();
+
+            if (IsOpenShopWindow) _shopWindow.Close();
+            if (IsOpenTransactionWindow) _transactionWindow.Close();
+
+            if (IsOpenInventoryWindow) _inventoryWindow.Close();
+            if (IsOpenInventoryWindow) _inventoryItemInfoWindow.Close();
+            if (IsOpenSkillsWindow) _skillsWindow.Close();
+
+            if (IsOpenEscWindow) _escWindow.gameObject.SetActive(false);
+
+            if (IsOpenOnDeathWindow) _onDeathWindow.gameObject.SetActive(false);
+        }
+
+        public void OpenInGameWindow()
+        {
+            _inGameUIRoot.gameObject.SetActive(true);
+            if (IsOpenItemBoxWindow) _itemBoxWindow.Close();
+            
+            if (IsOpenNpcServiceSelectionWindow) _npcServiceSelectionWindow.Close();
+            if (IsOpenDialogWindow) _dialogWindow.Quit();
+            if (IsOpenQuestSelectionWindow) _questSelectionWindow.Close();
+            if (IsOpenNpcQuestDetailWindow) _npcQuestDetailWindow.Close();
+            if (IsOpenCurrentQuestDetailWindow) _currentQuestDetailWindow.Close();
+
+            if (IsOpenCurrentQuestsWindow) _currentQuestsWindow.Close();
+
+            if (IsOpenShopWindow) _shopWindow.Close();
+            if (IsOpenTransactionWindow) _transactionWindow.Close();
+
+            if (IsOpenInventoryWindow) _inventoryWindow.Close();
+            if (IsOpenInventoryWindow) _inventoryItemInfoWindow.Close();
+            if (IsOpenSkillsWindow) _skillsWindow.Close();
+
+            if (IsOpenEscWindow) _escWindow.gameObject.SetActive(false);
+
+            if (IsOpenOnDeathWindow) _onDeathWindow.gameObject.SetActive(false);
+        }
+
+        public void ToggleCurrentQuestsWindow()
+        {
+            if (_currentQuestsWindow)
+            {
+                if (IsOpenCurrentQuestsWindow) _currentQuestsWindow.Close();
+                else _currentQuestsWindow.Open();
+            }
+        }
+
+        public void HighlightQuest(int questIndex)
+        {
+            _currentQuestsWindow.HighlightSlot(questIndex);
+        }
+
+        public void UnhighlightQuest(int questIndex)
+        {
+            _currentQuestsWindow.UnhighlightSlot(questIndex);
+        }
+
+        public void UpdateQuickSlotItemLink(int oldIndex, int newIndex)
+        {
+            _quickSlotManager.UpdateSlotItemLink(oldIndex, newIndex);
         }
     }
 }

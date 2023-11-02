@@ -7,23 +7,23 @@ using RPG.Common;
 
 namespace RPG.UI
 {
-    public class CurrentQuestSlot : ClickableObject
+    public class CurrentQuestSlot : MonoBehaviour
     {
-        public TextMeshProUGUI Text;
+        [SerializeField] private TextMeshProUGUI _questTitleText;
         public int QuestId;
         [SerializeField] private UIManager _uiManager;
 
         void Awake()
         {
-            base.Initialize();
             Clear();
             _uiManager = UIManager.Instance;
+            Unhighlight();
         }
 
         public void SetInfo(int questId, string questTitle)
         {
             Debug.Log($"{name} SetInfo #{questId}.{questTitle}");
-            Text.text = questTitle;
+            _questTitleText.text = questTitle;
             QuestId = questId;
             //gameObject.SetActive(true);
         }
@@ -31,17 +31,14 @@ namespace RPG.UI
         public void Clear()
         {
             //Debug.Log($"{name} Init Text");
-            Text.text = string.Empty;
+            _questTitleText.text = string.Empty;
             QuestId = -1;
             Off();
         }
 
-        protected override void OnClicked()
+        public void OpenQuestDetailWindow()
         {
-            //InitializeText();
-            //gameObject.SetActive(false);
             _uiManager.OpenCurrentQuestDetailWindow(QuestId);
-
         }
 
         public void On()
@@ -52,6 +49,16 @@ namespace RPG.UI
         public void Off()
         {
             gameObject.SetActive(false);
+        }
+
+        public void Highlight()
+        {
+            _questTitleText.color = Color.yellow;
+        }
+
+        public void Unhighlight()
+        {
+            _questTitleText.color = Color.gray;
         }
     }
 }

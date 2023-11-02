@@ -79,6 +79,7 @@ namespace RPG.UI
                     {
                         _uiManager.CLoseInventoryItemInfoWindow();
                         Swap(otherItemSlot);
+                        _uiManager.UpdateQuickSlotItemLink(SlotIndex, otherItemSlot.SlotIndex);
                     }
                 }
             }

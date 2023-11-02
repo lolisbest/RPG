@@ -9,8 +9,6 @@ using Cinemachine;
 
 public partial class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private bool _isInIntroScene;
-
     public Player @Player { get; private set; }
 
     public GameObject FollowCamPrefab;
@@ -43,15 +41,6 @@ public partial class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        if (_isInIntroScene)
-        {
-            _uiManager.SwitchToIntro();
-        }
-        else
-        {
-            _uiManager.SwitchToInGame();
-        }
-
         Debug.Log("GameManager.Start");
         Debug.Log("Start() _playerPrefab " + _playerPrefab);
     }
@@ -116,4 +105,15 @@ public partial class GameManager : Singleton<GameManager>
         @Player.Spwan(respawnPosition);
     }
 
+    public void MouseLockOn()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void MouseUnlock()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 }

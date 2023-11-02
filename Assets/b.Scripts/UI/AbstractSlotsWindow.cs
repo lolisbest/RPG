@@ -22,13 +22,23 @@ namespace RPG.UI
         public virtual void Open()
         {
             gameObject.SetActive(true);
-            if (_slots == null)
-                _slots = new();
+            if (_slots == null) _slots = new();
         }
 
         public virtual void Close()
         {
+            ClearAll();
+
             gameObject.SetActive(false);
+        }
+
+        protected virtual void ClearAll()
+        {
+            foreach (var slot in _slots)
+            {
+                slot.Clear();
+                slot.Off();
+            }
         }
 
         public virtual void LoadDataIntoSlots(T[] dataArray)

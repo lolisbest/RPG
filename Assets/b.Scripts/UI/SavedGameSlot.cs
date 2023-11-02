@@ -33,6 +33,7 @@ namespace RPG.UI
 
         public void OnClicked()
         {
+            Debug.Log("Saved CharacterSlot OnClicked");
             _savedGamesWindow.Select(this);
         }
 
@@ -44,6 +45,14 @@ namespace RPG.UI
         public void HighLightOff()
         {
             _highlightObject.SetActive(false);
+        }
+
+        public override void Clear()
+        {
+            PlayerDataId = -1;
+            _playerNameText.text = string.Empty;
+            _playerLevelText.text = string.Empty;
+            HighLightOff();
         }
     }
 }

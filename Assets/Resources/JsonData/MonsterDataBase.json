@@ -21,7 +21,7 @@
       "Id" : 2,
       "Status" : {
         "Name": "Bear",
-        "Str" : 30,
+        "Str" : 15,
         "End" : 10,
         "Sta" : 50,
         "Mag" : 0,
@@ -40,7 +40,7 @@
       "Id" : 3,
       "Status" : {
         "Name": "Skeleton",
-        "Str" : 15,
+        "Str" : 12,
         "End" : 5,
         "Sta" : 25,
         "Mag" : 0,

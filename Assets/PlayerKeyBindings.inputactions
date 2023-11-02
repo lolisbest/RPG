@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interaction",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "f13513a0-f368-421a-95e3-ed9e5258828f",
                     "expectedControlType": "Button",
@@ -213,7 +213,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "NpcQuest",
+                    "name": "Quest",
                     "type": "Button",
                     "id": "73e8da67-7b03-4f35-b4e8-96aea4d8dd9e",
                     "expectedControlType": "Button",
@@ -471,7 +471,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Interaction",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -614,7 +614,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "NpcQuest",
+                    "action": "Quest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

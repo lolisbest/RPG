@@ -146,7 +146,7 @@ namespace RPG.Common
         public static StructPlayerData GetTempData()
         {
             StructPlayerData playerData = new();
-            playerData.DataId = 1;
+            playerData.DataId = UnityEngine.Random.Range(0, 100000);
             playerData.Status = StructStatus.GetTempData();
             playerData.Inventory = StructInventory.GetTempData();
             playerData.HumanEquipSlots = StructHumanEquipSlots.GetTempData();

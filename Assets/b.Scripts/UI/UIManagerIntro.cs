@@ -12,8 +12,18 @@ namespace RPG.UI
         [Space(10f)]
         [Header("------- 인트로 씬 -------")]
         [SerializeField] private GameObject _mainSelectionWindow;
+        public bool IsOpenMainSelectionWindow { get => _mainSelectionWindow.gameObject.activeSelf; }
+
         [SerializeField] private SavedGamesWindow _savedGamesWindow;
+        public bool IsOpenSavedGamesWindow { get => _savedGamesWindow.gameObject.activeSelf; }
+
         [SerializeField] private PlayerCreationWindow _playerCreationWindow;
+        public bool IsOpenPlayerCreationWindow { get => _playerCreationWindow.gameObject.activeSelf; }
+
+        public void OpenMainSelectionWindow()
+        {
+            ReturnToMain();
+        }
 
         public void OpenSavedGamedsWindow()
         {
@@ -34,6 +44,13 @@ namespace RPG.UI
         public void ReturnToMain()
         {
             _mainSelectionWindow.gameObject.SetActive(true);
+            _savedGamesWindow.Close();
+            _playerCreationWindow.Close();
+        }
+
+        public void CloseIntroWindows()
+        {
+            _mainSelectionWindow.gameObject.SetActive(false);
             _savedGamesWindow.Close();
             _playerCreationWindow.Close();
         }

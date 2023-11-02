@@ -70,44 +70,35 @@ namespace RPG.UI
 
         private void RegisterItem(Sprite itemSprite, int linkedInventoryslotIndex)
         {
-            _quickSlotManager.TryClearSlotWidthSameItem(linkedInventoryslotIndex);
+            _quickSlotManager.TryClearSlotWidthSameElement(EnumQuickSlotType.Item, linkedInventoryslotIndex);
 
             if (!IsEmpty())
             {
                 ClearQuickSlot();
             }
 
-
             Link = linkedInventoryslotIndex;
-            Type = EnumQuickSlotType.Item;
             Icon.sprite = itemSprite;
-
-            Debug.Log("Quick LinkedInventorySlotIndex : " + linkedInventoryslotIndex);
-            Debug.Log("Quick itemSprite : " + itemSprite);
-
+            if (itemSprite != null) Icon.enabled = true;
+            Type = EnumQuickSlotType.Item;
             UpdateItemCount();
 
-            if (itemSprite != null)
-                Icon.enabled = true;
         }
 
         private void RegisterSkill(Sprite skillSprite, int skillId)
         {
-            _quickSlotManager.TryClearSlotWidthSameSkill(skillId);
+            _quickSlotManager.TryClearSlotWidthSameElement(EnumQuickSlotType.Skill, skillId);
 
             if (!IsEmpty())
             {
                 ClearQuickSlot();
             }
 
-            //throw new System.NotImplementedException("Add Skill To QuickSlot");
-
             Link = skillId;
             Icon.sprite = skillSprite;
+            if (skillSprite != null) Icon.enabled = true;
             Type = EnumQuickSlotType.Skill;
 
-            if (skillSprite != null)
-                Icon.enabled = true;
         }
 
         /// <summary>

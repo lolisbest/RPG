@@ -14,7 +14,7 @@ namespace RPG.UI
 
         public void StartGame()
         {
-            Debug.Log("_uiManager.ReturnToMain()");
+            Debug.Log("_uiManager.ReturnToMain(). _selectedSlot : " + _selectedSlot);
             //_uiManager.ReturnToMain();
             GameManager.Instance.SetCurrentPlayerData(_selectedSlot.SlotData);
             GameManager.Instance.LoadInGameScene();
@@ -31,6 +31,7 @@ namespace RPG.UI
         {
             if(_selectedSlot) _selectedSlot.HighLightOff();
 
+            Debug.Log("newSeletedSlot " + newSeletedSlot);
             _selectedSlot = newSeletedSlot;
 
             if (_selectedSlot) _selectedSlot.HighLightOn();

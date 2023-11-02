@@ -121,7 +121,7 @@ namespace RPG.UI
             }
         }
 
-        private void Close()
+        public void Close()
         {
             QuestId = -1;
 

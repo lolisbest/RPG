@@ -147,7 +147,10 @@ namespace RPG.Input
 #endif
         private Animator _animator;
         private CharacterController _controller;
-        private CustomStarterAssetsInputs _input;
+        private CustomStarterAssetsInputs _inputAsset;
+
+        public StructInput Inputs { get; private set; }
+
         private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
@@ -188,7 +191,8 @@ namespace RPG.Input
         public void SetHitAnimation()
         {
             _animator.SetTrigger(_animIDHit);
-            _input.block = false;
+            // 막기 자세 중에 막지 못 한 공격으로 막기 자세가 풀림
+            _inputAsset.block = false;
         }
 
         public void SetDeath()
@@ -196,6 +200,12 @@ namespace RPG.Input
             //Debug.Log("SetDeath");
             _animator.SetTrigger(_animIDDeath);
             _controller.enabled = false;
+            ResetAnimatorAndInput();
+        }
+        
+        private void ResetAnimatorAndInput()
+        {
+            _inputAsset.block = false;
         }
 
         public void SetRespawn()
@@ -211,7 +221,7 @@ namespace RPG.Input
 
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
-            _input = GetComponent<CustomStarterAssetsInputs>();
+            _inputAsset = GetComponent<CustomStarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM 
             _playerInput = GetComponent<PlayerInput>();
 #else
@@ -233,39 +243,36 @@ namespace RPG.Input
             RaycastFromCamera();
         }
 
-        private void Update()
+        private void SetInputs()
         {
-            // esc window
-            ToggleEscMenu();
-
             if (_uiManager.IsInteractingWithPlayer || @Player.IsDie)
             {
-                //Debug.Log("InteractingWithPlayer ");
-                _input.ClearInputsOnIntraction();
-            }
-            else
-            {
-                Slash();
+                _inputAsset.ClearInputsOnIntraction();
             }
 
-            if (_input.noMouseRotation)
-            {
-                //Debug.Log("noMouseRotation");
-                _input.look = Vector2.zero;
-                _input.attack = false;
-            }
+            StructInput inputs = _inputAsset.GetInputs();
 
+            // 막기 중이라면 이동 입력 버림
+            if (IsBlocking) inputs.Move = Vector2.zero;
 
-            // 점프 후, 그라운드 체크
-            JumpAndGravity();
+            // 커서를 사용해야한다면 회전 입력 버림
+            if (_uiManager.ShouldUnlockMouse) inputs.Look = Vector2.zero;
+
+            Inputs = inputs;
+        }
+
+        private void Update()
+        {
+            SetInputs();
+
+            // 중력 적용 후, 그라운드 체크
+            ApplyGravity();
             GroundedCheck();
 
-            // 현재 막기 중이면 Move 호출하지 않음.
-            if(!IsBlocking)
-            {
-                Move();
-            }
-       
+            ToggleEscMenu();
+
+            Move();
+            Slash();
             Block();
 
             // Interaction
@@ -307,7 +314,9 @@ namespace RPG.Input
             // quickslot
             PressQuickSlot();
 
-            _input.ClearBoolInputs();
+            ToggleCurrentQuestsWindow();
+
+            _inputAsset.ClearBoolInputs();
         }
 
         private void LateUpdate()
@@ -352,14 +361,14 @@ namespace RPG.Input
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (Inputs.Look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 deltaTimeMultiplier *= CameraRotationSensitivity;
 
-                _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += Inputs.Look.x * deltaTimeMultiplier;
+                _cinemachineTargetPitch += Inputs.Look.y * deltaTimeMultiplier;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -373,7 +382,7 @@ namespace RPG.Input
 
         private void Slash()
         {
-            if(IsIdleBlend && _input.attack)
+            if(IsIdleBlend && Inputs.Attack)
             {
                 _animator.SetTrigger(_animIDSlash);
             }
@@ -397,7 +406,7 @@ namespace RPG.Input
 
         private void Block()
         {
-            _animator.SetBool(_animIDBlock, _input.block);
+            _animator.SetBool(_animIDBlock, Inputs.Block);
         }
 
         private void Move()
@@ -414,8 +423,8 @@ namespace RPG.Input
             }
             else
             {
-                move = _input.move;
-                sprint = _input.sprint;
+                move = Inputs.Move;
+                sprint = Inputs.Sprint;
             }
 
             // set target speed based on move speed, sprint speed and if sprint is pressed
@@ -431,7 +440,7 @@ namespace RPG.Input
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? move.magnitude : 1f;
+            float inputMagnitude = _inputAsset.analogMovement ? move.magnitude : 1f;
 
             //Debug.Log("targetSpeed " + targetSpeed);
             //Debug.Log("currentHorizontalSpeed " + currentHorizontalSpeed);
@@ -534,6 +543,23 @@ namespace RPG.Input
             _controller.Move(Vector3.zero);
         }
 
+        private void ApplyGravity()
+        {
+            if (Grounded)
+            {
+                if (_verticalVelocity < 0.0f)
+                {
+                    _verticalVelocity = -2f;
+                }
+            }
+
+            // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
+            if (_verticalVelocity < _terminalVelocity)
+            {
+                _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+
         private void JumpAndGravity()
         {
             if (Grounded)
@@ -555,7 +581,7 @@ namespace RPG.Input
                 }
 
                 // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_inputAsset.jump && _jumpTimeoutDelta <= 0.0f)
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
@@ -593,7 +619,7 @@ namespace RPG.Input
                 }
 
                 // if we are not grounded, do not jump
-                _input.jump = false;
+                _inputAsset.jump = false;
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
@@ -672,7 +698,7 @@ namespace RPG.Input
 
         private void Interact()
         {
-            if(_input.interaction && ObjectToInteractWith != null)
+            if(Inputs.Interact && ObjectToInteractWith != null)
             {
                 ObjectToInteractWith.Interact();
             }
@@ -680,7 +706,7 @@ namespace RPG.Input
 
         private void LootAll()
         {
-            if(_input.lootAll && _uiManager.IsOpenItemBoxWindow)
+            if(Inputs.LootAll && _uiManager.IsOpenItemBoxWindow)
             {
                 StructIdCount[] droppedItems = _uiManager.CurrentBeingOpenItemBox.Items.ToArray();
                 Debug.Log($"PutAwayAll : {droppedItems.Length}");
@@ -709,7 +735,7 @@ namespace RPG.Input
         {
             if(_uiManager.IsOpenNpcServiceSelectionWindow)
             {
-                if (_input.quit)
+                if (Inputs.Quit)
                 {
                     _uiManager.CloseNpcServiceSelectionWindow();
                 }
@@ -721,7 +747,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenItemBoxWindow)
             {
-                if (_input.quit)
+                if (Inputs.Quit)
                 {
                     _uiManager.CloseItemBoxWindow();
                 }
@@ -791,7 +817,7 @@ namespace RPG.Input
 
         private void ToggleInventoryWindow()
         {
-            if (_input.inventory)
+            if (Inputs.Inventory)
             {
                 //Debug.Log("@UIManager.IsOpenInventoryWindow: " + @UIManager.IsOpenInventoryWindow);
                 //Debug.Log("@UIManager.IsInteractingWithPlayer: " + @UIManager.IsInteractingWithPlayer);
@@ -808,7 +834,7 @@ namespace RPG.Input
 
         private void ToggleSkillsWindow()
         {
-            if (_input.skill)
+            if (Inputs.Skill)
             {
                 //Debug.Log("@UIManager.IsOpenInventoryWindow: " + @UIManager.IsOpenInventoryWindow);
                 //Debug.Log("@UIManager.IsInteractingWithPlayer: " + @UIManager.IsInteractingWithPlayer);
@@ -827,7 +853,7 @@ namespace RPG.Input
         {
             if(_uiManager.IsOpenNpcServiceSelectionWindow)
             {
-                if (_input.npcTalk)
+                if (Inputs.NpcTalk)
                 {
                     _uiManager.OpenDialogWindow();
                 }
@@ -838,7 +864,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenDialogWindow && _uiManager.IsPresentDialogNextButton)
             {
-                if (_input.npcTalkNext)
+                if (Inputs.NpcTalkNext)
                 {
                     _uiManager.NextDialog();
                 }
@@ -849,7 +875,7 @@ namespace RPG.Input
         {
             if(_uiManager.IsOpenDialogWindow && _uiManager.IsPresentDialogQuitButton)
             {
-                if(_input.quit)
+                if(Inputs.Quit)
                 {
                     _uiManager.CloseDialogWindow();
                 }
@@ -860,7 +886,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenNpcServiceSelectionWindow)
             {
-                if (_input.npcQuest)
+                if (Inputs.Quest)
                 {
                     _uiManager.OpenQuestSelectionWindow();
                 }
@@ -871,7 +897,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenQuestSelectionWindow)
             {
-                if (_input.quit)
+                if (Inputs.Quit)
                 {
                     _uiManager.CloseQuestSelectionWindow();
                 }
@@ -882,7 +908,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenNpcQuestDetailWindow)
             {
-                if (_input.npcQuestAccept)
+                if (Inputs.NpcQuestAccept)
                 {
                     _uiManager.AcceptNpcQuest();
                 }
@@ -893,7 +919,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenNpcQuestDetailWindow)
             {
-                if (_input.quit)
+                if (Inputs.Quit)
                 {
                     _uiManager.CloseNpcQuestDetailWindow();
                 }
@@ -904,7 +930,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenNpcServiceSelectionWindow)
             {
-                if (_input.npcShop)
+                if (Inputs.NpcShop)
                 {
                     _uiManager.OpenShop();
                 }
@@ -915,7 +941,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenShopWindow)
             {
-                if (_input.quit)
+                if (Inputs.Quit)
                 {
                     _uiManager.CloseShop();
                 }
@@ -926,7 +952,7 @@ namespace RPG.Input
         {
             if (_uiManager.IsOpenNpcServiceSelectionWindow)
             {
-                if (_input.npcRest)
+                if (Inputs.NpcRest)
                 {
                     throw new System.NotImplementedException("not implemented npc rest");
                 }
@@ -935,53 +961,52 @@ namespace RPG.Input
 
         private void PressQuickSlot()
         {
-            if(_input.slot1)
+            if(Inputs.Slot1)
             {
                 _uiManager.UseQuickSlot(1);
             } 
 
-            if (_input.slot2)
+            if (Inputs.Slot2)
             {
                 _uiManager.UseQuickSlot(2);
             }
 
-            if (_input.slot3)
+            if (Inputs.Slot3)
             {
                 _uiManager.UseQuickSlot(3);
             }
 
-            if (_input.slot4)
+            if (Inputs.Slot4)
             {
                 _uiManager.UseQuickSlot(4);
             }
 
-            if (_input.slot5)
+            if (Inputs.Slot5)
             {
                 _uiManager.UseQuickSlot(5);
             }
 
-            if (_input.slot6)
+            if (Inputs.Slot6)
             {
-                //Debug.Log("Quick 6");
                 _uiManager.UseQuickSlot(6);
             }
 
-            if (_input.slot7)
+            if (Inputs.Slot7)
             {
                 _uiManager.UseQuickSlot(7);
             }
 
-            if (_input.slot8)
+            if (Inputs.Slot8)
             {
                 _uiManager.UseQuickSlot(8);
             }
 
-            if (_input.slot9)
+            if (Inputs.Slot9)
             {
                 _uiManager.UseQuickSlot(9);
             }
 
-            if (_input.slot0)
+            if (Inputs.Slot0)
             {
                 _uiManager.UseQuickSlot(0);
             }
@@ -989,7 +1014,7 @@ namespace RPG.Input
 
         private void ToggleEscMenu()
         {
-            if (_input.esc)
+            if (Inputs.Esc)
             {
                 Debug.Log("Player.ToggleEscMenu()");
                 _uiManager.ToggleEscWindow();
@@ -1010,6 +1035,14 @@ namespace RPG.Input
         public void OpenOnDeathWindow()
         {
             _uiManager.OpenOnDeathWindow();
+        }
+
+        public void ToggleCurrentQuestsWindow()
+        {
+            if (Inputs.Quest && !_uiManager.IsInteractingWithPlayer)
+            {
+                _uiManager.ToggleCurrentQuestsWindow();
+            }
         }
     }
 }

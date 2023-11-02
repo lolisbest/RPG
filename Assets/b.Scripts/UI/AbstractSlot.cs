@@ -26,5 +26,7 @@ namespace RPG.UI
         {
             gameObject.SetActive(true);
         }
+
+        public abstract void Clear();
     }
 }

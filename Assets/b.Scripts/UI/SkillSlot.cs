@@ -24,5 +24,12 @@ namespace RPG.UI
             _skillMpCostText.text = skillData.MpCost.ToString();
             _skillIcon.sprite = skillData.Icon;
         }
+
+        public override void Clear()
+        {
+            _skillNameText.text = string.Empty;
+            _skillMpCostText.text = string.Empty;
+            _skillIcon.sprite = null;
+        }
     }
 }

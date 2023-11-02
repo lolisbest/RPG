@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using RPG.Common;
 
 namespace RPG.UI
 {
@@ -30,19 +31,16 @@ namespace RPG.UI
             }
         }
 
-        public void TryClearSlotWidthSameSkill(int skillId)
+        /// <summary>
+        /// 동일한 요소가 다른 슬롯에 등록되어 있다면 기존에 등록된 요소를 없앰
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="link"></param>
+        public void TryClearSlotWidthSameElement(EnumQuickSlotType type, int link)
         {
             foreach(var quickSlot in QuickSlots)
             {
-                if (quickSlot.Link == skillId) quickSlot.ClearQuickSlot();
-            }
-        }
-
-        public void TryClearSlotWidthSameItem(int inventorySlotIndex)
-        {
-            foreach (var quickSlot in QuickSlots)
-            {
-                if (quickSlot.Link == inventorySlotIndex) quickSlot.ClearQuickSlot();
+                if (quickSlot.Type == type && quickSlot.Link == link) quickSlot.ClearQuickSlot();
             }
         }
 
@@ -65,6 +63,17 @@ namespace RPG.UI
             for (int i = 0; i < QuickSlots.Count; i++)
             {
                 QuickSlots[i].AddElement(Utils.StringToEnum<RPG.Common.EnumQuickSlotType>(types[i]), linkes[i]);
+            }
+        }
+
+        public void UpdateSlotItemLink(int oldLink, int newLink)
+        {
+            foreach(var slot in QuickSlots)
+            {
+                if (slot.Type == EnumQuickSlotType.Item && slot.Link == oldLink)
+                {
+                    slot.AddElement(EnumQuickSlotType.Item, newLink);
+                }
             }
         }
     }

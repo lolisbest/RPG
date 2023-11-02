@@ -15,18 +15,25 @@ public class NpcServiceSelectionWindow : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("NpcServiceSelectionWindow.Initialize");
+        //Debug.Log("NpcServiceSelectionWindow.Initialize");
 
         Buttons = new();
-        Button[] childButtons = ButtonsRoot.GetComponentsInChildren<Button>();
+
+        Button[] childButtons = ButtonsRoot.GetComponentsInChildren<Button>(true);
+
+        //Debug.Log("NpcServiceSelectionWindow childButtons " + childButtons.Length);
 
         foreach (var serviceString in System.Enum.GetNames(typeof(NpcService)))
         {
             NpcService service = Utils.StringToEnum<NpcService>(serviceString);
+            //Debug.Log("Add Key " + service);
             Buttons.Add(service, null);
         }
 
-        foreach(var childButton in childButtons)
+        //Debug.Log("NpcServiceSelectionWindow Buttons " + Buttons.Count);
+        //Debug.Log("NpcServiceSelectionWindow Enums " + string.Join(", ", System.Enum.GetNames(typeof(NpcService))));
+
+        foreach (var childButton in childButtons)
         {
             if (childButton.name == "Quit")
                 continue;
@@ -39,6 +46,7 @@ public class NpcServiceSelectionWindow : MonoBehaviour
                 continue;
 
             NpcService buttonService = Utils.StringToEnum<NpcService>(childButton.name);
+            //Debug.Log("buttonService " + buttonService);
             if (Buttons.ContainsKey(Utils.StringToEnum<NpcService>(childButton.name)))
             {
                 Buttons[buttonService] = childButton;

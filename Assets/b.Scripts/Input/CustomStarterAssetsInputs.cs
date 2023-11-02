@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
+using RPG.Common;
+
 namespace RPG.Input
 {
 	public class CustomStarterAssetsInputs : MonoBehaviour
@@ -11,7 +13,6 @@ namespace RPG.Input
 		public Vector2 move;
 		public Vector2 look;
 
-		public bool noMouseRotation;
 		public bool jump;
 
 		public bool sprint;
@@ -21,12 +22,12 @@ namespace RPG.Input
 
 		public bool block;
 
-		public bool interaction;
+		public bool interact;
 
 		public bool npcTalk;
 		public bool npcTalkNext;
 
-		public bool npcQuest;
+		public bool quest;
 		public bool npcQuestAccept;
 		public bool npcRest;
 		public bool npcShop;
@@ -71,21 +72,7 @@ namespace RPG.Input
 			}
 		}
 
-		public void OnNoMouseRotation(InputValue value)
-		{
-			float i = value.Get<float>();
-			if(i > 0)
-            {
-				noMouseRotation = true;
-			}
-			else
-            {
-				noMouseRotation = false;
-            }
-		}
-
-
-		public void OnJump(InputValue value)
+        public void OnJump(InputValue value)
 		{
 			JumpInput(value.isPressed);
 		}
@@ -100,9 +87,9 @@ namespace RPG.Input
 			attack = value.isPressed;
         }
 
-		public void OnInteraction(InputValue value)
+		public void OnInteract(InputValue value)
         {
-			interaction = value.isPressed;
+			interact = value.isPressed;
         }
 
 		public void OnNpcTalk(InputValue value)
@@ -115,9 +102,9 @@ namespace RPG.Input
 			npcTalkNext = value.isPressed;
 		}
 
-		public void OnNpcQuest(InputValue value)
+		public void OnQuest(InputValue value)
 		{
-			npcQuest = value.isPressed;
+			quest = value.isPressed;
 		}
 
 		public void OnNpcQuestAccept(InputValue value)
@@ -257,46 +244,46 @@ namespace RPG.Input
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 
+		/// <summary>
+		/// 오브젝트와 상호 작용 중일 때 사용 못 하게 하기 위해. 공격, 회전, 또 다른 상호작용, 인벤토리 창, 스킬 창, 퀵슬롯, Esc 키 입력 버림
+		/// </summary>
 		public void ClearInputsOnIntraction()
         {
-			// 오브젝트와 상호 작용 중일 때 사용 못 하게 하기 위해
-			//move = Vector2.zero;
+            // 오브젝트와 상호 작용 중일 때 사용 못 하게 하기 위해
+            attack = false;
             look = Vector2.zero;
-			attack = false;
+            interact = false;
+            inventory = false;
+			skill = false;
 
-			interaction = false;
-			//lootAll = false;
-			//inventory = false;
+            slot1 = false;
+            slot2 = false;
+            slot3 = false;
+            slot4 = false;
+            slot5 = false;
+            slot6 = false;
+            slot7 = false;
+            slot8 = false;
+            slot9 = false;
+            slot0 = false;
 
-			//quit = false;
+            esc = false;
+        }
 
-			slot1 = false;
-			slot2 = false;
-			slot3 = false;
-			slot4 = false;
-			slot5 = false;
-			slot6 = false;
-			slot7 = false;
-			slot8 = false;
-			slot9 = false;
-			slot0 = false;
-
-			esc = false;
-		}
-
-		/// <summary>
-		/// sprint, block 은 제외
-		/// </summary>
-		public void ClearBoolInputs()
+        /// <summary>
+        /// sprint, block 은 제외
+        /// </summary>
+        public void ClearBoolInputs()
         {
+			// 트리거 형식으로 쓰기 위해 리셋
 			jump = false;
 			attack = false;
 
-			interaction = false;
+			interact = false;
 
 			npcTalk = false;
 			npcTalkNext = false;
-			npcQuest = false;
+			quest = false;
 			npcQuestAccept = false;
 			npcRest = false;
 			npcShop = false;
@@ -320,6 +307,39 @@ namespace RPG.Input
 
 			esc = false;
 		}
-	}
 
+		public StructInput GetInputs()
+		{
+			StructInput input = new();
+			input.Move = move;
+			input.Look = look;
+			input.Sprint = sprint;
+			input.Attack = attack;
+			input.Block = block;
+			input.Interact = interact;
+			input.NpcTalk = npcTalk;
+			input.NpcTalkNext = npcTalkNext;
+			input.Quest = quest;
+			input.NpcQuestAccept = npcQuestAccept;
+			input.NpcRest = npcRest;
+			input.NpcShop = npcShop;
+			input.LootAll = lootAll;
+			input.Inventory = inventory;
+			input.Skill = skill;
+			input.Quit = quit;
+			input.Slot1 = slot1;
+			input.Slot2 = slot2;
+			input.Slot3 = slot3;
+			input.Slot4 = slot4;
+			input.Slot5 = slot5;
+			input.Slot6 = slot6;
+			input.Slot7 = slot7;
+			input.Slot8 = slot8;
+			input.Slot9 = slot9;
+			input.Slot0 = slot0;
+			input.Esc = esc;
+
+			return input;
+		}
+	}
 }

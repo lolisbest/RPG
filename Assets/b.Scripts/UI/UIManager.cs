@@ -16,32 +16,28 @@ namespace RPG.UI
         [Header("서버와의 통신 에러 창")]
         [SerializeField] private ServerErrorWindow _serverErrorWindow;
 
-        [SerializeField] private GameObject _introSceneUIRoot;
-        [SerializeField] private GameObject _inGameSceneUIRoot;
+        [SerializeField] private GameObject _inGameUIRoot;
+
+        //[SerializeField] private GameObject _introSceneUIRoot;
+        //[SerializeField] private GameObject _inGameSceneUIRoot;
+
+        public bool ShouldUnlockMouse
+        {
+            get
+            {
+                return IsOpenNpcServiceSelectionWindow || IsOpenQuestSelectionWindow || IsOpenNpcQuestDetailWindow ||
+                    IsOpenCurrentQuestDetailWindow || IsOpenInventoryWindow || IsOpenInventoryItemInfoWindow ||
+                    IsOpenItemBoxWindow || IsOpenSkillsWindow || IsOpenEscWindow || IsOpenOnDeathWindow ||
+                    IsOpenMainSelectionWindow || IsOpenSavedGamesWindow || IsOpenPlayerCreationWindow ||
+                    IsOpenCurrentQuestsWindow || IsOpenDialogWindow || IsOpenStatusWindow || IsOpenShopWindow ||
+                    IsOpenTransactionWindow;
+            }
+        }
 
         public override void Initialize()
         {
-            //LastInteractionType = InteractionType.Open;
-            //if (InteractionKeyMessageTxt != null)
-            //    InteractionKeyMessageTxt.text = string.Format(KeyPressMessage, LastInteractionType.ToString());
-
-            //@NpcServiceSelectionWindow.Initialize();
-            //@QuestSelectionWindow.Initialize();
-            //@QuestManager = QuestManager.Instance;
-            //@NpcQuestDetailWindow.Initialize();
-            //@DamageTextDrawer.Initialize();
-
-            //@InventoryWindow.Initialize();
-            //@CurrentQuestsWindow.Initialize();
-            //@DialogWindow.Initialize();
-            //@CurrentQuestDetailWindow.Initialize();
-            //@ShopWindow.Initialize();
-
-            return;
-            //DroppedBox.Initialize();
-            //@Player = Player.Instance;
+            ;
         }
-
 
         protected override void Awake()
         {
@@ -53,6 +49,24 @@ namespace RPG.UI
         {
             GameManager.Instance.SetUIManager(this);
             _mainSelectionWindow.gameObject.SetActive(true);
+        }
+
+        private void FixedUpdate()
+        {
+            //Debug.Log("IsOpenMainSelectionWindow " + IsOpenMainSelectionWindow);
+            //Debug.Log("IsOpenSavedGamesWindow " + IsOpenSavedGamesWindow);
+            //Debug.Log("IsOpenPlayerCreationWindow " + IsOpenPlayerCreationWindow);
+
+            if (ShouldUnlockMouse) 
+            {
+                //Debug.Log("MouseUnlock");
+                GameManager.Instance.MouseUnlock();
+            }
+            else
+            {
+                //Debug.Log("MouseLockOn");
+                GameManager.Instance.MouseLockOn();
+            }
         }
 
         void Update()
@@ -85,16 +99,15 @@ namespace RPG.UI
 
         public void SwitchToIntro()
         {
-            ReturnToMain();
-            _introSceneUIRoot.SetActive(true);
-            _inGameSceneUIRoot.SetActive(false);
+            OpenMainSelectionWindow();
+            CloseInGameWindows();
         }
 
         public void SwitchToInGame()
         {
             Debug.Log("SwitchToInGame");
-            _introSceneUIRoot.SetActive(false);
-            _inGameSceneUIRoot.SetActive(true);
+            CloseIntroWindows();
+            OpenInGameWindow();
         }
     }
 }

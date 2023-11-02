@@ -581,7 +581,6 @@ MonoBehaviour:
   CameraRayCastMaxDistance: 13
   MaxDistanceOnInteraction: 5
   ObjectToInteractWith: {fileID: 0}
-  UIManager: {fileID: 0}
   Player: {fileID: 0}
   CameraRoot: {fileID: 1532538733131122808}
 --- !u!114 &1532538732665431308
@@ -733,7 +732,7 @@ MonoBehaviour:
   slot0: 0
   esc: 0
   analogMovement: 0
-  cursorLocked: 0
+  cursorLocked: 1
   cursorInputForLook: 1
 --- !u!114 &1641525447
 MonoBehaviour:

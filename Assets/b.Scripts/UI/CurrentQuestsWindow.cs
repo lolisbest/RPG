@@ -13,21 +13,26 @@ namespace RPG.UI
         private int _currentQuestsNumber;
         private readonly int _defaultCount = 10;
 
-
         public void Initialize()
         {
-            Slots = new();
+            if (Slots == null)
+            {
+                Slots = new();
+                for (int i = 0; i < _defaultCount; i++)
+                {
+                    AppendQuestSlot();
+                }
+            }
+            else
+            {
+                foreach(var slot in Slots)
+                {
+                    slot.Clear();
+                    slot.Off();
+                }
+            }
+
             _currentQuestsNumber = 0;
-
-            for (int i = 0; i < SlotsRoot.transform.childCount; i++)
-            {
-                Destroy(SlotsRoot.transform.GetChild(i));
-            }
-
-            for (int i = 0; i < _defaultCount; i++)
-            {
-                AppendQuestSlot();
-            }
         }
 
         private CurrentQuestSlot AppendQuestSlot()
@@ -108,6 +113,16 @@ namespace RPG.UI
         public void Close()
         {
             gameObject.SetActive(false);
+        }
+
+        public void HighlightSlot(int questIndex)
+        {
+            Slots[questIndex].Highlight();
+        }
+
+        public void UnhighlightSlot(int questIndex)
+        {
+            Slots[questIndex].Unhighlight();
         }
     }
 }

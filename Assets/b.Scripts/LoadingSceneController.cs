@@ -47,7 +47,6 @@ public class LoadingSceneController : MonoBehaviour
                 {
                     Debug.Log("Progress End LoadingSceneController");
                     op.allowSceneActivation = true;
-                    UIManager.Instance.SwitchToInGame();
                     yield break;
                 }
             }

@@ -26,7 +26,11 @@ namespace RPG.UI
 
         public void Initialize()
         {
-            Slots = new();
+            if (Slots == null)
+            {
+                Slots = new();
+            }
+
             ClearEquipSlots();
         }
 
@@ -114,7 +118,7 @@ namespace RPG.UI
             _uiManager.UpdateInventoryItemInfoWindow();
         }
 
-        void Update()
+        void LateUpdate()
         {
             if (!@Player) return;
 
@@ -123,7 +127,6 @@ namespace RPG.UI
                 UpdateItemAll();
                 _uiManager.UpdateQuickSlots();
                 @Player.IsChangedInventory = false;
-                
             }
         }
 

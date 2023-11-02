@@ -17,6 +17,12 @@ public class QuestManager : Singleton<QuestManager>
         @Player = GameManager.Instance.Player;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Initialize();
+    }
+
     // CurrentInProgressQuests 에 퀘스트 추가
     public void AddQuest(int questId)
     {
@@ -37,21 +43,18 @@ public class QuestManager : Singleton<QuestManager>
     // 퀘스트 조건과 관련된 행위를 알림
     public void CallbackQuestCondition(QuestConditionType type, int targetId, int count)
     {
-        for (int i = 0; i < CurrentInProgressQuests.Count; i++)
+        for (int questIndex = 0; questIndex < CurrentInProgressQuests.Count; questIndex++)
         {
             // 퀘스트 정보 하나 가져오기
-            StructQuestData questData = CurrentInProgressQuests[i];
-            //Debug.Log($"Matched QuestCondition: QuestId:{questData.Id}, QuestTitle:{questData.Title}");
-            Debug.Log($"QuestCondition type: {type}, targetId: {targetId}, count: {count}");
-
+            StructQuestData questData = CurrentInProgressQuests[questIndex];
             StructQuestCondition[] conditions = questData.Conditions;
+
+            bool isComplete = true;
+
             for (int condIndex = 0; condIndex < conditions.Length; condIndex++)
             {
-                // 퀘스트 달성 조건 하나 가져오기
-                StructQuestCondition copyCondition = conditions[condIndex];
-                //Debug.Log($"condition[{condIndex}] {copyCondition}");
                 // 퀘스트 조건 유형과 목표 대상이 일치하는지
-                if (copyCondition.Type == type && copyCondition.TargetId == targetId)
+                if (conditions[condIndex].Type == type && conditions[condIndex].TargetId == targetId)
                 {
                     // 해당 퀘스트 조건의 CurrentCount 셋팅
                     switch (type)
@@ -78,8 +81,20 @@ public class QuestManager : Singleton<QuestManager>
                     }
                 }
 
-                Debug.Log($"After Condition CurrentCount {conditions[condIndex].CurrentCount}");
+                if (conditions[condIndex].ObjectiveCount > conditions[condIndex].CurrentCount)
+                {
+                    isComplete = false;
+                }
             }
+
+            if (isComplete)
+            {
+                _uiManager.HighlightQuest(questIndex);
+            }
+            else
+            {
+                _uiManager.UnhighlightQuest(questIndex);
+            }    
         }
     }
 
