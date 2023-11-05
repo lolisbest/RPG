@@ -15,7 +15,7 @@ C:/Users/JangJaeBeom/Desktop/4.unity_project/RPG
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-1959
+3187
 Successfully changed project path to: C:/Users/JangJaeBeom/Desktop/4.unity_project/RPG
 C:/Users/JangJaeBeom/Desktop/4.unity_project/RPG
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,11 +47,11 @@ C:/Users/JangJaeBeom/Desktop/4.unity_project/RPG
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [5656] Host "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 1777048234 [EditorId] 1777048234 [Version] 1048832 [Id] WindowsEditor(7,J) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [13088] Host "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 1069175547 [EditorId] 1069175547 [Version] 1048832 [Id] WindowsEditor(7,J) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [5656] Host "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 1777048234 [EditorId] 1777048234 [Version] 1048832 [Id] WindowsEditor(7,J) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [13088] Host "[IP] 192.168.0.9 [Port] 0 [Flags] 2 [Guid] 1069175547 [EditorId] 1069175547 [Version] 1048832 [Id] WindowsEditor(7,J) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 105.45 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 116.84 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.19f1 (c9714fde33b6)
 [Subsystems] Discovering subsystems at path D:/Program Files/Unity/Hub/Editor/2021.3.19f1/Editor/Data/Resources/UnitySubsystems
@@ -67,89 +67,89 @@ Initialize mono
 Mono path[0] = 'D:/Program Files/Unity/Hub/Editor/2021.3.19f1/Editor/Data/Managed'
 Mono path[1] = 'D:/Program Files/Unity/Hub/Editor/2021.3.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'D:/Program Files/Unity/Hub/Editor/2021.3.19f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56912
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56724
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/Program Files/Unity/Hub/Editor/2021.3.19f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001834 seconds.
+Registered in 0.001901 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 102.44 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 115.77 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.542 seconds
+- Completed reload, in  0.665 seconds
 Domain Reload Profiling:
-	ReloadAssembly (542ms)
-		BeginReloadAssembly (64ms)
+	ReloadAssembly (665ms)
+		BeginReloadAssembly (79ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (382ms)
-			LoadAssemblies (64ms)
+		EndReloadAssembly (483ms)
+			LoadAssemblies (79ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (91ms)
+			SetupTypeCache (131ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (19ms)
-			SetupLoadedEditorAssemblies (235ms)
+			RebuildScriptCaches (27ms)
+			SetupLoadedEditorAssemblies (262ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (5ms)
+				InitializePlatformSupportModulesInManaged (6ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (103ms)
+				RefreshPlugins (116ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (87ms)
-				ProcessInitializeOnLoadMethodAttributes (39ms)
+				ProcessInitializeOnLoadAttributes (94ms)
+				ProcessInitializeOnLoadMethodAttributes (45ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004888 seconds.
+Registered in 0.005269 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 105.78 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 112.91 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.161 seconds
+- Completed reload, in  1.223 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1161ms)
-		BeginReloadAssembly (82ms)
+	ReloadAssembly (1224ms)
+		BeginReloadAssembly (95ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (3ms)
+			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (16ms)
-		EndReloadAssembly (992ms)
-			LoadAssemblies (73ms)
+			CreateAndSetChildDomain (20ms)
+		EndReloadAssembly (1037ms)
+			LoadAssemblies (90ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (252ms)
+			SetupTypeCache (241ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (78ms)
-			SetupLoadedEditorAssemblies (547ms)
+			RebuildScriptCaches (81ms)
+			SetupLoadedEditorAssemblies (587ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (2ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (106ms)
-				BeforeProcessingInitializeOnLoad (76ms)
-				ProcessInitializeOnLoadAttributes (298ms)
-				ProcessInitializeOnLoadMethodAttributes (62ms)
+				RefreshPlugins (113ms)
+				BeforeProcessingInitializeOnLoad (89ms)
+				ProcessInitializeOnLoadAttributes (317ms)
+				ProcessInitializeOnLoadMethodAttributes (63ms)
 				AfterProcessingInitializeOnLoad (2ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (10ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 0.83 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.09 seconds
+Refreshing native plugins compatible for Editor in 1.25 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 6388 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 52 unused Assets / (1.5 MB). Loaded Objects now: 6872.
 Memory consumption went from 285.9 MB to 284.4 MB.
-Total: 3.724400 ms (FindLiveObjects: 0.393200 ms CreateObjectMapping: 0.220000 ms MarkObjects: 2.712400 ms  DeleteObjects: 0.397700 ms)
+Total: 3.608500 ms (FindLiveObjects: 0.401400 ms CreateObjectMapping: 0.252800 ms MarkObjects: 2.523300 ms  DeleteObjects: 0.430000 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -163,205 +163,415 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 1074445.484419 seconds.
-  path: Assets/b.Scripts/IntroTrigger.cs
-  artifactKey: Guid(c51560c3e61883047b255142b4931786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/b.Scripts/IntroTrigger.cs using Guid(c51560c3e61883047b255142b4931786) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '996303dfa64eefa1034ca04708316c57') in 0.034910 seconds 
+  Time since last request: 1315721.250354 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 1.fbx
+  artifactKey: Guid(bcff3e9866c3771448103116f48f90f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 1.fbx using Guid(bcff3e9866c3771448103116f48f90f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa16052d9e3673db8f78281c788a5c6c') in 0.106852 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000068 seconds.
-  path: Assets/b.Scripts/LoadingSceneController.cs
-  artifactKey: Guid(8f925d62742f646439d10c291488a705) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/b.Scripts/LoadingSceneController.cs using Guid(8f925d62742f646439d10c291488a705) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0215267e11ad350a8288ac0cbbf08c07') in 0.009025 seconds 
+  Time since last request: 10.721360 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 1.fbx
+  artifactKey: Guid(bcff3e9866c3771448103116f48f90f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 1.fbx using Guid(bcff3e9866c3771448103116f48f90f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe7fa27d03cbd21af9dc3381c218e018') in 0.005540 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000040 seconds.
-  path: Assets/b.Scripts/LoadIntroManagers.cs
-  artifactKey: Guid(cf1db20529c3da64aac120fb854af116) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/b.Scripts/LoadIntroManagers.cs using Guid(cf1db20529c3da64aac120fb854af116) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a84079a50505bf827c20aa85e4a0884') in 0.006053 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005945 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.97 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.143 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1143ms)
-		BeginReloadAssembly (124ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (2ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (34ms)
-		EndReloadAssembly (947ms)
-			LoadAssemblies (92ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (345ms)
-			ReleaseScriptCaches (4ms)
-			RebuildScriptCaches (66ms)
-			SetupLoadedEditorAssemblies (387ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (63ms)
-				ProcessInitializeOnLoadAttributes (256ms)
-				ProcessInitializeOnLoadMethodAttributes (56ms)
-				AfterProcessingInitializeOnLoad (2ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (20ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.03 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6205 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 31 unused Assets / (1.5 MB). Loaded Objects now: 6891.
-Memory consumption went from 282.1 MB to 280.6 MB.
-Total: 3.064100 ms (FindLiveObjects: 0.306800 ms CreateObjectMapping: 0.187400 ms MarkObjects: 2.235900 ms  DeleteObjects: 0.333200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  Time since last request: 48.041184 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword strafe left fast.fbx
+  artifactKey: Guid(dd160e7c11e2ebd489f4af8fc96dd13a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword strafe left fast.fbx using Guid(dd160e7c11e2ebd489f4af8fc96dd13a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89a0cdf1690b9c13456245ad05c00a19') in 0.010364 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 21.211514 seconds.
-  path: Assets/b.Scripts/DamageableStatusMonoBehaviour.cs
-  artifactKey: Guid(df5faa6593cec594d8215eddbfb9e30b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/b.Scripts/DamageableStatusMonoBehaviour.cs using Guid(df5faa6593cec594d8215eddbfb9e30b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a18ac383b36608660de5bed6d7c09805') in 0.016977 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005484 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.94 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.024 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1024ms)
-		BeginReloadAssembly (129ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (2ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (38ms)
-		EndReloadAssembly (828ms)
-			LoadAssemblies (95ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (215ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (56ms)
-			SetupLoadedEditorAssemblies (410ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (61ms)
-				ProcessInitializeOnLoadAttributes (267ms)
-				ProcessInitializeOnLoadMethodAttributes (71ms)
-				AfterProcessingInitializeOnLoad (2ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (26ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.34 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6205 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 31 unused Assets / (1.5 MB). Loaded Objects now: 6910.
-Memory consumption went from 282.1 MB to 280.7 MB.
-Total: 4.340100 ms (FindLiveObjects: 0.381400 ms CreateObjectMapping: 0.208700 ms MarkObjects: 3.263300 ms  DeleteObjects: 0.485700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  Time since last request: 3.596888 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 2.fbx
+  artifactKey: Guid(e8b49caab0d0f3c4b929c3febe4b916f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 2.fbx using Guid(e8b49caab0d0f3c4b929c3febe4b916f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80dcda7c3416f0af3563fbc99d822f1a') in 0.013367 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 145.898987 seconds.
-  path: Assets/Resources/Prefabs/Monster/Skeleton.prefab
-  artifactKey: Guid(87c60663dbbfd774e94230852a98672d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Prefabs/Monster/Skeleton.prefab using Guid(87c60663dbbfd774e94230852a98672d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f2ba852b356f2d4e126482265711489') in 0.339066 seconds 
+  Time since last request: 2.445299 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword kick (2).fbx
+  artifactKey: Guid(97fbe1f253218d744a42362118d6c660) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword kick (2).fbx using Guid(97fbe1f253218d744a42362118d6c660) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3783d84e169a26fe7ea65a11bfdd23a6') in 0.012580 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 72.750054 seconds.
-  path: Assets/Resources/Prefabs/PlayerCharacter.prefab
-  artifactKey: Guid(14f923e1bbd887241859ecc9f237f907) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Prefabs/PlayerCharacter.prefab using Guid(14f923e1bbd887241859ecc9f237f907) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78a60d149b41a1fc5589d35a1b733d53') in 0.238592 seconds 
+  Time since last request: 4.505738 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword run back.fbx
+  artifactKey: Guid(fa404456dbb6e3a41a0e11efc1053d26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword run back.fbx using Guid(fa404456dbb6e3a41a0e11efc1053d26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d0960c7dbf9f6bf7ca12e21ff2812a5') in 0.010922 seconds 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005680 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\JangJaeBeom\Desktop\4.unity_project\RPG\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.90 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.116 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1117ms)
-		BeginReloadAssembly (129ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (43ms)
-		EndReloadAssembly (923ms)
-			LoadAssemblies (85ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (254ms)
-			ReleaseScriptCaches (3ms)
-			RebuildScriptCaches (56ms)
-			SetupLoadedEditorAssemblies (422ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (57ms)
-				ProcessInitializeOnLoadAttributes (286ms)
-				ProcessInitializeOnLoadMethodAttributes (68ms)
-				AfterProcessingInitializeOnLoad (1ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (57ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.53 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 6213 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 34 unused Assets / (1.5 MB). Loaded Objects now: 6996.
-Memory consumption went from 302.2 MB to 300.8 MB.
-Total: 4.144300 ms (FindLiveObjects: 0.454000 ms CreateObjectMapping: 0.312000 ms MarkObjects: 2.900600 ms  DeleteObjects: 0.476400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Received Import Request.
+  Time since last request: 4.002539 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact (5).fbx
+  artifactKey: Guid(362aa21af387fa543adbbf950e966d28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact (5).fbx using Guid(362aa21af387fa543adbbf950e966d28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5b236ede08409801a45fe6806e14ff4') in 0.013210 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.812481 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact (4).fbx
+  artifactKey: Guid(cd5d52192495cf84890deeb1566183dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact (4).fbx using Guid(cd5d52192495cf84890deeb1566183dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01653c51285ad129b68df82f2578be0e') in 0.013316 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.223277 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact blocking.fbx
+  artifactKey: Guid(6f90dc521e5e4a843811550be75cf0cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact blocking.fbx using Guid(6f90dc521e5e4a843811550be75cf0cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '182a972a01f6778961d57f4cb4b22141') in 0.011602 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.994930 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact (2).fbx
+  artifactKey: Guid(05862772b39471b4ea4fc0116dd9332e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact (2).fbx using Guid(05862772b39471b4ea4fc0116dd9332e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5060d876a8a4c661752c1890d9a067cb') in 0.017167 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.849307 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact common.fbx
+  artifactKey: Guid(4d4aa1c2ef7944240a26a30da58e5c23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact common.fbx using Guid(4d4aa1c2ef7944240a26a30da58e5c23) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6014f958d021f445e59980910fcc078') in 0.017537 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.615550 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword idle.fbx
+  artifactKey: Guid(fd4fec56ca1b0bc428936f0fdbc6ac17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword idle.fbx using Guid(fd4fec56ca1b0bc428936f0fdbc6ac17) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7434411d9f293574546ef42c0829d8a') in 0.012155 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.195388 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact (5).fbx
+  artifactKey: Guid(362aa21af387fa543adbbf950e966d28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact (5).fbx using Guid(362aa21af387fa543adbbf950e966d28) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2041b4638c7a75eaf996d7619e9725f7') in 0.005170 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.107767 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword idle (5).fbx
+  artifactKey: Guid(372ded7d119520d488a48a8c33b21db0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword idle (5).fbx using Guid(372ded7d119520d488a48a8c33b21db0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '809595a44cc35ad7deb0602d5e5de9c4') in 0.013997 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.031192 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword idle (4).fbx
+  artifactKey: Guid(08ecf6fbacb852b48b962b7f8d94ea3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword idle (4).fbx using Guid(08ecf6fbacb852b48b962b7f8d94ea3e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8a8585a879f7990410e777efef2d996') in 0.011597 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.021344 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword idle (3).fbx
+  artifactKey: Guid(50ef065cca350ec4ab42288a51df8c18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword idle (3).fbx using Guid(50ef065cca350ec4ab42288a51df8c18) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1974864d72ca6b939b039a452fe80f20') in 0.013841 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.007732 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword idle (2).fbx
+  artifactKey: Guid(98171b4e83e606a45b3d901a9c38b6ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword idle (2).fbx using Guid(98171b4e83e606a45b3d901a9c38b6ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4aacadb59f679db60a58eea295044963') in 0.009687 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.008331 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword high spin attack.fbx
+  artifactKey: Guid(adcc72bbc1849e54cbc4b424a091a65b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword high spin attack.fbx using Guid(adcc72bbc1849e54cbc4b424a091a65b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '844f7bfa2d89178272997f368a4be24c') in 0.009951 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.012078 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword hand one spell casting.fbx
+  artifactKey: Guid(8bac6d39b859e2341be391bf8962132b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword hand one spell casting.fbx using Guid(8bac6d39b859e2341be391bf8962132b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b6f37a4289efc901d174937208257e4') in 0.010249 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.013267 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword free 2.fbx
+  artifactKey: Guid(a51f35748c0c2a442aaf0c6d30c7e689) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword free 2.fbx using Guid(a51f35748c0c2a442aaf0c6d30c7e689) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '684c477f7a4fdcbe0e80ade4b1a94967') in 0.010683 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.017290 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword free 1.fbx
+  artifactKey: Guid(c8ad4bc3e9f593c4e810f83dec8fa496) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword free 1.fbx using Guid(c8ad4bc3e9f593c4e810f83dec8fa496) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43cc6838e310a221059bc2edc1fb87c7') in 0.010349 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.008711 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching.fbx
+  artifactKey: Guid(ee8bb94944f1c6244a37115ce4013fae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching.fbx using Guid(ee8bb94944f1c6244a37115ce4013fae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2b29aba185af325e495a207e5733b07') in 0.009024 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.011099 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (6).fbx
+  artifactKey: Guid(0d295d607d84cc343be45ea335a66e32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (6).fbx using Guid(0d295d607d84cc343be45ea335a66e32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '997050a441a7e39d0f3914ff0dd25583') in 0.011456 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.008654 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (5).fbx
+  artifactKey: Guid(30e331fece3da97409b1b0701dc259c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (5).fbx using Guid(30e331fece3da97409b1b0701dc259c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7adc33dc8595807e888ce9e9edb444f5') in 0.011185 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.012283 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (4).fbx
+  artifactKey: Guid(ad3a2e5cfbb39aa40955fa766106ba9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (4).fbx using Guid(ad3a2e5cfbb39aa40955fa766106ba9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfe3167a960c8022f4e6f5407f49cf38') in 0.010299 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.009328 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (3).fbx
+  artifactKey: Guid(1b49f3feae75bc245a46e5bedd2dd669) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (3).fbx using Guid(1b49f3feae75bc245a46e5bedd2dd669) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdefd7134d77ac8b6b0080df276f60bc') in 0.012249 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.024945 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (2).fbx
+  artifactKey: Guid(32084d9515260044984ecd396045fbee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (2).fbx using Guid(32084d9515260044984ecd396045fbee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9f79eb196727fe12c9f2cc9900f429c') in 0.012056 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.008227 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword casting.fbx
+  artifactKey: Guid(4f59995ce6ea92841a91c5f7c5819f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword casting.fbx using Guid(4f59995ce6ea92841a91c5f7c5819f6a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0704fb8a942fcf4f3c7160edd6ef4a59') in 0.012400 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.011899 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword blocking ready.fbx
+  artifactKey: Guid(5fa5e295383042e4fb0ad3f5f8561ea2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword blocking ready.fbx using Guid(5fa5e295383042e4fb0ad3f5f8561ea2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d47fe1c8960c0826089aa16b8f10211') in 0.012105 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.011749 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword blocking on.fbx
+  artifactKey: Guid(bbafa9a11f245af49871d1c9411d1df5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword blocking on.fbx using Guid(bbafa9a11f245af49871d1c9411d1df5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16b30a6ada383dd339c203bd98afe11f') in 0.010897 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.010830 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword blocking free.fbx
+  artifactKey: Guid(5aa9b784e4848e54fb20c2a5107ee0fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword blocking free.fbx using Guid(5aa9b784e4848e54fb20c2a5107ee0fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c7b24f96d0d19bc2f0a3c0e3d7c7731') in 0.011952 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.023204 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword attack.fbx
+  artifactKey: Guid(4c581d8541fdee44bb6cb4a6a66b8419) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword attack.fbx using Guid(4c581d8541fdee44bb6cb4a6a66b8419) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '088278c52be2cb3965857748b5597e89') in 0.008548 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.004447 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword 180 turn.fbx
+  artifactKey: Guid(d599cefb6c7b87e40967b5ab88cdc18f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword 180 turn.fbx using Guid(d599cefb6c7b87e40967b5ab88cdc18f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfcbe1b3bebfb2089345dcf59d895480') in 0.011591 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.023679 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword 180 turn (2).fbx
+  artifactKey: Guid(a6defad4962b6b44b9638a4c27049866) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword 180 turn (2).fbx using Guid(a6defad4962b6b44b9638a4c27049866) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c59af0010c78d0be27deaa1d5dc85bad') in 0.010892 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.109839 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact (2).fbx
+  artifactKey: Guid(05862772b39471b4ea4fc0116dd9332e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact (2).fbx using Guid(05862772b39471b4ea4fc0116dd9332e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6724020ded292b41401c24ccbc34a15e') in 0.005088 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.349742 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword impact (4).fbx
+  artifactKey: Guid(cd5d52192495cf84890deeb1566183dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword impact (4).fbx using Guid(cd5d52192495cf84890deeb1566183dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '909ac621d11445eb9d4ff0699ac775a8') in 0.005670 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.377220 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword jump attack.fbx
+  artifactKey: Guid(d054a5a115cd4f2429f297519133a11c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword jump attack.fbx using Guid(d054a5a115cd4f2429f297519133a11c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b7fc29326d746bd6fe070389d0fdc14f') in 0.015184 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.526348 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword jump idle.fbx
+  artifactKey: Guid(ce04c539dcc1f154b9bfc54f894b6c1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword jump idle.fbx using Guid(ce04c539dcc1f154b9bfc54f894b6c1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '118189c553031b830152e743cbabb15a') in 0.014471 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.350383 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword jump run.fbx
+  artifactKey: Guid(1537c3c000544264fbfc274b9922b534) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword jump run.fbx using Guid(1537c3c000544264fbfc274b9922b534) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '37b4ac5dd63d3e674e3395b1e4d63a05') in 0.013075 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.615792 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword kick.fbx
+  artifactKey: Guid(c92ced16a43762f4c9f7dc7054b152be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword kick.fbx using Guid(c92ced16a43762f4c9f7dc7054b152be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '25cbc8aee92fb5213d368f2661f3e24d') in 0.014144 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.901329 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword power up.fbx
+  artifactKey: Guid(6c56dd5791c6f384098ae9535d7628af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword power up.fbx using Guid(6c56dd5791c6f384098ae9535d7628af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f24b2df7e8c45ae32928b83cf52a9edd') in 0.014448 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 20.097097 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword hand one spell casting.fbx
+  artifactKey: Guid(8bac6d39b859e2341be391bf8962132b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword hand one spell casting.fbx using Guid(8bac6d39b859e2341be391bf8962132b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3fcecaa06d43ce5bef51a8a109655213') in 0.007873 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 23.072511 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword kick (2).fbx
+  artifactKey: Guid(97fbe1f253218d744a42362118d6c660) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword kick (2).fbx using Guid(97fbe1f253218d744a42362118d6c660) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b296f463608d372654696d289477b903') in 0.005088 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.692152 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword run.fbx
+  artifactKey: Guid(0ad7506a4cf6c444db7ad8328fb90304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword run.fbx using Guid(0ad7506a4cf6c444db7ad8328fb90304) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79b4c7dd00737839e3a5fde34ae4d141') in 0.014436 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.812676 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slash (5).fbx
+  artifactKey: Guid(4e5194c9ae9e82e47a83f84d950ca6e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slash (5).fbx using Guid(4e5194c9ae9e82e47a83f84d950ca6e7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a137d97d54b42b8451ef78c49c226c75') in 0.013458 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.257901 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slash backspin.fbx
+  artifactKey: Guid(a81b669811dd31147a8e50ff8410154a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slash backspin.fbx using Guid(a81b669811dd31147a8e50ff8410154a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f98f1e918b1077e27aa424c1d9acdfd6') in 0.012864 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.178175 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slash down.fbx
+  artifactKey: Guid(7fa16e17df027004cb7d91a17b777498) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slash down.fbx using Guid(7fa16e17df027004cb7d91a17b777498) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0626d56921a2a740997e1664acd6c36') in 0.016682 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.472414 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slash three.fbx
+  artifactKey: Guid(483a65e59b5759045828cdb07a0fc017) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slash three.fbx using Guid(483a65e59b5759045828cdb07a0fc017) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c02914e91ec2f7e0839d4ee53bd0d6cd') in 0.020868 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.211391 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slash.fbx
+  artifactKey: Guid(c540670824e14ae47a4b40c6a6392081) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slash.fbx using Guid(c540670824e14ae47a4b40c6a6392081) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b204013e7e181c3087e4dea2d013df5') in 0.016099 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.212923 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slide attack.fbx
+  artifactKey: Guid(586f3006ad2d348408f292e3f8c5c61a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slide attack.fbx using Guid(586f3006ad2d348408f292e3f8c5c61a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8f7ecf54d1cb86c072d33ad1d89c812') in 0.015406 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.205281 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword spell casting.fbx
+  artifactKey: Guid(4455c435eb387ea46a84418baf5d9f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword spell casting.fbx using Guid(4455c435eb387ea46a84418baf5d9f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0345d5c41c9d2b4ab5147970ce016be7') in 0.016023 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.418640 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword strafe left.fbx
+  artifactKey: Guid(04230863c67f52a488ac235aaba29c76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword strafe left.fbx using Guid(04230863c67f52a488ac235aaba29c76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '901829c7c6e69ee5d5e5773e38d72d71') in 0.015626 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.519565 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword strafe right fast.fbx
+  artifactKey: Guid(a164a50013f56c1419bc0abdc98b82cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword strafe right fast.fbx using Guid(a164a50013f56c1419bc0abdc98b82cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b274696ca56dfa0324ca414e590ebf5f') in 0.013241 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.225789 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword strafe right.fbx
+  artifactKey: Guid(595e5c22c04083a4d8382fd83bf0b6ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword strafe right.fbx using Guid(595e5c22c04083a4d8382fd83bf0b6ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8d81504bb1b9711e8f194a171cc92ce2') in 0.011664 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.211028 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword turn left.fbx
+  artifactKey: Guid(9f42aa52d3bf9874589804f4f5b84a07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword turn left.fbx using Guid(9f42aa52d3bf9874589804f4f5b84a07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11431b1a027ab66c9caf4101dc83f9ae') in 0.011834 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.221088 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword turn right.fbx
+  artifactKey: Guid(5fc4164ba66b9854bb371b5918d2f926) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword turn right.fbx using Guid(5fc4164ba66b9854bb371b5918d2f926) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70cc4e66dbe2c820673d15398d53f8b9') in 0.010776 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.226183 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword walk back.fbx
+  artifactKey: Guid(2507ac6f2b9d3804ba751513b2867ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword walk back.fbx using Guid(2507ac6f2b9d3804ba751513b2867ca6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1bf6781837f263fed32ae48f4db755b') in 0.015493 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.208845 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword walk.fbx
+  artifactKey: Guid(d88a59697c21f9c4592db521bf9c547d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword walk.fbx using Guid(d88a59697c21f9c4592db521bf9c547d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ce0249d4ff03221c889b3595009886c') in 0.012271 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.205474 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/spell cast.fbx
+  artifactKey: Guid(1eacb5aea200771429219a6115e9bec0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/spell cast.fbx using Guid(1eacb5aea200771429219a6115e9bec0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd4389ac0cecbbdef0b4707e429512ba') in 0.015615 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.205562 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/two handed sword death 2.fbx
+  artifactKey: Guid(7b08211bf1d82e740b327f1e45190420) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/two handed sword death 2.fbx using Guid(7b08211bf1d82e740b327f1e45190420) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0575cf39270c7ec235f1875c983f087a') in 0.011901 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.224175 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/two handed sword death.fbx
+  artifactKey: Guid(c4ae3f667d647f2428a6c1f1b8297588) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/two handed sword death.fbx using Guid(c4ae3f667d647f2428a6c1f1b8297588) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c88b7ca96ee70b2545fc58db749289f') in 0.028212 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.265413 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword spell casting.fbx
+  artifactKey: Guid(4455c435eb387ea46a84418baf5d9f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword spell casting.fbx using Guid(4455c435eb387ea46a84418baf5d9f8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '178c812000f099bc280b1fc99005699f') in 0.006671 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.315373 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword strafe left fast.fbx
+  artifactKey: Guid(dd160e7c11e2ebd489f4af8fc96dd13a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword strafe left fast.fbx using Guid(dd160e7c11e2ebd489f4af8fc96dd13a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f19104cf1cfdec3d94bd74bcdf370ac') in 0.005902 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.014846 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword slash.fbx
+  artifactKey: Guid(c540670824e14ae47a4b40c6a6392081) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword slash.fbx using Guid(c540670824e14ae47a4b40c6a6392081) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bdde527614dcb81d06f0cd4a617ec85c') in 0.022522 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.788547 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (6).fbx
+  artifactKey: Guid(0d295d607d84cc343be45ea335a66e32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword crouching (6).fbx using Guid(0d295d607d84cc343be45ea335a66e32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7367ddaa8800b0dac7af4bccad731dc7') in 0.008014 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.304920 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 2.fbx
+  artifactKey: Guid(e8b49caab0d0f3c4b929c3febe4b916f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 2.fbx using Guid(e8b49caab0d0f3c4b929c3febe4b916f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3339ac8741bc8ab47ce872ceefdc051a') in 0.006204 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.779165 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 2.anim
+  artifactKey: Guid(4201ac3bb075d9242b45648917e0e7ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/draw a great sword 2.anim using Guid(4201ac3bb075d9242b45648917e0e7ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '214de569acb7851a7afc50ef5c90db0e') in 0.012613 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.526298 seconds.
+  path: Assets/Resources/Animations/PlayerClips/Ref/great sword 180 turn (2).fbx
+  artifactKey: Guid(a6defad4962b6b44b9638a4c27049866) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/Ref/great sword 180 turn (2).fbx using Guid(a6defad4962b6b44b9638a4c27049866) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4b55ecc815dd6dbed8a8d9706c8850c') in 0.005013 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 19.407243 seconds.
+  path: Assets/Resources/Animations/PlayerClips/draw a great sword 1.anim
+  artifactKey: Guid(a70ee4f9e1908464eb4d0e023eebd5bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Animations/PlayerClips/draw a great sword 1.anim using Guid(a70ee4f9e1908464eb4d0e023eebd5bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebe45a39f950c1efc2e0e75e23a13716') in 0.006125 seconds 
